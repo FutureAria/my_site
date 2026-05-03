@@ -17,11 +17,11 @@ export default function AdminLoginForm() {
     const response = await fetch(adminApiPath("admin-login"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password: password.trim() }),
     });
 
     if (!response.ok) {
-      setMessage("비밀번호가 올바르지 않습니다.");
+      setMessage("비밀번호가 올바르지 않습니다. 한/영 입력 상태와 앞뒤 공백을 확인해주세요.");
       return;
     }
 
