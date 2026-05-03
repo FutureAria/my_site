@@ -33,7 +33,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
   return (
     <>
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-0 pt-24 pb-10 sm:pt-28 sm:pb-16">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-0 pt-24 pb-10 sm:pt-28 sm:pb-16 supports-[height:100dvh]:min-h-[100dvh]">
       {/* Animated background blobs */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
@@ -70,7 +70,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
         {/* Main heading */}
         <h1
-          className={`text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-5 sm:mb-6 transition-all duration-700 delay-100 ${
+          className={`mobile-safe-wrap text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-5 sm:mb-6 transition-all duration-700 delay-100 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
@@ -153,7 +153,7 @@ export default function Hero({ data }: { data: HeroData }) {
         onClick={() => setPreviewOpen(false)}
       >
         <div
-          className="relative w-full max-w-4xl h-[90vh] bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            className="relative w-full max-w-4xl h-[88dvh] max-h-[900px] bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">

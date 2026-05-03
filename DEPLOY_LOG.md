@@ -48,3 +48,20 @@
 
 - `npm audit --omit=dev` reported a Next.js advisory fixed by a newer Next.js release. Update Next.js in a separate maintenance step, then rebuild and redeploy.
 - Test on a real Windows browser and iPhone/Safari device when available, because local automated checks cannot perfectly reproduce every OS font/rendering difference.
+
+## 2026-05-04
+
+### Mobile App Shell
+
+- Added a lightweight web app manifest at `/manifest.webmanifest`.
+- Added a small SVG app icon and a tiny service worker for production caching.
+- The service worker only caches safe public pages and static assets. It skips `/api/*` requests so admin edits and uploads are not cached incorrectly.
+- Added mobile safe-area padding for phone browser/app mode and improved tap targets for navigation and theme controls.
+- Updated theme handling so dark/light mode also updates browser `theme-color` and `color-scheme`.
+- Adjusted mobile hero text wrapping and modal height so Korean text and resume preview behave better on small screens.
+
+### Storage Notes
+
+- New PWA files are very small: `/public/sw.js` and `/public/icon.svg` are each about 4 KB.
+- Current `/public/uploads` size is about 19 MB.
+- Continue converting screenshots to compressed WebP and avoid uploading large original PNG screenshots unless they are really needed.

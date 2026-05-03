@@ -10,6 +10,15 @@ export default function ThemeToggle() {
     if (stored === "light") {
       setDark(false);
       document.documentElement.classList.add("light");
+      document.documentElement.style.colorScheme = "light";
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#ffffff");
+    } else {
+      document.documentElement.style.colorScheme = "dark";
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#030712");
     }
   }, []);
 
@@ -18,9 +27,17 @@ export default function ThemeToggle() {
     setDark(next);
     if (next) {
       document.documentElement.classList.remove("light");
+      document.documentElement.style.colorScheme = "dark";
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#030712");
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.add("light");
+      document.documentElement.style.colorScheme = "light";
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", "#ffffff");
       localStorage.setItem("theme", "light");
     }
   };
@@ -28,8 +45,9 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+      className="w-11 h-11 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
       title={dark ? "라이트 모드" : "다크 모드"}
+      aria-label={dark ? "라이트 모드로 변경" : "다크 모드로 변경"}
     >
       {dark ? (
         <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

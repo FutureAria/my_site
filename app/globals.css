@@ -33,6 +33,10 @@ html.light {
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -44,6 +48,28 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
   margin: 0;
   overflow-x: hidden;
+  min-height: 100svh;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  overscroll-behavior-y: none;
+  touch-action: manipulation;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  min-height: 44px;
+}
+
+html.light {
+  color-scheme: light;
 }
 
 #about,
@@ -146,6 +172,16 @@ html.light body {
   color: var(--text-primary);
 }
 
+@media (display-mode: standalone) {
+  body {
+    min-height: 100dvh;
+  }
+
+  nav {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
 /* Nav */
 html.light nav {
   border-color: var(--border-color) !important;
@@ -160,6 +196,7 @@ html.light .bg-gray-950 { background: var(--bg-primary) !important; }
 html.light .bg-gray-950\/90 { background: rgba(255, 255, 255, 0.9) !important; }
 html.light .bg-gray-900 { background: var(--bg-secondary) !important; }
 html.light .bg-gray-800 { background: #f3f4f6 !important; }
+html.light .bg-black\/80 { background: rgba(255, 255, 255, 0.9) !important; }
 
 /* Text colors */
 html.light .text-gray-100 { color: #111827 !important; }
@@ -169,6 +206,8 @@ html.light .text-gray-400 { color: #6b7280 !important; }
 html.light .text-gray-500 { color: #9ca3af !important; }
 html.light .text-gray-600 { color: #9ca3af !important; }
 html.light .text-white { color: #111827 !important; }
+html.light .text-blue-300 { color: #2563eb !important; }
+html.light .text-emerald-300 { color: #059669 !important; }
 
 /* Borders */
 html.light .border-white\/5,
@@ -206,6 +245,13 @@ html.light .bg-gradient-to-r.from-blue-500.to-emerald-500 {
   color: #ffffff !important;
 }
 
+html.light .gradient-text {
+  background: linear-gradient(135deg, #2563eb, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Card shadows in light */
 html.light .glass {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -228,10 +274,24 @@ html.light footer {
 /* Select / input in admin */
 html.light select,
 html.light input[type="text"],
+html.light input[type="email"],
+html.light input[type="password"],
 html.light textarea {
   background: #f9fafb !important;
   border-color: rgba(0, 0, 0, 0.1) !important;
   color: #111827 !important;
+}
+
+@media (max-width: 480px) {
+  .readable-copy {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 /* Grid pattern */

@@ -105,7 +105,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-xl hover:bg-white/5 transition-colors"
+            className="md:hidden w-11 h-11 flex flex-col justify-center items-center gap-1.5 rounded-xl hover:bg-white/5 transition-colors"
             aria-label="메뉴 열기"
             aria-expanded={menuOpen}
           >
@@ -133,7 +133,7 @@ export default function Navbar() {
                 <a
                   href={href}
                   onClick={(e) => handleNavClick(e, href)}
-                  className="block px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
+                  className="flex min-h-11 items-center px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-colors text-sm font-medium"
                 >
                   {label}
                 </a>
