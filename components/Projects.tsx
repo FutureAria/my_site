@@ -37,12 +37,32 @@ const colors = [
 ];
 
 const MOBILE_TECH_LIMIT = 4;
+const DEFAULT_FILTER_LIMIT = 14;
+const IMPORTANT_TECHS = [
+  "Oracle Cloud",
+  "Caddy",
+  "PHP",
+  "MySQL",
+  "JavaScript",
+  "HTML/CSS",
+  "React",
+  "REST API",
+  "Python",
+  "API",
+  "데이터 분석",
+  "AI/ML",
+  "TypeScript",
+  "Vite",
+  "Node.js",
+  "MariaDB(MySQL)",
+];
 
 export default function Projects({ data }: { data: ProjectItem[] }) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  const [showAllTechs, setShowAllTechs] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -58,6 +78,22 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
 
   // 전체 tech 목록 (중복 제거)
   const allTechs = Array.from(new Set(data.flatMap((p) => p.techs)));
+  const orderedTechs = [...allTechs].sort((a, b) => {
+    const aIndex = IMPORTANT_TECHS.indexOf(a);
+    const bIndex = IMPORTANT_TECHS.indexOf(b);
+    if (aIndex !== -1 || bIndex !== -1) {
+      return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+    }
+    return a.localeCompare(b);
+  });
+  const collapsedTechs = orderedTechs.slice(0, DEFAULT_FILTER_LIMIT);
+  const visibleTechs =
+    showAllTechs || orderedTechs.length <= DEFAULT_FILTER_LIMIT
+      ? orderedTechs
+      : activeTech && !collapsedTechs.includes(activeTech)
+        ? [...collapsedTechs, activeTech]
+        : collapsedTechs;
+  const hiddenTechCount = Math.max(orderedTechs.length - collapsedTechs.length, 0);
 
   const filtered = data.filter((p) => {
     const q = search.toLowerCase();
@@ -118,7 +154,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             >
               전체
             </button>
-            {allTechs.map((tech) => (
+            {visibleTechs.map((tech) => (
               <button
                 key={tech}
                 onClick={() => setActiveTech(activeTech === tech ? null : tech)}
@@ -127,6 +163,15 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                 {tech}
               </button>
             ))}
+            {hiddenTechCount > 0 && (
+              <button
+                onClick={() => setShowAllTechs((value) => !value)}
+                className="px-3 py-1 rounded-lg text-xs font-semibold transition-all bg-white/5 text-gray-300 border border-white/10 hover:border-blue-500/30 hover:text-blue-300"
+                aria-expanded={showAllTechs}
+              >
+                {showAllTechs ? "접기" : `+ ${hiddenTechCount}개 더보기`}
+              </button>
+            )}
           </div>
         </div>
 

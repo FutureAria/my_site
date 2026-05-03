@@ -79,3 +79,9 @@
 - Local file exists and is a valid PDF, about 15 MB.
 - Oracle disk check showed about 39 GB available, so this PDF is acceptable for now.
 - Updated the Oracle deploy script so missing upload PDFs are seeded to the server without deleting or overwriting existing server uploads.
+
+### Project Filter Cleanup
+
+- Project technology filters now show only the important tags first.
+- Deployment-related tags such as Oracle Cloud and Caddy are prioritized because they help explain the deployed projects.
+- Less important tags are hidden behind a `+ n개 더보기` control to keep the project section easier to scan.
