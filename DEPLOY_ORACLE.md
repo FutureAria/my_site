@@ -33,7 +33,7 @@ cp .env.oracle.example .env.oracle
 그 다음 `.env.oracle`에서 관리자 비밀번호만 실제 값으로 바꿉니다.
 
 ```env
-ADMIN_PASSWORD=021111
+ADMIN_PASSWORD=여기에_관리자_비밀번호
 ```
 
 `.env.oracle`은 GitHub에 올라가지 않도록 `.gitignore`에 등록되어 있습니다.
