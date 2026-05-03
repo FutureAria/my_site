@@ -57,17 +57,21 @@ path = Path("/etc/caddy/Caddyfile")
 text = path.read_text()
 marker = "# my_site portfolio"
 if marker in text:
-    text = text.split(marker)[0].rstrip() + "\n"
+    text = text.split(marker)[0].rstrip() + "\\n"
 else:
-    text = text.rstrip() + "\n"
+    text = text.rstrip() + "\\n"
 
 block = """
 # my_site portfolio
-http://juyoung-portfolio.duckdns.org, http://juwwkd-portfolio.132.145.186.82.nip.io {
+juyoung-portfolio.duckdns.org {
+\treverse_proxy 127.0.0.1:${oracleEnv.port}
+}
+
+http://juwwkd-portfolio.132.145.186.82.nip.io {
 \treverse_proxy 127.0.0.1:${oracleEnv.port}
 }
 """
-path.write_text(text + "\n" + block.lstrip())
+path.write_text(text + "\\n" + block.lstrip())
 PY
 
 

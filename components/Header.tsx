@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 border-b hairline bg-[color:var(--bg)]/78 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 sm:px-6">
         <Link href="/" className="flex items-baseline gap-2">
           <span className="text-base font-semibold">박주영</span>
           <span className="hidden text-xs ink-muted sm:inline">Portfolio Archive</span>
@@ -54,7 +54,7 @@ export default function Header() {
           <span className="text-sm">{dark ? "☾" : "☼"}</span>
         </button>
       </div>
-      <nav className="mx-auto flex max-w-7xl gap-5 overflow-x-auto border-t hairline px-4 py-3 text-sm ink-muted md:hidden">
+      <nav className="mx-auto flex max-w-7xl gap-5 overflow-x-auto border-t hairline px-4 py-2.5 text-sm ink-muted md:hidden">
         {navItems.map((item) => (
           <Link key={item.href} href={item.href} className="shrink-0 transition hover:text-[color:var(--text)]">
             {item.label}
