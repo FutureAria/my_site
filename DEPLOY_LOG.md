@@ -54,7 +54,7 @@
 ### Mobile App Shell
 
 - Added a lightweight web app manifest at `/manifest.webmanifest`.
-- Added a small SVG app icon and a tiny service worker for production caching.
+- Added small SVG/PNG app icons and a tiny service worker for production caching.
 - The service worker only caches safe public pages and static assets. It skips `/api/*` requests so admin edits and uploads are not cached incorrectly.
 - Added mobile safe-area padding for phone browser/app mode and improved tap targets for navigation and theme controls.
 - Updated theme handling so dark/light mode also updates browser `theme-color` and `color-scheme`.
@@ -62,6 +62,6 @@
 
 ### Storage Notes
 
-- New PWA files are very small: `/public/sw.js` and `/public/icon.svg` are each about 4 KB.
+- New PWA files are very small: `/public/sw.js` and `/public/icon.svg` are each about 4 KB, with PNG app icons under 10 KB each.
 - Current `/public/uploads` size is about 19 MB.
 - Continue converting screenshots to compressed WebP and avoid uploading large original PNG screenshots unless they are really needed.

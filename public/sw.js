@@ -1,5 +1,5 @@
 const CACHE_NAME = "jy-portfolio-v1";
-const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg"];
+const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

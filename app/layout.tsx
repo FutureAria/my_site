@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    apple: "/icon-192.png",
   },
   openGraph: {
     title: "박주영 | 백엔드 개발자 포트폴리오",
