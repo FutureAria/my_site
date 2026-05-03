@@ -20,6 +20,8 @@
 - Admin login API issued an httpOnly cookie when the configured password matched
 - Local production build completed successfully
 - Server service was active and Next.js reported ready in under one second
+- Desktop and mobile-width browser checks showed the main hero, navigation, project cards, and Korean text without obvious overlap.
+- Safari/WebKit-sensitive blur styles include the `-webkit-backdrop-filter` fallback.
 
 ### GitHub Safety Rules
 
@@ -35,3 +37,14 @@
 - The current upload folder is about 19 MB. Most uploaded screenshots are WebP files, but one PDF is much larger than the images.
 - Before deploying large new assets, check upload size and prefer compressed WebP for screenshots.
 - Admin uploads now reject unsupported file types. Images must be 8 MB or smaller, PDFs must be 20 MB or smaller, and supported images are converted to compressed WebP files on upload.
+
+### GitHub
+
+- Current public commit: `5826361 Refresh deployed portfolio site`
+- Repository: `https://github.com/FutureAria/my_site`
+- Ignored locally: `.env.local`, `.env.oracle`, `.claude/`, `.vscode/`, `.next/`, `node_modules/`
+
+### Remaining Maintenance
+
+- `npm audit --omit=dev` reported a Next.js advisory fixed by a newer Next.js release. Update Next.js in a separate maintenance step, then rebuild and redeploy.
+- Test on a real Windows browser and iPhone/Safari device when available, because local automated checks cannot perfectly reproduce every OS font/rendering difference.
