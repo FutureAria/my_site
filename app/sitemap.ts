@@ -1,19 +1,39 @@
-import type { MetadataRoute } from "next";
-import { getPortfolioData } from "@/lib/portfolio";
+import fs from "fs";
+import path from "path";
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const data = getPortfolioData();
+  const raw = fs.readFileSync(path.join(process.cwd(), "data", "portfolio.json"), "utf-8");
+  const data = JSON.parse(raw);
+
+  const baseUrl = "https://juyoung-portfolio.vercel.app";
+
+  const projectRoutes: MetadataRoute.Sitemap = (data.projects || []).map(
+    (_: unknown, i: number) => ({
+      url: `${baseUrl}/projects/${i}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })
+  );
+
+  const blogRoutes: MetadataRoute.Sitemap = (data.blog || []).map(
+    (_: unknown, i: number) => ({
+      url: `${baseUrl}/blog/${i}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    })
+  );
 
   return [
-    "",
-    "/about",
-    "/projects",
-    "/journal",
-    "/contact",
-    ...data.projects.map((_, index) => `/projects/${index}`),
-  ].map((path) => ({
-    url: `${siteUrl}${path}`,
-    lastModified: new Date(),
-  }));
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    ...projectRoutes,
+    ...blogRoutes,
+  ];
 }

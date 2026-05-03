@@ -1,14 +1,19 @@
-.next
-node_modules
-dist
-CoverLetter
-.env.local
-.env.dothome
-.env.oracle
-dothome/api/_config.php
-public/uploads/*.pdf
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# misc
 .DS_Store
-Icon?
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.tsbuildinfo
+next-env.d.ts
+.claude/
+.vscode/
+
+# env
+.env
+.env.local
+.env.oracle
+.env.production.local

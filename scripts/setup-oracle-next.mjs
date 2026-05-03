@@ -80,21 +80,6 @@ juyoung-portfolio.duckdns.org {
 \treverse_proxy 127.0.0.1:${oracleEnv.port}
 }
 
-http://juwwkd-portfolio.132.145.186.82.nip.io {
-\tencode zstd gzip
-\theader /_next/static/* Cache-Control "public, max-age=31536000, immutable"
-\thandle /uploads/* {
-\t\troot * ${oracleEnv.remoteDir}/public
-\t\theader Cache-Control "public, max-age=31536000, immutable"
-\t\tfile_server
-\t}
-\thandle /sw.js {
-\t\troot * ${oracleEnv.remoteDir}/public
-\t\theader Cache-Control "public, max-age=0, must-revalidate"
-\t\tfile_server
-\t}
-\treverse_proxy 127.0.0.1:${oracleEnv.port}
-}
 """
 path.write_text(text + "\\n" + block.lstrip())
 PY

@@ -1,15 +1,13 @@
-import Link from "next/link";
-
 export default function Footer() {
   return (
-    <footer className="border-t hairline px-4 py-10 sm:px-6">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm ink-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>기록하고, 만들고, 오래 남기는 사람.</p>
-        <div className="flex gap-5">
-          <Link href="/projects" className="hover:text-[color:var(--text)]">Projects</Link>
-          <Link href="/about" className="hover:text-[color:var(--text)]">About</Link>
-          <Link href="/contact" className="hover:text-[color:var(--text)]">Contact</Link>
-        </div>
+    <footer className="border-t border-white/5 py-8 px-4">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} <span className="gradient-text font-semibold">박주영</span>. 모든 권리 보유.
+        </p>
+        <p className="text-xs text-gray-600">
+          Next.js와 Tailwind CSS로 제작했습니다.
+        </p>
       </div>
     </footer>
   );

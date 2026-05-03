@@ -11,12 +11,12 @@ if (fs.existsSync(envPath)) {
 
 export const oracleEnv = {
   root,
-  host: process.env.ORACLE_HOST || "132.145.186.82",
-  user: process.env.ORACLE_USER || "ubuntu",
-  keyPath: process.env.ORACLE_KEY_PATH || "/Users/juyoung/workspace/kis-ai-trader/oracle_key",
-  remoteDir: process.env.ORACLE_REMOTE_DIR || "/home/ubuntu/my_site",
+  host: process.env.ORACLE_HOST || "",
+  user: process.env.ORACLE_USER || "",
+  keyPath: process.env.ORACLE_KEY_PATH || "",
+  remoteDir: process.env.ORACLE_REMOTE_DIR || "",
   port: process.env.ORACLE_APP_PORT || "3000",
-  publicHost: process.env.ORACLE_PUBLIC_HOST || "http://132.145.186.82",
+  publicHost: process.env.ORACLE_PUBLIC_HOST || "",
   serviceName: process.env.ORACLE_SERVICE_NAME || "my-site",
   adminPassword: process.env.ADMIN_PASSWORD || "",
 };
@@ -26,6 +26,8 @@ export function requireOracleEnv() {
   if (!oracleEnv.host) missing.push("ORACLE_HOST");
   if (!oracleEnv.user) missing.push("ORACLE_USER");
   if (!oracleEnv.keyPath) missing.push("ORACLE_KEY_PATH");
+  if (!oracleEnv.remoteDir) missing.push("ORACLE_REMOTE_DIR");
+  if (!oracleEnv.publicHost) missing.push("ORACLE_PUBLIC_HOST");
   if (!oracleEnv.adminPassword) missing.push("ADMIN_PASSWORD");
 
   if (missing.length > 0) {

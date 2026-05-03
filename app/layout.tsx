@@ -1,66 +1,58 @@
-import type { Metadata, Viewport } from "next";
-import PwaRegister from "@/components/PwaRegister";
+import type { Metadata } from "next";
+import { Inter, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ["latin"],
+  variable: "--font-noto-sans-kr",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  applicationName: "박주영 Portfolio",
-  title: "박주영 | 기록하고, 만들고, 오래 남기는 사람",
-  description: "프로젝트, 생각, 이미지와 경험을 차분히 모아둔 개인 포트폴리오입니다.",
-  keywords: ["박주영", "포트폴리오", "백엔드 개발자", "프로젝트", "개인 홈페이지"],
-  authors: [{ name: "박주영" }],
-  alternates: {
-    canonical: "/",
-  },
-  manifest: "/manifest.webmanifest",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "박주영 Portfolio",
-  },
-  formatDetection: {
-    telephone: false,
-  },
+  title: "박주영 | 백엔드 개발자 포트폴리오",
+  description:
+    "데이터 흐름과 API 기반 구조 설계를 중심으로 문제를 해결하는 백엔드 개발자 박주영의 포트폴리오입니다. Python, Java, React 등 다양한 기술 스택을 활용한 프로젝트를 확인하세요.",
+  keywords: ["포트폴리오", "백엔드 개발자", "박주영", "Python", "Java", "React", "Next.js", "K-Digital"],
   openGraph: {
-    title: "박주영 | 기록하고, 만들고, 오래 남기는 사람",
-    description: "프로젝트, 생각, 이미지와 경험을 차분히 모아둔 개인 포트폴리오입니다.",
-    url: siteUrl,
-    siteName: "박주영 Portfolio Archive",
+    title: "박주영 | 백엔드 개발자 포트폴리오",
+    description: "데이터 흐름과 API 기반 구조 설계를 중심으로 문제를 해결하는 백엔드 개발자",
     type: "website",
     locale: "ko_KR",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "박주영 Portfolio Archive" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "박주영 | 기록하고, 만들고, 오래 남기는 사람",
-    description: "프로젝트, 생각, 이미지와 경험을 차분히 모아둔 개인 포트폴리오입니다.",
-    images: ["/opengraph-image"],
+  robots: {
+    index: true,
+    follow: true,
   },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f3ec" },
-    { media: "(prefers-color-scheme: dark)", color: "#11110f" },
-  ],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <body>
-        {children}
-        <PwaRegister />
-      </body>
+    <html
+      lang="ko"
+      className={`scroll-smooth ${inter.variable} ${notoSansKr.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#030712" />
+        {/* 다크모드 플래시 방지: 렌더 전 localStorage 확인 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.add('light');}}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }
