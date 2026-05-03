@@ -65,3 +65,10 @@
 - New PWA files are very small: `/public/sw.js` and `/public/icon.svg` are each about 4 KB, with PNG app icons under 10 KB each.
 - Current `/public/uploads` size is about 19 MB.
 - Continue converting screenshots to compressed WebP and avoid uploading large original PNG screenshots unless they are really needed.
+
+### Admin Editing
+
+- Added a blog management tab to `/admin`.
+- Blog posts can now be added, edited, deleted, reordered, collapsed, expanded, and opened in a new tab for preview.
+- Editable blog fields: title, date, tags, card summary, and Markdown body.
+- Blog data remains inside `data/portfolio.json`, so admin saves continue to update the same lightweight JSON file.

@@ -29,10 +29,19 @@ interface Project {
   detail: ProjectDetail;
 }
 
+interface BlogPost {
+  title: string;
+  date: string;
+  tags: string[];
+  summary: string;
+  content: string;
+}
+
 interface PortfolioData {
   hero: { badge: string; name: string; subtitle: string; resumeFile: string };
   about: { intro: string; timeline: TimelineItem[] };
   projects: Project[];
+  blog: BlogPost[];
   skills: Record<string, string[]>;
   contact: {
     desc: string;
@@ -65,6 +74,7 @@ export default function AdminPage() {
   const [pwError, setPwError] = useState(false);
   const [openProjects, setOpenProjects] = useState<Set<number>>(new Set([0]));
   const [openAbout, setOpenAbout] = useState<Set<number>>(new Set([0]));
+  const [openBlog, setOpenBlog] = useState<Set<number>>(new Set([0]));
 
   useEffect(() => {
     if (sessionStorage.getItem("admin_authed") === "true") {
@@ -152,6 +162,7 @@ export default function AdminPage() {
     { id: "hero", label: "히어로" },
     { id: "about", label: "소개" },
     { id: "projects", label: "프로젝트" },
+    { id: "blog", label: "블로그" },
     { id: "skills", label: "기술 스택" },
     { id: "contact", label: "연락처" },
   ];
@@ -788,6 +799,200 @@ export default function AdminPage() {
               className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
             >
               + 프로젝트 추가
+            </button>
+          </Section>
+        )}
+
+        {/* Blog section */}
+        {activeTab === "blog" && (
+          <Section title="블로그">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <p className="text-sm text-gray-500">
+                  메인 블로그 카드와 상세 글 페이지에 함께 반영됩니다.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setOpenBlog(new Set((data.blog || []).map((_, i) => i)))}
+                  className="text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded hover:bg-white/5"
+                >
+                  모두 펼치기
+                </button>
+                <span className="text-gray-700">|</span>
+                <button
+                  onClick={() => setOpenBlog(new Set())}
+                  className="text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded hover:bg-white/5"
+                >
+                  모두 접기
+                </button>
+              </div>
+            </div>
+
+            {(data.blog || []).map((post, i) => {
+              const isOpen = openBlog.has(i);
+              const toggleOpen = () => {
+                const next = new Set(openBlog);
+                if (next.has(i)) next.delete(i);
+                else next.add(i);
+                setOpenBlog(next);
+              };
+
+              return (
+                <div key={i} className="glass rounded-xl mb-4 overflow-hidden">
+                  <div
+                    className="flex items-center justify-between p-5 cursor-pointer hover:bg-white/[0.03] transition-colors"
+                    onClick={toggleOpen}
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <svg
+                        className={`w-4 h-4 shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                      <div className="min-w-0">
+                        <h3 className="truncate text-white font-semibold">
+                          {post.title || `블로그 글 ${i + 1}`}
+                        </h3>
+                        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                          {post.date && <span>{post.date}</span>}
+                          {(post.tags || []).slice(0, 3).map((tag) => (
+                            <span key={tag} className="rounded-md bg-blue-500/10 px-2 py-0.5 text-blue-300">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                      <a
+                        href={`/blog/${i}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-2 py-1 rounded-md text-xs text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                      >
+                        보기
+                      </a>
+                      <MoveButton
+                        direction="up"
+                        disabled={i === 0}
+                        onClick={() =>
+                          setData({
+                            ...data,
+                            blog: swap(data.blog || [], i, i - 1),
+                          })
+                        }
+                      />
+                      <MoveButton
+                        direction="down"
+                        disabled={i === (data.blog || []).length - 1}
+                        onClick={() =>
+                          setData({
+                            ...data,
+                            blog: swap(data.blog || [], i, i + 1),
+                          })
+                        }
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          setData({
+                            ...data,
+                            blog: (data.blog || []).filter((_, idx) => idx !== i),
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  {!isOpen ? null : (
+                    <div className="px-5 pb-5 border-t border-white/5 pt-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Field
+                          label="제목"
+                          value={post.title}
+                          placeholder="예: 트랜잭션으로 동시성 문제 해결하기"
+                          onChange={(v) => {
+                            const blog = [...(data.blog || [])];
+                            blog[i] = { ...blog[i], title: v };
+                            setData({ ...data, blog });
+                          }}
+                        />
+                        <Field
+                          label="날짜"
+                          value={post.date}
+                          placeholder="2026-05-04"
+                          onChange={(v) => {
+                            const blog = [...(data.blog || [])];
+                            blog[i] = { ...blog[i], date: v };
+                            setData({ ...data, blog });
+                          }}
+                        />
+                      </div>
+                      <DelimitedField
+                        label="태그 (쉼표로 구분)"
+                        values={post.tags || []}
+                        placeholder="예: MySQL, 백엔드, 트러블슈팅"
+                        onCommit={(tags) => {
+                          const blog = [...(data.blog || [])];
+                          blog[i] = { ...blog[i], tags };
+                          setData({ ...data, blog });
+                        }}
+                      />
+                      <TextArea
+                        label="카드 요약"
+                        value={post.summary}
+                        onChange={(v) => {
+                          const blog = [...(data.blog || [])];
+                          blog[i] = { ...blog[i], summary: v };
+                          setData({ ...data, blog });
+                        }}
+                        rows={3}
+                      />
+                      <TextArea
+                        label="본문 (Markdown)"
+                        value={post.content}
+                        onChange={(v) => {
+                          const blog = [...(data.blog || [])];
+                          blog[i] = { ...blog[i], content: v };
+                          setData({ ...data, blog });
+                        }}
+                        rows={12}
+                      />
+                      <p className="text-xs text-gray-500">
+                        `## 제목`, `- 목록`, ```코드블록``` 형태를 사용할 수 있습니다.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <button
+              onClick={() => {
+                const blog = data.blog || [];
+                const newIdx = blog.length;
+                setData({
+                  ...data,
+                  blog: [
+                    ...blog,
+                    {
+                      title: "",
+                      date: new Date().toISOString().slice(0, 10),
+                      tags: [],
+                      summary: "",
+                      content: "## 기록 제목\n\n여기에 배운 점과 해결 과정을 적어주세요.",
+                    },
+                  ],
+                });
+                setOpenBlog(new Set([...openBlog, newIdx]));
+              }}
+              className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              + 블로그 글 추가
             </button>
           </Section>
         )}
