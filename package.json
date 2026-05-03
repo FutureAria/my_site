@@ -13,6 +13,7 @@
     "check:content": "node scripts/audit-content.mjs",
     "check:links": "node scripts/check-external-links.mjs",
     "check:all": "npm run build && npm run check:content && npm run check:site",
+    "optimize:uploads": "node scripts/optimize-source-uploads.mjs",
     "build:dothome": "node scripts/build-dothome-static.mjs",
     "optimize:dothome": "node scripts/optimize-dothome-assets.mjs",
     "deploy:dothome": "node scripts/deploy-dothome-ftp.mjs",

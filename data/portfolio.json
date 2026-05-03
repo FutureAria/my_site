@@ -14,9 +14,9 @@
       "noteLabel": "NOTE",
       "noteText": "화면보다 먼저 데이터 흐름을 보고, 해결 과정을 다음 사람이 읽을 수 있게 남깁니다.",
       "collageImages": [
-        "/uploads/project-1775108245161.png",
-        "/uploads/project-1775114221549.png",
-        "/uploads/project-1775114225126.png"
+        "/uploads/project-1775108245161.webp",
+        "/uploads/project-1775114221549.webp",
+        "/uploads/project-1775114225126.webp"
       ]
     }
   },
@@ -35,7 +35,7 @@
         "title": "백석대학교 컴퓨터공학부",
         "desc": "자료구조, 운영체제, 데이터베이스 등 핵심 전공을 통해 시스템 동작 원리와 데이터 처리 구조 이해. \n다양한 팀 프로젝트와 캡스톤을 통해 문제 해결 및 서비스 설계·구현 경험 축적. \n효율적인 데이터 처리와 안정적인 백엔드 시스템 설계에 관심을 가지고 학습 중.",
         "type": "education",
-        "image": "/uploads/project-1775123196043.jpeg",
+        "image": "/uploads/project-1775123196043.webp",
         "subjects": [
           "자료구조",
           "운영체제",
@@ -49,7 +49,7 @@
         "title": "해킹 페스티벌 동상",
         "desc": "주제: 백업 및 복제 경로 악용을 통한 기업 데이터 유출\n\n백업·복제 경로는 기업 데이터 보호의 최후 방어선으로\n인식해야 한다.\n기술적 대응(암호화, 무결성 검증, 불변 저장소)과 관리적 대응\n(접근 통제, 로그 모니터링)을 균형 있게 적용해야 한다.\n\n법적 대응 체계를 사전에 구축해 사고 발생 시 신속히 대응해야 한다.\n백업 담당자 교육과 인식 제고 역시 기술적 대응만큼 중요하다.",
         "type": "award",
-        "image": "/uploads/project-1775693829957.png",
+        "image": "/uploads/project-1775693829957.webp",
         "subjects": []
       },
       {
@@ -57,7 +57,7 @@
         "title": "K-Digital (산업 협력단)",
         "desc": "웹 서비스 개발 전반을 학습하여 데이터 처리와 API 기반 서비스 구조에 대한 이해를 심화. \n장바구니 시스템, AI 상권 분석, 물품 관리 시스템, NFT 민팅 웹 서비스 등 \n다양한 프로젝트에서 기능 구현뿐 아니라 서비스 구조와 흐름을 고려한 개발 경험 축적.",
         "type": "training",
-        "image": "/uploads/project-1775123250126.jpg",
+        "image": "/uploads/project-1775123250126.webp",
         "subjects": [
           "HTML/CSS/JavaScript",
           "PHP",
@@ -73,7 +73,7 @@
         "title": "리눅스 자격증 스터디 진행 중",
         "desc": "리눅스 기본 명령어부터 파일 권한, 사용자 관리, 프로세스 및 네트워크 관리까지 단계적으로 학습하고, \n마지막에는 서버 운영 실습과 자격증 기출 문제 풀이를 통해 전체 내용을 정리함.",
         "type": "certificate",
-        "image": "/uploads/project-1775123557264.png",
+        "image": "/uploads/project-1775123557264.webp",
         "subjects": [
           "리눅스 자격증 2급"
         ]
@@ -92,7 +92,7 @@
         "HTML/CSS",
         "CRUD"
       ],
-      "image": "/uploads/project-1775108245161.png",
+      "image": "/uploads/project-1775108245161.webp",
       "link": "https://juwwkd.dothome.co.kr/3team/3team_webpage.php",
       "github": "",
       "detail": {
@@ -106,11 +106,11 @@
         ],
         "challenges": "문제: 여러 사용자가 같은 강의를 동시에 신청할 때 정원 초과가 발생할 수 있었습니다. 단순히 현재 인원을 조회한 뒤 신청 수를 증가시키는 방식으로는 거의 동시에 들어온 요청을 구분하기 어려웠습니다.\n\n해결: 수강신청 처리 흐름을 하나의 트랜잭션으로 묶고, 강의 행을 SELECT FOR UPDATE로 잠근 뒤 정원 확인과 신청 등록을 순서대로 처리했습니다. 장바구니에서 실제 신청으로 넘어가는 단계도 같은 처리 단위로 정리해 중간 실패가 생겨도 데이터가 어긋나지 않도록 했습니다.\n\n배운 점: 동시성 문제는 화면 기능보다 데이터 처리 순서에서 먼저 설계해야 한다는 것을 배웠습니다. 특히 정원, 재고, 결제처럼 수량이 중요한 기능은 트랜잭션 범위와 잠금 기준을 명확히 잡는 것이 중요했습니다.",
         "images": [
-          "/uploads/project-1775114221549.png",
-          "/uploads/project-1775114225126.png",
-          "/uploads/project-1775114227791.png",
-          "/uploads/project-1775114230733.png",
-          "/uploads/project-1775114233906.png"
+          "/uploads/project-1775114221549.webp",
+          "/uploads/project-1775114225126.webp",
+          "/uploads/project-1775114227791.webp",
+          "/uploads/project-1775114230733.webp",
+          "/uploads/project-1775114233906.webp"
         ],
         "takeaways": [
           "동시 요청이 많은 기능에서는 트랜잭션 범위를 먼저 설계해야 한다는 점",
@@ -130,7 +130,7 @@
         "CRUD",
         "UI/UX"
       ],
-      "image": "/uploads/project-1775116821521.png",
+      "image": "/uploads/project-1775116821521.webp",
       "link": "",
       "github": "",
       "detail": {
@@ -144,12 +144,12 @@
         ],
         "challenges": "문제: 등록, 수정, 삭제 후 화면 상태가 즉시 반영되지 않거나 컴포넌트 사이로 상태를 계속 전달해야 해 관리가 어려워졌습니다. 기능이 늘어날수록 어떤 컴포넌트가 데이터를 책임지는지 흐려지는 문제가 있었습니다.\n\n해결: 물품 목록 상태를 상위 흐름에서 관리하고, 등록/수정/삭제 이후 API 응답을 기준으로 목록을 다시 정리했습니다. 입력 폼, 목록, 상세 모달의 역할을 분리해 화면 갱신 흐름이 한눈에 보이도록 구조를 단순화했습니다.\n\n배운 점: CRUD 기능은 단순해 보여도 상태의 소유 위치가 명확하지 않으면 유지보수가 어려워집니다. 사용자 입장에서는 저장 직후 변화가 바로 보이는 것이 중요하다는 점도 함께 확인했습니다.",
         "images": [
-          "/uploads/project-1775116868788.png",
-          "/uploads/project-1775116872639.png",
-          "/uploads/project-1775116875747.png",
-          "/uploads/project-1775116878596.png",
-          "/uploads/project-1775116882358.png",
-          "/uploads/project-1775116886978.png"
+          "/uploads/project-1775116868788.webp",
+          "/uploads/project-1775116872639.webp",
+          "/uploads/project-1775116875747.webp",
+          "/uploads/project-1775116878596.webp",
+          "/uploads/project-1775116882358.webp",
+          "/uploads/project-1775116886978.webp"
         ],
         "takeaways": [
           "CRUD 기능에서도 상태의 소유 위치가 명확해야 유지보수가 쉬워진다는 점",
@@ -169,7 +169,7 @@
         "데이터 분석",
         "AI/ML"
       ],
-      "image": "/uploads/project-1775108081787.png",
+      "image": "/uploads/project-1775108081787.webp",
       "link": "https://juwwkd.dothome.co.kr/server/bu-dev1/",
       "github": "",
       "detail": {
@@ -183,12 +183,12 @@
         ],
         "challenges": "문제: 공공 API 데이터는 형식이 일정하지 않고 결측치와 이상치가 섞여 있어 그대로 분석에 사용하기 어려웠습니다. 데이터가 많아질수록 응답 속도와 분석 기준의 일관성도 문제가 됐습니다.\n\n해결: 수집, 정제, 저장, 분석 단계를 분리하고 각 단계에서 검증 기준을 두었습니다. 결측치 처리와 이상치 제거 기준을 정리한 뒤 DB에 저장하고, 자주 조회되는 분석 결과는 재사용할 수 있도록 흐름을 최적화했습니다.\n\n배운 점: 데이터 기반 서비스에서는 모델이나 화면보다 데이터 품질 관리가 먼저라는 것을 배웠습니다. 같은 API라도 수집 기준과 정제 규칙을 문서화해야 결과를 신뢰할 수 있었습니다.",
         "images": [
-          "/uploads/project-1775113867447.png",
-          "/uploads/project-1775113872081.png",
-          "/uploads/project-1775113875413.png",
-          "/uploads/project-1775113879031.png",
-          "/uploads/project-1775113884847.png",
-          "/uploads/project-1775113892359.png"
+          "/uploads/project-1775113867447.webp",
+          "/uploads/project-1775113872081.webp",
+          "/uploads/project-1775113875413.webp",
+          "/uploads/project-1775113879031.webp",
+          "/uploads/project-1775113884847.webp",
+          "/uploads/project-1775113892359.webp"
         ],
         "takeaways": [
           "데이터 기반 서비스는 수집보다 정제 기준을 명확히 하는 것이 더 중요하다는 점",
@@ -209,7 +209,7 @@
         "비동기 처리",
         "스케줄링"
       ],
-      "image": "/uploads/project-1775118021155.png",
+      "image": "/uploads/project-1775118021155.webp",
       "link": "",
       "github": "",
       "detail": {
@@ -223,12 +223,12 @@
         ],
         "challenges": "문제: 실시간 데이터 수집 과정에서 요청 지연, 누락, 중복 저장 가능성이 있었습니다. 매매 판단 흐름이 하나의 긴 절차로 묶이면 오류가 났을 때 어느 단계에서 문제가 생겼는지 추적하기 어려웠습니다.\n\n해결: 데이터 수집, 전략 분석, 주문 판단, 로그 저장 단계를 분리하고 각 단계의 입력과 결과를 기록하도록 정리했습니다. 반복 실행되는 작업은 스케줄 기반으로 분리하고, DB 저장 전 중복 여부를 확인해 데이터 정합성을 높였습니다.\n\n배운 점: 자동화 시스템은 동작 자체보다 실패했을 때 추적 가능한 구조가 중요했습니다. 실시간 처리에서는 속도와 안정성 사이의 균형을 잡는 설계가 필요하다는 점을 배웠습니다.",
         "images": [
-          "/uploads/project-1775118040822.png",
-          "/uploads/project-1775118044510.png",
-          "/uploads/project-1775118048577.png",
-          "/uploads/project-1775118053331.png",
-          "/uploads/project-1775118057233.png",
-          "/uploads/project-1775118062265.png"
+          "/uploads/project-1775118040822.webp",
+          "/uploads/project-1775118044510.webp",
+          "/uploads/project-1775118048577.webp",
+          "/uploads/project-1775118053331.webp",
+          "/uploads/project-1775118057233.webp",
+          "/uploads/project-1775118062265.webp"
         ],
         "takeaways": [
           "자동화 시스템은 정상 동작보다 실패 추적 구조가 먼저 필요하다는 점",

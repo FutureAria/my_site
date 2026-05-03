@@ -27,6 +27,7 @@ fi
 
 sudo mkdir -p ${shellQuote(oracleEnv.remoteDir)}
 sudo chown -R ${shellQuote(oracleEnv.user)}:${shellQuote(oracleEnv.user)} ${shellQuote(oracleEnv.remoteDir)}
+sudo chmod o+x /home/${oracleEnv.user}
 
 sudo tee /etc/systemd/system/${oracleEnv.serviceName}.service >/dev/null <<'SERVICE'
 [Unit]
@@ -64,10 +65,34 @@ else:
 block = """
 # my_site portfolio
 juyoung-portfolio.duckdns.org {
+\tencode zstd gzip
+\theader /_next/static/* Cache-Control "public, max-age=31536000, immutable"
+\thandle /uploads/* {
+\t\troot * ${oracleEnv.remoteDir}/public
+\t\theader Cache-Control "public, max-age=31536000, immutable"
+\t\tfile_server
+\t}
+\thandle /sw.js {
+\t\troot * ${oracleEnv.remoteDir}/public
+\t\theader Cache-Control "public, max-age=0, must-revalidate"
+\t\tfile_server
+\t}
 \treverse_proxy 127.0.0.1:${oracleEnv.port}
 }
 
 http://juwwkd-portfolio.132.145.186.82.nip.io {
+\tencode zstd gzip
+\theader /_next/static/* Cache-Control "public, max-age=31536000, immutable"
+\thandle /uploads/* {
+\t\troot * ${oracleEnv.remoteDir}/public
+\t\theader Cache-Control "public, max-age=31536000, immutable"
+\t\tfile_server
+\t}
+\thandle /sw.js {
+\t\troot * ${oracleEnv.remoteDir}/public
+\t\theader Cache-Control "public, max-age=0, must-revalidate"
+\t\tfile_server
+\t}
 \treverse_proxy 127.0.0.1:${oracleEnv.port}
 }
 """
