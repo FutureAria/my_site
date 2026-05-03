@@ -1,12 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
+import sharp from "sharp";
 
 const uploadDir = path.join(process.cwd(), "public", "uploads");
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"]);
-const imageMaxFileSize = 3 * 1024 * 1024;
+const imageMaxFileSize = 8 * 1024 * 1024;
 const pdfMaxFileSize = 8 * 1024 * 1024;
 const maxFiles = 20;
+const targetImageMaxSize = 1.2 * 1024 * 1024;
 const extensionByType: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -14,6 +16,34 @@ const extensionByType: Record<string, string> = {
   "image/gif": "gif",
   "application/pdf": "pdf",
 };
+
+async function optimizeImage(bytes: Buffer) {
+  const attempts = [
+    { width: 1600, quality: 76 },
+    { width: 1280, quality: 70 },
+    { width: 1100, quality: 64 },
+  ];
+
+  let best: Buffer | null = null;
+
+  for (const attempt of attempts) {
+    const output = await sharp(bytes, { animated: false })
+      .rotate()
+      .resize({ width: attempt.width, withoutEnlargement: true })
+      .webp({ quality: attempt.quality, effort: 5 })
+      .toBuffer();
+
+    if (!best || output.length < best.length) {
+      best = output;
+    }
+
+    if (output.length <= targetImageMaxSize) {
+      return output;
+    }
+  }
+
+  return best || bytes;
+}
 
 export async function POST(request: Request) {
   try {
@@ -34,20 +64,22 @@ export async function POST(request: Request) {
     });
     if (invalidFile) {
       if (!allowedTypes.has(invalidFile.type)) {
-        return NextResponse.json({ message: "jpg, png, webp, gif, pdf 파일만 업로드할 수 있습니다." }, { status: 400 });
+      return NextResponse.json({ message: "jpg, png, webp, gif, pdf 파일만 업로드할 수 있습니다." }, { status: 400 });
       }
 
-      return NextResponse.json({ message: "서버 용량 보호를 위해 이미지는 3MB, PDF는 8MB까지 업로드할 수 있습니다." }, { status: 400 });
+      return NextResponse.json({ message: "서버 용량 보호를 위해 이미지는 8MB, PDF는 8MB까지 업로드할 수 있습니다." }, { status: 400 });
     }
 
     await fs.mkdir(uploadDir, { recursive: true });
 
     const paths = await Promise.all(
       files.map(async (file, index) => {
-        const ext = extensionByType[file.type] || "png";
+        const isOptimizableImage = file.type !== "application/pdf" && file.type !== "image/gif";
+        const ext = isOptimizableImage ? "webp" : extensionByType[file.type] || "png";
         const safeName = `admin-${Date.now()}-${index}.${ext}`;
         const bytes = Buffer.from(await file.arrayBuffer());
-        await fs.writeFile(path.join(uploadDir, safeName), bytes);
+        const output = isOptimizableImage ? await optimizeImage(bytes) : bytes;
+        await fs.writeFile(path.join(uploadDir, safeName), output);
         return `/uploads/${safeName}`;
       }),
     );

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $uploadDir = root_path('uploads');
 $maxFiles = 20;
-$imageMaxSize = 3 * 1024 * 1024;
+$imageMaxSize = 8 * 1024 * 1024;
 $pdfMaxSize = 8 * 1024 * 1024;
 $allowedTypes = [
     'image/jpeg' => 'jpg',
@@ -19,6 +19,49 @@ $allowedTypes = [
     'image/gif' => 'gif',
     'application/pdf' => 'pdf',
 ];
+
+function optimize_image_upload(string $tmpName, string $target): bool
+{
+    if (!function_exists('imagewebp')) {
+        return false;
+    }
+
+    $info = @getimagesize($tmpName);
+    if (!$info) {
+        return false;
+    }
+
+    [$width, $height] = $info;
+    $mime = $info['mime'] ?? '';
+
+    if ($mime === 'image/jpeg') {
+        $source = @imagecreatefromjpeg($tmpName);
+    } elseif ($mime === 'image/png') {
+        $source = @imagecreatefrompng($tmpName);
+    } elseif ($mime === 'image/webp' && function_exists('imagecreatefromwebp')) {
+        $source = @imagecreatefromwebp($tmpName);
+    } else {
+        return false;
+    }
+
+    if (!$source) {
+        return false;
+    }
+
+    $maxWidth = 1600;
+    $targetWidth = min($width, $maxWidth);
+    $targetHeight = (int) round($height * ($targetWidth / max($width, 1)));
+    $canvas = imagecreatetruecolor($targetWidth, $targetHeight);
+    imagealphablending($canvas, true);
+    imagesavealpha($canvas, true);
+    imagecopyresampled($canvas, $source, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
+
+    $ok = imagewebp($canvas, $target, 76);
+    imagedestroy($source);
+    imagedestroy($canvas);
+
+    return $ok;
+}
 
 if (!isset($_FILES['files'])) {
     json_response(['message' => '업로드할 파일이 없습니다.'], 400);
@@ -61,11 +104,18 @@ foreach ($names as $index => $name) {
 
     $maxSize = $detectedType === 'application/pdf' ? $pdfMaxSize : $imageMaxSize;
     if (($sizes[$index] ?? 0) > $maxSize) {
-        json_response(['message' => '서버 용량 보호를 위해 이미지는 3MB, PDF는 8MB까지 업로드할 수 있습니다.'], 400);
+        json_response(['message' => '서버 용량 보호를 위해 이미지는 8MB, PDF는 8MB까지 업로드할 수 있습니다.'], 400);
     }
 
-    $filename = 'admin-' . round(microtime(true) * 1000) . '-' . $index . '.' . $allowedTypes[$detectedType];
+    $canOptimize = in_array($detectedType, ['image/jpeg', 'image/png', 'image/webp'], true);
+    $extension = $canOptimize ? 'webp' : $allowedTypes[$detectedType];
+    $filename = 'admin-' . round(microtime(true) * 1000) . '-' . $index . '.' . $extension;
     $target = $uploadDir . '/' . $filename;
+
+    if ($canOptimize && optimize_image_upload($tmpName, $target)) {
+        $paths[] = '/uploads/' . $filename;
+        continue;
+    }
 
     if (!move_uploaded_file($tmpName, $target)) {
         json_response(['message' => '파일 저장 중 오류가 발생했습니다. uploads 권한을 확인하세요.'], 500);
