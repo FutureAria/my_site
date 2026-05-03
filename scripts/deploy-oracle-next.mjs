@@ -61,6 +61,7 @@ await run("ssh", [
   ...sshBaseArgs(),
   [
     `cd ${oracleEnv.remoteDir}`,
+    `node - <<'NODE'\nconst fs = require('fs');\nconst path = require('path');\nconst file = path.join(process.cwd(), 'data', 'portfolio.json');\nif (fs.existsSync(file)) {\n  const uploads = path.join(process.cwd(), 'public', 'uploads');\n  const data = fs.readFileSync(file, 'utf8');\n  const next = data.replace(/\\/uploads\\/([^\"'\\s]+?)\\.(png|jpe?g)/gi, (match, name) => {\n    const webp = path.join(uploads, `${name}.webp`);\n    return fs.existsSync(webp) ? `/uploads/${name}.webp` : match;\n  });\n  if (next !== data) fs.writeFileSync(file, next);\n}\nNODE`,
     "npm ci",
     "npm run build",
     `sudo systemctl restart ${oracleEnv.serviceName}`,
