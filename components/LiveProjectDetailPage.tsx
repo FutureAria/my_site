@@ -83,18 +83,23 @@ export default function LiveProjectDetailPage({ initialData, projectIndex }: { i
             <div className="border-t hairline pt-5">
               <h2 className="text-sm font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">RECORD</h2>
               <p className="mt-3 text-sm leading-7 ink-muted">
-                기능, 문제 해결, 이미지 기록 순서로 프로젝트의 흐름을 읽을 수 있습니다.
+                기능, 문제 해결, 이미지 기록과 외부 자료로 프로젝트의 흐름을 확인할 수 있습니다.
               </p>
             </div>
             <div className="flex flex-col gap-3 lg:pt-5">
               {project.link && (
                 <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center rounded-md bg-[color:var(--text)] px-5 text-sm font-semibold text-[color:var(--bg)]">
-                  데모 보기
+                  서버 보기
                 </a>
               )}
               {project.github && (
                 <a href={project.github} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center rounded-md border hairline px-5 text-sm font-semibold">
                   GitHub 보기
+                </a>
+              )}
+              {project.document && (
+                <a href={project.document} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center rounded-md border hairline px-5 text-sm font-semibold">
+                  {project.documentLabel || "PDF 설명서"}
                 </a>
               )}
             </div>

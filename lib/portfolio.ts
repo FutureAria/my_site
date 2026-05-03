@@ -18,6 +18,8 @@ export interface ProjectItem {
   image: string;
   link: string;
   github: string;
+  document?: string;
+  documentLabel?: string;
   detail?: {
     role?: string;
     features?: string[];

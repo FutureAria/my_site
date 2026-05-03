@@ -59,6 +59,8 @@ const emptyProject: ProjectItem = {
   image: "",
   link: "",
   github: "",
+  document: "",
+  documentLabel: "PDF 설명서",
   detail: {
     role: "담당 역할을 입력하세요.",
     features: ["주요 기능을 입력하세요."],
@@ -360,6 +362,29 @@ export default function AdminEditor({ initialData }: { initialData: PortfolioDat
     const { paths } = (await response.json()) as { paths: string[] };
     updateData({ ...data, hero: { ...data.hero, [field]: paths[0] || data.hero[field] } });
     setMessage(`${label} 업로드 완료. 저장하기를 누르면 반영됩니다.`);
+  };
+
+  const uploadProjectDocument = async (files: FileList | null) => {
+    if (!files || files.length === 0 || !project) return;
+
+    setMessage("프로젝트 PDF 업로드 중...");
+    const formData = new FormData();
+    formData.append("files", files[0]);
+
+    const response = await fetch(adminApiPath("upload"), {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = (await response.json().catch(() => null)) as { message?: string } | null;
+      setMessage(error?.message || "프로젝트 PDF 업로드 실패.");
+      return;
+    }
+
+    const { paths } = (await response.json()) as { paths: string[] };
+    updateProject({ document: paths[0] || project.document, documentLabel: project.documentLabel || "PDF 설명서" });
+    setMessage("프로젝트 PDF 업로드 완료. 저장하기를 누르면 반영됩니다.");
   };
 
   const inputClass = "mt-2 w-full rounded-md border hairline bg-transparent px-3 py-2 text-sm outline-none";
@@ -723,8 +748,30 @@ export default function AdminEditor({ initialData }: { initialData: PortfolioDat
                   <p className="mt-2 text-xs leading-6 ink-muted">여러 장 선택 시 첫 장은 대표 이미지, 전체는 상세 이미지 기록에 추가됩니다.</p>
                 </div>
                 <label className="block text-sm">기술 스택, 쉼표로 구분<input className={inputClass} value={project.techs.join(", ")} onChange={(event) => updateProject({ techs: event.target.value.split(",").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>예: React, MySQL, REST API</span></label>
-                <label className="block text-sm">Demo 링크<input className={inputClass} value={project.link} onChange={(event) => updateProject({ link: event.target.value })} /><span className={helperClass}>없으면 비워두면 됩니다.</span></label>
-                <label className="block text-sm">GitHub 링크<input className={inputClass} value={project.github} onChange={(event) => updateProject({ github: event.target.value })} /><span className={helperClass}>없으면 비워두면 됩니다.</span></label>
+                <label className="block text-sm">서버/Demo 주소<input className={inputClass} value={project.link} onChange={(event) => updateProject({ link: event.target.value })} /><span className={helperClass}>배포된 서버, 시연 페이지, 서비스 주소를 넣습니다. 없으면 비워두면 됩니다.</span></label>
+                <label className="block text-sm">GitHub 주소<input className={inputClass} value={project.github} onChange={(event) => updateProject({ github: event.target.value })} /><span className={helperClass}>코드를 볼 수 있는 GitHub 저장소 주소입니다. 없으면 비워두면 됩니다.</span></label>
+                <div className="block text-sm lg:col-span-2">
+                  프로젝트 PDF 설명서
+                  <div className="mt-2 grid gap-3 lg:grid-cols-[1fr_14rem]">
+                    <input
+                      className="w-full rounded-md border hairline bg-transparent px-3 py-2 text-sm outline-none"
+                      value={project.document || ""}
+                      onChange={(event) => updateProject({ document: event.target.value })}
+                      placeholder="/uploads/project-guide.pdf"
+                    />
+                    <input
+                      className="w-full rounded-md border hairline bg-transparent px-3 py-2 text-sm outline-none"
+                      value={project.documentLabel || ""}
+                      onChange={(event) => updateProject({ documentLabel: event.target.value })}
+                      placeholder="PDF 설명서"
+                    />
+                  </div>
+                  <span className={helperClass}>프로젝트가 어떤 서비스인지 간략히 설명하는 PDF를 넣습니다. 오른쪽 칸은 상세 페이지 버튼 문구입니다.</span>
+                  <label className="mt-3 inline-flex h-10 cursor-pointer items-center rounded-md border hairline px-4 text-sm font-semibold">
+                    프로젝트 PDF 업로드
+                    <input type="file" accept="application/pdf" className="sr-only" onChange={(event) => uploadProjectDocument(event.target.files)} />
+                  </label>
+                </div>
                 <label className="block text-sm lg:col-span-2">역할<textarea className={textareaClass} value={project.detail?.role || ""} onChange={(event) => updateProjectDetail({ role: event.target.value })} /><span className={helperClass}>본인이 맡은 설계, 구현, 개선 내용을 적습니다.</span></label>
                 <label className="block text-sm">주요 기능, 줄바꿈으로 구분<textarea className={textareaClass} value={projectFeaturesText} onChange={(event) => updateProjectDetail({ features: event.target.value.split("\n").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>한 줄에 하나씩 쓰면 상세 페이지에서 구분되어 보입니다.</span></label>
                 <label className="block text-sm">배운 점, 줄바꿈으로 구분<textarea className={textareaClass} value={projectTakeawaysText} onChange={(event) => updateProjectDetail({ takeaways: event.target.value.split("\n").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>상세 페이지의 배운 점 영역에 표시됩니다.</span></label>

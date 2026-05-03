@@ -29,6 +29,12 @@
 - `/uploads/*`는 Next.js를 거치지 않고 Caddy가 직접 파일을 제공하도록 변경했습니다.
 - Caddy가 `/home/ubuntu/my_site/public/uploads`를 읽을 수 있도록 `/home/ubuntu`에 통과 권한만 추가하도록 설정했습니다.
 
+### 프로젝트 외부 자료
+
+- 프로젝트별로 서버/Demo 주소, GitHub 주소, PDF 설명서 경로를 관리할 수 있게 했습니다.
+- 프로젝트 상세 페이지에서 값이 있는 버튼만 노출합니다.
+- PDF는 Admin에서 업로드하거나 `/uploads/...pdf` 경로를 직접 입력할 수 있습니다.
+
 ### 자주 쓰는 명령어
 
 ```bash
