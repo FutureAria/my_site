@@ -17,7 +17,11 @@
     "optimize:dothome": "node scripts/optimize-dothome-assets.mjs",
     "deploy:dothome": "node scripts/deploy-dothome-ftp.mjs",
     "publish:dothome": "npm run build:dothome && npm run optimize:dothome && npm run deploy:dothome",
-    "watch:dothome": "node scripts/watch-dothome.mjs"
+    "watch:dothome": "node scripts/watch-dothome.mjs",
+    "check:oracle": "node scripts/check-oracle-capacity.mjs",
+    "setup:oracle": "node scripts/setup-oracle-next.mjs",
+    "deploy:oracle": "node scripts/deploy-oracle-next.mjs",
+    "watch:oracle": "node scripts/watch-oracle.mjs"
   },
   "dependencies": {
     "@types/nodemailer": "^8.0.0",

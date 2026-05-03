@@ -4,6 +4,7 @@ dist
 CoverLetter
 .env.local
 .env.dothome
+.env.oracle
 dothome/api/_config.php
 public/uploads/*.pdf
 .DS_Store
