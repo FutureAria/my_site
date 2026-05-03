@@ -1,0 +1,13 @@
+.next
+node_modules
+dist
+CoverLetter
+.env.local
+.env.dothome
+dothome/api/_config.php
+public/uploads/*.pdf
+.DS_Store
+Icon?
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

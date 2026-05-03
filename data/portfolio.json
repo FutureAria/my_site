@@ -1,0 +1,390 @@
+{
+  "settings": {
+    "featuredProjectIndexes": [
+      2,
+      0,
+      1
+    ],
+    "home": {
+      "eyebrow": "PORTFOLIO ARCHIVE",
+      "headline": "기록하고, 만들고, 오래 남기는 사람",
+      "description": "백엔드 흐름, 데이터 처리, 문제 해결 과정을 프로젝트와 기록으로 정리한 개인 포트폴리오입니다.",
+      "primaryCtaLabel": "포트폴리오 보기",
+      "secondaryCtaLabel": "나에 대해",
+      "noteLabel": "NOTE",
+      "noteText": "화면보다 먼저 데이터 흐름을 보고, 해결 과정을 다음 사람이 읽을 수 있게 남깁니다.",
+      "collageImages": [
+        "/uploads/project-1775108245161.png",
+        "/uploads/project-1775114221549.png",
+        "/uploads/project-1775114225126.png"
+      ]
+    }
+  },
+  "hero": {
+    "badge": "K-Digital 교육생 · 백엔드 개발자 지망",
+    "name": "박주영",
+    "subtitle": "컴퓨터공학 전공과 프로젝트 경험을 바탕으로 \n데이터 흐름, API 설계, DB 구조에 관심을 두고 공부하고 있습니다.\n다양한 프로젝트를 통해 직접 구현하고 문제를 해결하며 백엔드 개발자로 성장하고 있습니다.",
+    "resumeFile": "/uploads/project-1775449898435.pdf",
+    "coverLetterFile": ""
+  },
+  "about": {
+    "intro": "저는 현재 컴퓨터공학을 전공하고 있으며, 졸업을 앞두고 백엔드 개발자로의 진로를 준비하고 있습니다. \n수업에서 배운 자료구조, 운영체제, 데이터베이스 기초를 바탕으로 웹 서비스 프로젝트를 수행하며 \n서버 구조와 데이터 처리 흐름을 익혀왔습니다. \n특히 API 설계, 데이터 정합성, 트랜잭션 처리처럼 서비스가 안정적으로 동작하기 위해 필요한 부분에 관심이 많습니다.\n\n또한 새로운 기술을 학습하고 프로젝트를 구현하는 과정에서 AI 도구를 적극적으로 활용하고 있습니다. \n기능 아이디어를 정리하고, 구현 중 발생하는 문제를 분석하며, \n필요한 자료를 빠르게 탐색하는 데 AI를 활용해 학습과 개발 효율을 높이고 있습니다.\n\n아직 실무 경험은 부족하지만, 프로젝트를 통해 직접 구현하고 개선하는 과정을 반복하며 꾸준히 성장하고 있습니다. \n앞으로는 안정적인 서버 구조를 설계하고 실제 서비스 문제를 해결할 수 있는 백엔드 개발자로 성장하고 싶습니다.",
+    "timeline": [
+      {
+        "year": "2021 ~ 2026",
+        "title": "백석대학교 컴퓨터공학부",
+        "desc": "자료구조, 운영체제, 데이터베이스 등 핵심 전공을 통해 시스템 동작 원리와 데이터 처리 구조 이해. \n다양한 팀 프로젝트와 캡스톤을 통해 문제 해결 및 서비스 설계·구현 경험 축적. \n효율적인 데이터 처리와 안정적인 백엔드 시스템 설계에 관심을 가지고 학습 중.",
+        "type": "education",
+        "image": "/uploads/project-1775123196043.jpeg",
+        "subjects": [
+          "자료구조",
+          "운영체제",
+          "데이터베이스",
+          "소프트웨어공학",
+          "캡스톤디자인"
+        ]
+      },
+      {
+        "year": "2025.10.22 ~ 2025.11.30",
+        "title": "해킹 페스티벌 동상",
+        "desc": "주제: 백업 및 복제 경로 악용을 통한 기업 데이터 유출\n\n백업·복제 경로는 기업 데이터 보호의 최후 방어선으로\n인식해야 한다.\n기술적 대응(암호화, 무결성 검증, 불변 저장소)과 관리적 대응\n(접근 통제, 로그 모니터링)을 균형 있게 적용해야 한다.\n\n법적 대응 체계를 사전에 구축해 사고 발생 시 신속히 대응해야 한다.\n백업 담당자 교육과 인식 제고 역시 기술적 대응만큼 중요하다.",
+        "type": "award",
+        "image": "/uploads/project-1775693829957.png",
+        "subjects": []
+      },
+      {
+        "year": "2025 ~ 2026",
+        "title": "K-Digital (산업 협력단)",
+        "desc": "웹 서비스 개발 전반을 학습하여 데이터 처리와 API 기반 서비스 구조에 대한 이해를 심화. \n장바구니 시스템, AI 상권 분석, 물품 관리 시스템, NFT 민팅 웹 서비스 등 \n다양한 프로젝트에서 기능 구현뿐 아니라 서비스 구조와 흐름을 고려한 개발 경험 축적.",
+        "type": "training",
+        "image": "/uploads/project-1775123250126.jpg",
+        "subjects": [
+          "HTML/CSS/JavaScript",
+          "PHP",
+          "MySQL",
+          "React",
+          "Python",
+          "API 개발",
+          "블록체인"
+        ]
+      },
+      {
+        "year": "2026.04.03",
+        "title": "리눅스 자격증 스터디 진행 중",
+        "desc": "리눅스 기본 명령어부터 파일 권한, 사용자 관리, 프로세스 및 네트워크 관리까지 단계적으로 학습하고, \n마지막에는 서버 운영 실습과 자격증 기출 문제 풀이를 통해 전체 내용을 정리함.",
+        "type": "certificate",
+        "image": "/uploads/project-1775123557264.png",
+        "subjects": [
+          "리눅스 자격증 2급"
+        ]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "title": "장바구니 기능 기반 수강신청 웹 플랫폼",
+      "period": "2026.01.02 ~ 01.07",
+      "desc": "동시 수강신청에서 발생할 수 있는 정원 초과 문제를 MySQL 트랜잭션과 행 잠금으로 제어한 웹 플랫폼",
+      "techs": [
+        "PHP",
+        "MySQL",
+        "JavaScript",
+        "HTML/CSS",
+        "CRUD"
+      ],
+      "image": "/uploads/project-1775108245161.png",
+      "link": "https://juwwkd.dothome.co.kr/3team/3team_webpage.php",
+      "github": "",
+      "detail": {
+        "role": "수강신청 흐름의 DB 테이블을 설계하고, 장바구니에서 신청 처리까지 이어지는 서버 로직과 동시성 제어 방식을 구현했습니다.",
+        "features": [
+          "강의 목록 조회와 상세 정보 확인",
+          "장바구니 담기와 삭제 흐름",
+          "트랜잭션 기반 일괄 수강신청 처리",
+          "신청 내역 조회와 취소 처리",
+          "학과와 시간대 기준 검색 및 필터링"
+        ],
+        "challenges": "문제: 여러 사용자가 같은 강의를 동시에 신청할 때 정원 초과가 발생할 수 있었습니다. 단순히 현재 인원을 조회한 뒤 신청 수를 증가시키는 방식으로는 거의 동시에 들어온 요청을 구분하기 어려웠습니다.\n\n해결: 수강신청 처리 흐름을 하나의 트랜잭션으로 묶고, 강의 행을 SELECT FOR UPDATE로 잠근 뒤 정원 확인과 신청 등록을 순서대로 처리했습니다. 장바구니에서 실제 신청으로 넘어가는 단계도 같은 처리 단위로 정리해 중간 실패가 생겨도 데이터가 어긋나지 않도록 했습니다.\n\n배운 점: 동시성 문제는 화면 기능보다 데이터 처리 순서에서 먼저 설계해야 한다는 것을 배웠습니다. 특히 정원, 재고, 결제처럼 수량이 중요한 기능은 트랜잭션 범위와 잠금 기준을 명확히 잡는 것이 중요했습니다.",
+        "images": [
+          "/uploads/project-1775114221549.png",
+          "/uploads/project-1775114225126.png",
+          "/uploads/project-1775114227791.png",
+          "/uploads/project-1775114230733.png",
+          "/uploads/project-1775114233906.png"
+        ],
+        "takeaways": [
+          "동시 요청이 많은 기능에서는 트랜잭션 범위를 먼저 설계해야 한다는 점",
+          "정원, 재고처럼 수량이 중요한 데이터는 잠금 기준이 명확해야 한다는 점",
+          "장바구니와 신청 처럼 이어지는 흐름은 하나의 처리 단위로 바라봐야 한다는 점"
+        ]
+      }
+    },
+    {
+      "title": "CRUD 기반 물품 관리 웹 시스템",
+      "period": "2026.01.16 ~ 01.23",
+      "desc": "등록, 조회, 수정, 삭제 이후 화면 상태가 어긋나지 않도록 API 연동과 상태 흐름을 정리한 관리 시스템",
+      "techs": [
+        "React",
+        "JavaScript",
+        "REST API",
+        "CRUD",
+        "UI/UX"
+      ],
+      "image": "/uploads/project-1775116821521.png",
+      "link": "",
+      "github": "",
+      "detail": {
+        "role": "물품 목록 상태의 소유 위치를 정리하고, 등록·수정·삭제 후 API 응답을 기준으로 화면이 다시 갱신되도록 구현했습니다.",
+        "features": [
+          "물품 등록·조회·수정·삭제 (CRUD) 기능",
+          "카테고리별 물품 분류 및 검색",
+          "물품 상세 정보 모달 뷰",
+          "REST API 기반 서버 데이터 연동",
+          "반응형 UI 및 사용자 친화적 인터페이스"
+        ],
+        "challenges": "문제: 등록, 수정, 삭제 후 화면 상태가 즉시 반영되지 않거나 컴포넌트 사이로 상태를 계속 전달해야 해 관리가 어려워졌습니다. 기능이 늘어날수록 어떤 컴포넌트가 데이터를 책임지는지 흐려지는 문제가 있었습니다.\n\n해결: 물품 목록 상태를 상위 흐름에서 관리하고, 등록/수정/삭제 이후 API 응답을 기준으로 목록을 다시 정리했습니다. 입력 폼, 목록, 상세 모달의 역할을 분리해 화면 갱신 흐름이 한눈에 보이도록 구조를 단순화했습니다.\n\n배운 점: CRUD 기능은 단순해 보여도 상태의 소유 위치가 명확하지 않으면 유지보수가 어려워집니다. 사용자 입장에서는 저장 직후 변화가 바로 보이는 것이 중요하다는 점도 함께 확인했습니다.",
+        "images": [
+          "/uploads/project-1775116868788.png",
+          "/uploads/project-1775116872639.png",
+          "/uploads/project-1775116875747.png",
+          "/uploads/project-1775116878596.png",
+          "/uploads/project-1775116882358.png",
+          "/uploads/project-1775116886978.png"
+        ],
+        "takeaways": [
+          "CRUD 기능에서도 상태의 소유 위치가 명확해야 유지보수가 쉬워진다는 점",
+          "API 응답 이후 화면 갱신 흐름이 사용자 경험을 크게 좌우한다는 점",
+          "폼, 목록, 모달의 책임을 나누면 기능 추가가 훨씬 안정적이라는 점"
+        ]
+      }
+    },
+    {
+      "title": "데이터 기반 AI 상권 분석 및 추천 서비스",
+      "period": "2026.01.28 ~ 02.14",
+      "desc": "공공 API 데이터를 수집·정제한 뒤 분석 기준을 적용해 상권 추천 결과로 연결한 데이터 기반 서비스",
+      "techs": [
+        "Python",
+        "API",
+        "MySQL",
+        "데이터 분석",
+        "AI/ML"
+      ],
+      "image": "/uploads/project-1775108081787.png",
+      "link": "https://juwwkd.dothome.co.kr/server/bu-dev1/",
+      "github": "",
+      "detail": {
+        "role": "공공 API 수집, 결측치와 이상치 정제, DB 저장 구조, 분석 결과를 제공하는 API와 추천 로직 구현을 담당했습니다.",
+        "features": [
+          "서울 Open API 기반 상권 데이터 자동 수집 및 정제",
+          "매출·유동인구·경쟁도 다차원 분석 대시보드",
+          "AI/ML 기반 창업 적합도 점수 산출 및 추천",
+          "지역별·업종별 상권 비교 기능",
+          "분석 결과 시각화 차트 제공"
+        ],
+        "challenges": "문제: 공공 API 데이터는 형식이 일정하지 않고 결측치와 이상치가 섞여 있어 그대로 분석에 사용하기 어려웠습니다. 데이터가 많아질수록 응답 속도와 분석 기준의 일관성도 문제가 됐습니다.\n\n해결: 수집, 정제, 저장, 분석 단계를 분리하고 각 단계에서 검증 기준을 두었습니다. 결측치 처리와 이상치 제거 기준을 정리한 뒤 DB에 저장하고, 자주 조회되는 분석 결과는 재사용할 수 있도록 흐름을 최적화했습니다.\n\n배운 점: 데이터 기반 서비스에서는 모델이나 화면보다 데이터 품질 관리가 먼저라는 것을 배웠습니다. 같은 API라도 수집 기준과 정제 규칙을 문서화해야 결과를 신뢰할 수 있었습니다.",
+        "images": [
+          "/uploads/project-1775113867447.png",
+          "/uploads/project-1775113872081.png",
+          "/uploads/project-1775113875413.png",
+          "/uploads/project-1775113879031.png",
+          "/uploads/project-1775113884847.png",
+          "/uploads/project-1775113892359.png"
+        ],
+        "takeaways": [
+          "데이터 기반 서비스는 수집보다 정제 기준을 명확히 하는 것이 더 중요하다는 점",
+          "분석 결과를 신뢰하려면 결측치와 이상치 처리 규칙이 기록되어야 한다는 점",
+          "API 응답 속도는 캐싱과 조회 범위 설계로 함께 관리해야 한다는 점"
+        ]
+      }
+    },
+    {
+      "title": "AI 자동 주식 매매 시스템 (개발 중)",
+      "period": "2026.03.02 ~ 진행 중",
+      "desc": "실시간 주식 데이터 수집부터 전략 분석, 주문 판단, 로그 저장까지 추적 가능한 단계로 나눈 자동 매매 시스템",
+      "techs": [
+        "Python",
+        "REST API",
+        "Pandas",
+        "MySQL",
+        "비동기 처리",
+        "스케줄링"
+      ],
+      "image": "/uploads/project-1775118021155.png",
+      "link": "",
+      "github": "",
+      "detail": {
+        "role": "자동 매매 흐름을 데이터 수집, 전략 분석, 주문 판단, 로그 저장 단계로 분리하고 백엔드 중심의 처리 구조를 설계하고 있습니다.",
+        "features": [
+          "실시간 주식 데이터 수집",
+          "매매 신호 분석 로직",
+          "자동 매수/매도 판단 시스템",
+          "거래 로그 저장 및 관리",
+          "스케줄 기반 자동 실행"
+        ],
+        "challenges": "문제: 실시간 데이터 수집 과정에서 요청 지연, 누락, 중복 저장 가능성이 있었습니다. 매매 판단 흐름이 하나의 긴 절차로 묶이면 오류가 났을 때 어느 단계에서 문제가 생겼는지 추적하기 어려웠습니다.\n\n해결: 데이터 수집, 전략 분석, 주문 판단, 로그 저장 단계를 분리하고 각 단계의 입력과 결과를 기록하도록 정리했습니다. 반복 실행되는 작업은 스케줄 기반으로 분리하고, DB 저장 전 중복 여부를 확인해 데이터 정합성을 높였습니다.\n\n배운 점: 자동화 시스템은 동작 자체보다 실패했을 때 추적 가능한 구조가 중요했습니다. 실시간 처리에서는 속도와 안정성 사이의 균형을 잡는 설계가 필요하다는 점을 배웠습니다.",
+        "images": [
+          "/uploads/project-1775118040822.png",
+          "/uploads/project-1775118044510.png",
+          "/uploads/project-1775118048577.png",
+          "/uploads/project-1775118053331.png",
+          "/uploads/project-1775118057233.png",
+          "/uploads/project-1775118062265.png"
+        ],
+        "takeaways": [
+          "자동화 시스템은 정상 동작보다 실패 추적 구조가 먼저 필요하다는 점",
+          "실시간 데이터는 수집, 분석, 실행, 기록 단계를 분리해야 안정적이라는 점",
+          "중복 저장과 누락을 막는 검증 로직이 서비스 신뢰도를 만든다는 점"
+        ]
+      }
+    },
+    {
+      "title": "그땐 그랬지 (개발 중)",
+      "period": "2026.03 ~ 진행 중",
+      "desc": "확률형 보상과 NFT 조합 과정에서 상태 불일치가 생기지 않도록 보상 지급 흐름을 정리한 플랫폼",
+      "techs": [
+        "React",
+        "Spring Boot",
+        "REST API",
+        "MySQL(RDB)",
+        "ERC-721",
+        "Polygon Network",
+        "Web3(MetaMask)",
+        "Docker",
+        "AWS"
+      ],
+      "image": "",
+      "link": "",
+      "github": "https://github.com/hsw0914-window/bu-blockchain.git",
+      "detail": {
+        "role": "REST API, DB 구조, 보상 지급 조건, NFT 관련 서버 처리 흐름을 설계하고 상태 전이를 안정적으로 관리하는 로직을 구현했습니다.",
+        "features": [
+          "밈 박스 획득",
+          "박스 개봉(랜덤 보상)",
+          "열쇠 시스템",
+          "밈 파편 수집",
+          "NFT 조합 시스템",
+          "희귀도 등급(S/A/B/C)",
+          "인벤토리 관리",
+          "Web3 지갑 연동"
+        ],
+        "challenges": "문제: 박스 개봉, 보상 지급, NFT 조합 과정에서 중복 지급이나 데이터 불일치가 생기면 사용자 신뢰에 직접 영향을 줄 수 있었습니다. Web3 지갑 연동과 서버 데이터 흐름도 함께 맞춰야 했습니다.\n\n해결: 보상 로직을 서버 중심으로 정리하고, 지급 조건과 결과 저장 순서를 명확히 분리했습니다. Web3 승인 흐름은 사용자가 이해할 수 있는 단계로 나누고, Docker 기반 실행 환경을 맞춰 개발 환경 차이를 줄였습니다.\n\n배운 점: 블록체인 기능은 화면보다 상태 전이가 중요했습니다. 사용자가 보상을 받는 순간마다 서버 기록과 온체인 흐름이 어긋나지 않도록 설계해야 한다는 점을 배웠습니다.",
+        "images": [],
+        "takeaways": [
+          "보상 지급과 NFT 조합은 상태 전이 순서가 서비스 신뢰를 좌우한다는 점",
+          "Web3 연동은 사용자가 이해할 수 있는 승인 단계로 나누어야 한다는 점",
+          "서버 기록과 온체인 흐름이 어긋나지 않도록 기준을 맞춰야 한다는 점"
+        ]
+      }
+    },
+    {
+      "title": "AI 감정 분석 기반 음악 추천 서비스 (개발 중)",
+      "period": "2026.03 ~ 진행 중",
+      "desc": "AI 감정 분석 응답을 서비스 데이터로 정규화하고 사용자 감정 기록을 기반으로 음악 추천 흐름을 구성한 서비스",
+      "techs": [
+        "React",
+        "Firebase Authentication",
+        "Firestore",
+        "Google Gemini API",
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ],
+      "image": "",
+      "link": "",
+      "github": "https://github.com/FutureAria/Capstone_Project.git",
+      "detail": {
+        "role": "Gemini API 감정 분석 결과를 추천에 활용할 수 있는 형태로 정리하고, 사용자별 감정 히스토리와 추천 흐름을 연결했습니다.",
+        "features": [
+          "Gemini 기반 감정 분석",
+          "감정 기반 음악 추천 알고리즘",
+          "사용자 감정 히스토리 관리",
+          "Firebase 인증 시스템",
+          "감정 시각화 UI",
+          "몰입형 음악 UI"
+        ],
+        "challenges": "문제: 감정 분석 결과를 그대로 추천에 연결하면 응답 형식이 흔들릴 때 추천 흐름도 불안정해질 수 있었습니다. 사용자 감정 기록을 저장하고 다시 활용하는 구조도 함께 필요했습니다.\n\n해결: Gemini API 응답을 서비스에서 쓰기 좋은 형태로 정규화하고, 감정 결과와 추천 기준을 분리했습니다. Firestore에는 사용자별 감정 히스토리를 저장해 이후 추천 흐름에서 다시 활용할 수 있도록 설계했습니다.\n\n배운 점: AI API를 붙이는 것보다 응답을 안정적인 서비스 데이터로 바꾸는 과정이 중요했습니다. 추천 서비스는 사용자 경험을 위해 결과의 설명 가능성과 기록 흐름을 함께 고려해야 했습니다.",
+        "images": [],
+        "takeaways": [
+          "AI API 응답은 서비스에서 쓰기 좋은 형태로 정규화해야 한다는 점",
+          "추천 흐름은 감정 분석 결과와 추천 기준을 분리해야 안정적이라는 점",
+          "개인화 서비스는 결과뿐 아니라 사용자의 기록 흐름도 함께 설계해야 한다는 점"
+        ]
+      }
+    }
+  ],
+  "skills": {
+    "Backend": [
+      "Python",
+      "Java (Spring Boot)",
+      "PHP",
+      "Node.js"
+    ],
+    "Database & DevOps": [
+      "MySQL",
+      "MongoDB",
+      "Docker",
+      "AWS EC2",
+      "Git/GitHub"
+    ],
+    "Frontend": [
+      "React",
+      "JavaScript",
+      "HTML/CSS",
+      "Tailwind CSS",
+      "Figma"
+    ],
+    "Blockchain & Tools": [
+      "Solidity",
+      "Hardhat",
+      "Ethers.js",
+      "Notion",
+      "Postman",
+      "Slack",
+      "VS Code"
+    ]
+  },
+  "contact": {
+    "email": "juwwkd89@gmail.com",
+    "phone": "+82 (0)10-7441-3843",
+    "address": "경기도 용인시 기흥구",
+    "homepage": "https://www.notion.so/Ju-Young-Park-e01e9559182683749f2c814bc63638ce?source=copy_link",
+    "github": "https://github.com/FutureAria?tab=repositories",
+    "extraItems": [],
+    "desc": "백엔드 개발자를 목표로 학습과 프로젝트를 이어가고 있습니다.\n프로젝트 구조, 문제 해결 과정, 데이터 흐름을 중심으로 더 자세히 설명드릴 수 있습니다.\n포트폴리오 자료나 협업 가능성에 대해 편하게 연락 주세요."
+  },
+  "blog": [
+    {
+      "title": "MySQL 트랜잭션과 Row Lock으로 동시성 제어하기",
+      "date": "2026-01-10",
+      "tags": [
+        "MySQL",
+        "트랜잭션",
+        "백엔드"
+      ],
+      "summary": "수강신청 시스템 개발 중 동시 요청으로 인한 정원 초과 문제를 MySQL 트랜잭션과 SELECT FOR UPDATE를 활용해 해결한 경험을 정리했습니다.",
+      "content": "## 문제 상황\n\n수강신청 시스템에서 여러 사용자가 동시에 같은 강의에 신청할 경우, 정원이 초과될 수 있는 Race Condition 문제가 발생했습니다.\n\n## 해결 방법\n\nMySQL의 트랜잭션과 행 잠금(Row Lock)을 조합하여 해결했습니다.\n\n```sql\nSTART TRANSACTION;\nSELECT current_count, max_count \nFROM courses \nWHERE id = ? FOR UPDATE;\n\n-- 정원 확인 후 신청 처리\nUPDATE courses SET current_count = current_count + 1 WHERE id = ?;\nINSERT INTO enrollments (user_id, course_id) VALUES (?, ?);\nCOMMIT;\n```\n\n`FOR UPDATE`로 해당 행에 배타적 잠금을 걸어 다른 트랜잭션이 동시에 접근하지 못하도록 했습니다.\n\n## 배운 점\n\n- 트랜잭션의 ACID 특성 중 Isolation(격리성)의 중요성\n- SELECT FOR UPDATE와 LOCK IN SHARE MODE의 차이\n- 데드락 방지를 위한 잠금 순서 일관성 유지"
+    },
+    {
+      "title": "React 상태 관리 패턴: Props Drilling 문제 해결하기",
+      "date": "2026-01-25",
+      "tags": [
+        "React",
+        "상태관리",
+        "프론트엔드"
+      ],
+      "summary": "물품 관리 시스템 개발 중 컴포넌트 간 상태 전달이 복잡해지는 Props Drilling 문제를 구조적으로 해결한 방법을 공유합니다.",
+      "content": "## Props Drilling이란?\n\n부모 컴포넌트의 데이터를 여러 단계의 자식 컴포넌트에 props로 계속 전달해야 하는 상황으로, 컴포넌트 구조가 깊어질수록 유지보수가 어려워집니다.\n\n## 해결 방법\n\n상태를 적절한 위치로 끌어올리고(State Lifting), 컴포넌트 책임을 명확히 분리했습니다.\n\n```jsx\n// Before: 중간 컴포넌트가 불필요하게 props를 전달\nfunction Parent() {\n  const [items, setItems] = useState([]);\n  return <Middle items={items} setItems={setItems} />;\n}\n\n// After: Context나 prop 구조 개선으로 단순화\nconst ItemContext = createContext(null);\n```\n\n## 배운 점\n\n- 컴포넌트 설계 시 상태의 위치(ownership)가 중요\n- 단순한 경우에는 State Lifting이 Context보다 효과적\n- 컴포넌트 분리 기준: 단일 책임 원칙"
+    },
+    {
+      "title": "공공 API 데이터 수집과 정제 파이프라인 구축",
+      "date": "2026-02-15",
+      "tags": [
+        "Python",
+        "API",
+        "데이터처리"
+      ],
+      "summary": "AI 상권 분석 서비스 개발 중 서울시 공공 API에서 데이터를 수집하고 결측치·이상치를 처리하는 파이프라인을 구축한 과정을 공유합니다.",
+      "content": "## 공공 API 데이터의 어려움\n\n공공 API 데이터는 형식이 일정하지 않고, 결측치와 이상치가 많아 정제 과정이 복잡합니다.\n\n## 파이프라인 설계\n\n```python\ndef collect_data(api_key, district):\n    url = f\"http://openapi.seoul.go.kr/data/...\"\n    response = requests.get(url, params={\"KEY\": api_key})\n    return response.json()\n\ndef clean_data(raw_data):\n    df = pd.DataFrame(raw_data)\n    # 결측치 처리\n    df = df.dropna(subset=['sales_amount'])\n    df['population'] = df['population'].fillna(df['population'].median())\n    # 이상치 제거 (IQR 방식)\n    Q1 = df['sales_amount'].quantile(0.25)\n    Q3 = df['sales_amount'].quantile(0.75)\n    IQR = Q3 - Q1\n    df = df[(df['sales_amount'] >= Q1 - 1.5*IQR) & \n            (df['sales_amount'] <= Q3 + 1.5*IQR)]\n    return df\n```\n\n## 배운 점\n\n- 데이터 수집 전 API 명세를 꼼꼼히 읽어야 함\n- 결측치 처리 전략(제거 vs 대체)은 분석 목적에 따라 달라짐\n- 캐싱으로 API 호출 횟수를 줄여 응답 속도 개선 가능"
+    }
+  ]
+}
