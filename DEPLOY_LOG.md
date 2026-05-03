@@ -72,3 +72,10 @@
 - Blog posts can now be added, edited, deleted, reordered, collapsed, expanded, and opened in a new tab for preview.
 - Editable blog fields: title, date, tags, card summary, and Markdown body.
 - Blog data remains inside `data/portfolio.json`, so admin saves continue to update the same lightweight JSON file.
+
+### Resume PDF Fix
+
+- The resume preview was blank because `data/portfolio.json` pointed to `/uploads/project-1775449898435.pdf`, but the file was missing on the Oracle server.
+- Local file exists and is a valid PDF, about 15 MB.
+- Oracle disk check showed about 39 GB available, so this PDF is acceptable for now.
+- Updated the Oracle deploy script so missing upload PDFs are seeded to the server without deleting or overwriting existing server uploads.

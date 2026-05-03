@@ -50,8 +50,6 @@ const rsyncBase = [
 const seedBase = [
   "-az",
   "--ignore-existing",
-  "--exclude",
-  "*.pdf",
   "-e",
   sshTransport,
 ];
