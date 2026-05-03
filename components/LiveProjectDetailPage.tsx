@@ -42,7 +42,7 @@ export default function LiveProjectDetailPage({ initialData, projectIndex }: { i
         <div className="mt-8 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
             <p className="text-sm ink-muted">{project.period}</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight sm:text-6xl">
+            <h1 className="hangul-title mt-4 max-w-[13ch] text-4xl font-semibold leading-tight sm:text-6xl">
               {project.title}
             </h1>
             <p className="mt-6 text-lg leading-8 ink-muted">{project.desc}</p>
@@ -59,7 +59,10 @@ export default function LiveProjectDetailPage({ initialData, projectIndex }: { i
                 priority
               />
             ) : (
-              <div className="flex h-full items-center justify-center ink-muted">Project Preview</div>
+              <div className="quiet-placeholder flex h-full items-end justify-between p-5">
+                <span className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">PREPARING</span>
+                <span className="text-sm ink-muted">Project Preview</span>
+              </div>
             )}
           </div>
         </div>
@@ -86,7 +89,7 @@ export default function LiveProjectDetailPage({ initialData, projectIndex }: { i
                 기능, 문제 해결, 이미지 기록과 외부 자료로 프로젝트의 흐름을 확인할 수 있습니다.
               </p>
             </div>
-            <div className="flex flex-col gap-3 lg:pt-5">
+            <div className="flex flex-col gap-3 lg:min-w-40 lg:pt-5">
               {project.link && (
                 <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center rounded-md bg-[color:var(--text)] px-5 text-sm font-semibold text-[color:var(--bg)]">
                   서버 보기

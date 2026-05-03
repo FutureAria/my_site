@@ -21,11 +21,11 @@ export default function LiveAboutPage({ initialData }: { initialData: PortfolioD
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.82fr_1.18fr]">
           <div>
             <p className="text-sm font-medium tracking-[0.2em] text-[color:var(--accent-strong)]">ABOUT</p>
-            <h1 className="mt-4 max-w-[11ch] text-[2.75rem] font-semibold leading-[1.14] sm:max-w-[12ch] sm:text-[4.2rem] lg:text-[4.9rem]">
+            <h1 className="hangul-title mt-4 max-w-[11ch] text-[2.7rem] font-semibold leading-[1.14] sm:max-w-[12ch] sm:text-[4rem] lg:text-[4.45rem]">
               <span className="block">문제를</span>
-              <span className="block">관찰하고,</span>
-              <span className="block sm:pl-[0.28em]">흐름을 정리해</span>
-              <span className="block sm:pl-[0.28em]">다시 남깁니다.</span>
+              <span className="block pl-[0.45em]">관찰하고,</span>
+              <span className="block pl-[0.9em]">흐름을 정리해</span>
+              <span className="block pl-[1.35em]">다시 남깁니다.</span>
             </h1>
           </div>
           <div className="space-y-8">
@@ -59,7 +59,7 @@ export default function LiveAboutPage({ initialData }: { initialData: PortfolioD
         <div className="mx-auto max-w-7xl">
           <div className="mb-12">
             <p className="text-sm font-medium tracking-[0.2em] text-[color:var(--accent-strong)]">TIMELINE</p>
-            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">배움과 프로젝트의 흐름</h2>
+            <h2 className="hangul-title mt-3 text-3xl font-semibold sm:text-4xl">배움과 프로젝트의 흐름</h2>
           </div>
           <div className="space-y-8">
             {data.about.timeline.map((item) => (

@@ -14,7 +14,10 @@ function getDisplayGalleryImages(data: PortfolioData): string[] {
 function ProjectImage({ project, index }: { project: ProjectItem; index: number }) {
   if (!project.image) {
     return (
-      <div className="flex h-full min-h-56 items-center justify-center bg-[color:var(--bg-soft)]">
+      <div className="quiet-placeholder flex h-full min-h-56 items-end justify-between p-5">
+        <span className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">
+          PREPARING
+        </span>
         <span className="text-sm ink-muted">Project {String(index + 1).padStart(2, "0")}</span>
       </div>
     );
@@ -45,7 +48,7 @@ export function HeroMagazine({ data }: { data: PortfolioData }) {
           <p className="mb-5 text-xs font-semibold tracking-[0.24em] text-[color:var(--accent-strong)] sm:text-sm">
             {home.eyebrow || "PORTFOLIO ARCHIVE"}
           </p>
-          <h1 className="display-title max-w-[11ch] text-[3.05rem] font-semibold sm:text-[4.8rem] lg:text-[5.8rem]">
+          <h1 className="display-title max-w-[11ch] text-[3.05rem] font-semibold sm:text-[4.8rem] lg:text-[5.5rem]">
             {home.headline || "기록하고, 만들고, 오래 남기는 사람"}
           </h1>
           <p className="mt-7 max-w-[35rem] text-[0.98rem] leading-8 ink-muted sm:text-base">
@@ -134,7 +137,7 @@ export function AboutPreview({ data }: { data: PortfolioData }) {
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.7fr_1.3fr]">
         <div>
           <p className="text-sm font-medium tracking-[0.2em] text-[color:var(--accent-strong)]">ABOUT</p>
-          <h2 className="mt-3 max-w-xl text-3xl font-semibold leading-tight sm:text-4xl">저는 이런 흐름으로 성장하고 있습니다.</h2>
+          <h2 className="hangul-title mt-3 max-w-xl text-3xl font-semibold leading-tight sm:text-4xl">저는 이런 흐름으로 성장하고 있습니다.</h2>
         </div>
         <div>
           <p className="max-w-3xl text-base leading-8 ink-muted">
@@ -163,7 +166,7 @@ export function JournalGalleryPreview({ data }: { data: PortfolioData }) {
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.75fr_1.25fr]">
         <div id="journal">
           <p className="text-sm font-medium tracking-[0.2em] text-[color:var(--accent-strong)]">JOURNAL</p>
-          <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">문제를 해결하며 남긴 기록</h2>
+          <h2 className="hangul-title mt-3 text-3xl font-semibold leading-tight sm:text-4xl">문제를 해결하며 남긴 기록</h2>
           <Link href="/journal" className="mt-8 inline-flex h-11 items-center rounded-md border hairline px-5 text-sm font-semibold">
             기록 전체 보기
           </Link>
@@ -188,7 +191,7 @@ export function ContactTeaser({ email }: { email: string }) {
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <p className="text-sm font-medium tracking-[0.2em] text-[color:var(--accent-strong)]">CONTACT</p>
-          <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight sm:text-5xl">
+          <h2 className="hangul-title mt-3 max-w-3xl text-3xl font-semibold leading-tight sm:text-5xl">
             프로젝트와 기록에 대해 이야기하고 싶다면 편하게 연락해주세요.
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-8 ink-muted">

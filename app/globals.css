@@ -96,6 +96,19 @@ a {
   overflow-wrap: normal;
 }
 
+.hangul-title {
+  letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.quiet-placeholder {
+  background:
+    linear-gradient(135deg, rgba(111, 127, 105, 0.1), transparent 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent),
+    var(--bg-soft);
+}
+
 .section-pad {
   padding: 6rem 1.25rem;
 }
@@ -138,5 +151,9 @@ a {
     max-width: 11ch;
     font-size: clamp(2.4rem, 12.5vw, 3.45rem);
     line-height: 1.12;
+  }
+
+  .hangul-title {
+    line-height: 1.18;
   }
 }

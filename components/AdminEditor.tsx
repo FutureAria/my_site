@@ -713,9 +713,18 @@ export default function AdminEditor({ initialData }: { initialData: PortfolioDat
             )}
             {project && (
               <div className="mt-6 grid gap-5 lg:grid-cols-2">
+                <div className="lg:col-span-2 border-t hairline pt-4">
+                  <p className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">01 BASIC</p>
+                  <p className="mt-2 text-sm ink-muted">목록과 상세 페이지에 공통으로 보이는 기본 정보입니다.</p>
+                </div>
                 <label className="block text-sm">제목<input className={inputClass} value={project.title} onChange={(event) => updateProject({ title: event.target.value })} /><span className={helperClass}>프로젝트 카드와 상세 페이지 제목에 표시됩니다.</span></label>
                 <label className="block text-sm">기간<input className={inputClass} value={project.period} onChange={(event) => updateProject({ period: event.target.value })} /><span className={helperClass}>예: 2026.01.02 ~ 01.07 또는 진행 중</span></label>
                 <label className="block text-sm lg:col-span-2">한 줄 설명<textarea className={textareaClass} value={project.desc} onChange={(event) => updateProject({ desc: event.target.value })} /><span className={helperClass}>프로젝트 목록 카드에 먼저 보이는 요약입니다.</span></label>
+                <label className="block text-sm lg:col-span-2">기술 스택, 쉼표로 구분<input className={inputClass} value={project.techs.join(", ")} onChange={(event) => updateProject({ techs: event.target.value.split(",").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>예: React, MySQL, REST API</span></label>
+                <div className="lg:col-span-2 border-t hairline pt-4">
+                  <p className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">02 IMAGES</p>
+                  <p className="mt-2 text-sm ink-muted">대표 이미지와 상세 이미지 기록입니다. 이미지는 업로드 시 WebP로 압축됩니다.</p>
+                </div>
                 <div className="block text-sm">
                   대표 이미지
                   {project.image && (
@@ -747,7 +756,10 @@ export default function AdminEditor({ initialData }: { initialData: PortfolioDat
                   </label>
                   <p className="mt-2 text-xs leading-6 ink-muted">여러 장 선택 시 첫 장은 대표 이미지, 전체는 상세 이미지 기록에 추가됩니다.</p>
                 </div>
-                <label className="block text-sm">기술 스택, 쉼표로 구분<input className={inputClass} value={project.techs.join(", ")} onChange={(event) => updateProject({ techs: event.target.value.split(",").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>예: React, MySQL, REST API</span></label>
+                <div className="lg:col-span-2 border-t hairline pt-4">
+                  <p className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">03 LINKS</p>
+                  <p className="mt-2 text-sm ink-muted">방문자가 직접 눌러볼 수 있는 서버, 코드, PDF 설명서입니다.</p>
+                </div>
                 <label className="block text-sm">서버/Demo 주소<input className={inputClass} value={project.link} onChange={(event) => updateProject({ link: event.target.value })} /><span className={helperClass}>배포된 서버, 시연 페이지, 서비스 주소를 넣습니다. 없으면 비워두면 됩니다.</span></label>
                 <label className="block text-sm">GitHub 주소<input className={inputClass} value={project.github} onChange={(event) => updateProject({ github: event.target.value })} /><span className={helperClass}>코드를 볼 수 있는 GitHub 저장소 주소입니다. 없으면 비워두면 됩니다.</span></label>
                 <div className="block text-sm lg:col-span-2">
@@ -766,11 +778,15 @@ export default function AdminEditor({ initialData }: { initialData: PortfolioDat
                       placeholder="PDF 설명서"
                     />
                   </div>
-                  <span className={helperClass}>프로젝트가 어떤 서비스인지 간략히 설명하는 PDF를 넣습니다. 오른쪽 칸은 상세 페이지 버튼 문구입니다.</span>
+                  <span className={helperClass}>프로젝트가 어떤 서비스인지 간략히 설명하는 PDF를 넣습니다. 가능하면 5MB 이하로 가볍게 올리는 게 좋습니다.</span>
                   <label className="mt-3 inline-flex h-10 cursor-pointer items-center rounded-md border hairline px-4 text-sm font-semibold">
                     프로젝트 PDF 업로드
                     <input type="file" accept="application/pdf" className="sr-only" onChange={(event) => uploadProjectDocument(event.target.files)} />
                   </label>
+                </div>
+                <div className="lg:col-span-2 border-t hairline pt-4">
+                  <p className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">04 DETAIL</p>
+                  <p className="mt-2 text-sm ink-muted">채용 담당자가 읽을 역할, 기능, 문제 해결, 배운 점입니다.</p>
                 </div>
                 <label className="block text-sm lg:col-span-2">역할<textarea className={textareaClass} value={project.detail?.role || ""} onChange={(event) => updateProjectDetail({ role: event.target.value })} /><span className={helperClass}>본인이 맡은 설계, 구현, 개선 내용을 적습니다.</span></label>
                 <label className="block text-sm">주요 기능, 줄바꿈으로 구분<textarea className={textareaClass} value={projectFeaturesText} onChange={(event) => updateProjectDetail({ features: event.target.value.split("\n").map((item) => item.trim()).filter(Boolean) })} /><span className={helperClass}>한 줄에 하나씩 쓰면 상세 페이지에서 구분되어 보입니다.</span></label>

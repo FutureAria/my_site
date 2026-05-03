@@ -110,14 +110,17 @@ export default function ProjectDirectory({ projects }: { projects: ProjectItem[]
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm ink-muted">
-                      Project {String(originalIndex + 1).padStart(2, "0")}
+                    <div className="quiet-placeholder flex h-full items-end justify-between p-5">
+                      <span className="text-xs font-semibold tracking-[0.18em] text-[color:var(--accent-strong)]">
+                        PREPARING
+                      </span>
+                      <span className="text-sm ink-muted">Project {String(originalIndex + 1).padStart(2, "0")}</span>
                     </div>
                   )}
                 </div>
                 <div className="mt-5">
                   <p className="text-xs ink-muted">{project.period}</p>
-                  <h2 className="mt-2 text-xl font-semibold leading-7">{project.title}</h2>
+                  <h2 className="hangul-title mt-2 text-xl font-semibold leading-7">{project.title}</h2>
                   <p className="mt-3 line-clamp-3 text-sm leading-7 ink-muted">{project.desc}</p>
                   {project.detail?.role && (
                     <p className="mt-4 border-l-2 border-[color:var(--accent)] pl-4 text-sm leading-7 ink-muted">
