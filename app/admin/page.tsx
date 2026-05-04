@@ -482,113 +482,111 @@ export default function AdminPage() {
                       />
                     )}
                   </div>
-                  {(item.type === "award" || item.type === "certificate") && (
-                    <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <div className="flex items-center justify-between gap-3 mb-3">
-                        <div>
-                          <p className="text-xs text-gray-400 font-medium">
-                            상장 증빙
-                          </p>
-                          <p className="text-[11px] text-gray-500 mt-1">
-                            PNG/JPG 이미지는 화면에 표시되고, PDF는 열기/다운로드 버튼으로 노출됩니다.
-                          </p>
-                        </div>
-                        {(item.certificateImage || item.certificateFile) && (
-                          <span className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-200 border border-amber-400/10">
-                            상장 있음
-                          </span>
+                  <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <div>
+                        <p className="text-xs text-gray-400 font-medium">
+                          증빙 자료
+                        </p>
+                        <p className="text-[11px] text-gray-500 mt-1">
+                          학력, 교육, 경력, 수상, 자격증 증빙 이미지는 화면에 표시되고, PDF는 열기/다운로드 버튼으로 노출됩니다.
+                        </p>
+                      </div>
+                      {(item.certificateImage || item.certificateFile) && (
+                        <span className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-200 border border-amber-400/10">
+                          증빙 있음
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs text-gray-400 font-medium mb-1.5">
+                          증빙 이미지 PNG/JPG
+                        </label>
+                        {item.certificateImage ? (
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={item.certificateImage}
+                              alt=""
+                              className="w-16 h-12 rounded-lg object-cover border border-white/10"
+                            />
+                            <a
+                              href={item.certificateImage}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-xs text-blue-300 hover:text-blue-200"
+                            >
+                              보기
+                            </a>
+                            <button
+                              onClick={() => {
+                                const timeline = [...data.about.timeline];
+                                timeline[i] = { ...timeline[i], certificateImage: "" };
+                                setData({ ...data, about: { ...data.about, timeline } });
+                              }}
+                              className="text-xs text-red-400 hover:text-red-300"
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        ) : (
+                          <FileUpload
+                            accept="image/png,image/jpeg,image/webp"
+                            label="증빙 이미지 업로드"
+                            onUploaded={(url) => {
+                              const timeline = [...data.about.timeline];
+                              timeline[i] = { ...timeline[i], certificateImage: url };
+                              setData({ ...data, about: { ...data.about, timeline } });
+                            }}
+                          />
                         )}
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs text-gray-400 font-medium mb-1.5">
-                            상장 이미지 PNG/JPG
-                          </label>
-                          {item.certificateImage ? (
-                            <div className="flex items-center gap-3">
-                              <img
-                                src={item.certificateImage}
-                                alt=""
-                                className="w-16 h-12 rounded-lg object-cover border border-white/10"
-                              />
-                              <a
-                                href={item.certificateImage}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-xs text-blue-300 hover:text-blue-200"
-                              >
-                                보기
-                              </a>
-                              <button
-                                onClick={() => {
-                                  const timeline = [...data.about.timeline];
-                                  timeline[i] = { ...timeline[i], certificateImage: "" };
-                                  setData({ ...data, about: { ...data.about, timeline } });
-                                }}
-                                className="text-xs text-red-400 hover:text-red-300"
-                              >
-                                삭제
-                              </button>
-                            </div>
-                          ) : (
-                            <FileUpload
-                              accept="image/png,image/jpeg,image/webp"
-                              label="상장 이미지 업로드"
-                              onUploaded={(url) => {
+                      <div>
+                        <label className="block text-xs text-gray-400 font-medium mb-1.5">
+                          증빙 PDF
+                        </label>
+                        {item.certificateFile ? (
+                          <div className="flex flex-wrap items-center gap-3">
+                            <a
+                              href={item.certificateFile}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-xs text-blue-300 hover:text-blue-200"
+                            >
+                              PDF 열기
+                            </a>
+                            <a
+                              href={item.certificateFile}
+                              download
+                              className="text-xs text-emerald-300 hover:text-emerald-200"
+                            >
+                              다운로드
+                            </a>
+                            <button
+                              onClick={() => {
                                 const timeline = [...data.about.timeline];
-                                timeline[i] = { ...timeline[i], certificateImage: url };
+                                timeline[i] = { ...timeline[i], certificateFile: "" };
                                 setData({ ...data, about: { ...data.about, timeline } });
                               }}
-                            />
-                          )}
-                        </div>
-                        <div>
-                          <label className="block text-xs text-gray-400 font-medium mb-1.5">
-                            상장 PDF
-                          </label>
-                          {item.certificateFile ? (
-                            <div className="flex flex-wrap items-center gap-3">
-                              <a
-                                href={item.certificateFile}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-xs text-blue-300 hover:text-blue-200"
-                              >
-                                PDF 열기
-                              </a>
-                              <a
-                                href={item.certificateFile}
-                                download
-                                className="text-xs text-emerald-300 hover:text-emerald-200"
-                              >
-                                다운로드
-                              </a>
-                              <button
-                                onClick={() => {
-                                  const timeline = [...data.about.timeline];
-                                  timeline[i] = { ...timeline[i], certificateFile: "" };
-                                  setData({ ...data, about: { ...data.about, timeline } });
-                                }}
-                                className="text-xs text-red-400 hover:text-red-300"
-                              >
-                                삭제
-                              </button>
-                            </div>
-                          ) : (
-                            <FileUpload
-                              accept=".pdf,application/pdf"
-                              label="상장 PDF 업로드"
-                              onUploaded={(url) => {
-                                const timeline = [...data.about.timeline];
-                                timeline[i] = { ...timeline[i], certificateFile: url };
-                                setData({ ...data, about: { ...data.about, timeline } });
-                              }}
-                            />
-                          )}
-                        </div>
+                              className="text-xs text-red-400 hover:text-red-300"
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        ) : (
+                          <FileUpload
+                            accept=".pdf,application/pdf"
+                            label="증빙 PDF 업로드"
+                            onUploaded={(url) => {
+                              const timeline = [...data.about.timeline];
+                              timeline[i] = { ...timeline[i], certificateFile: url };
+                              setData({ ...data, about: { ...data.about, timeline } });
+                            }}
+                          />
+                        )}
                       </div>
                     </div>
-                  )}
+                  </div>
                   {/* Subjects */}
                   <DelimitedField
                     label="주요 과목 (쉼표로 구분)"

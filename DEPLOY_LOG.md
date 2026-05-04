@@ -194,3 +194,9 @@
 - Certificate images can be opened from the portfolio card, while certificate PDFs support both view and download actions.
 - Admin timeline items now provide separate upload, view, and delete controls for certificate PNG/JPG images and PDF files.
 - Local production build completed successfully after the award attachment update.
+
+### Timeline Proof Attachments
+
+- Expanded the proof upload controls from only award/certificate items to every about timeline type: education, training, career, award, and certificate.
+- Renamed the public badge and admin labels from award-specific wording to `증빙 있음` and `증빙 자료` so they fit school, education, career, awards, and certificates.
+- Local production build completed successfully after expanding the timeline proof controls.

@@ -150,7 +150,7 @@ function TimelineCard({ item }: { item: TimelineItem }) {
           </span>
           {hasCertificate && (
             <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-md mb-2 ml-2 bg-amber-500/15 text-amber-200 border border-amber-400/10">
-              상장 있음
+              증빙 있음
             </span>
           )}
           <span className="sm:hidden text-xs text-gray-500 ml-2">{item.year}</span>
@@ -170,12 +170,12 @@ function TimelineCard({ item }: { item: TimelineItem }) {
               target="_blank"
               rel="noreferrer"
               className="block rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] hover:border-blue-400/40 transition-colors"
-              aria-label={`${item.title} 상장 이미지 열기`}
+              aria-label={`${item.title} 증빙 이미지 열기`}
             >
               <span className="relative block aspect-[16/9]">
                 <Image
                   src={item.certificateImage}
-                  alt={`${item.title} 상장`}
+                  alt={`${item.title} 증빙 이미지`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 640px) 90vw, 400px"
@@ -191,7 +191,7 @@ function TimelineCard({ item }: { item: TimelineItem }) {
                 rel="noreferrer"
                 className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/5 text-gray-200 border border-white/10 hover:border-blue-400/40 hover:text-white transition-colors"
               >
-                상장 이미지 열기
+                증빙 이미지 열기
               </a>
             )}
             {item.certificateFile && (
