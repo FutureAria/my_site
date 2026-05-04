@@ -1,4 +1,4 @@
-const CACHE_NAME = "jy-portfolio-v2";
+const CACHE_NAME = "jy-portfolio-v3";
 const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg", "/icon-192.png", "/icon-512.png"];
 const NETWORK_TIMEOUT_MS = 500;
 

@@ -153,3 +153,9 @@
 - Updated the service worker cache version and added a 500ms navigation fallback to cached home content for repeat visits.
 - Updated Caddy on Oracle so `/_next/static/*` files are served by Caddy instead of Node while the home route keeps Next.js revalidation for admin edits.
 - Local built home HTML dropped from about 132KB to about 35KB, and gzip size dropped to about 10KB.
+
+### Admin Hash Route Guard
+
+- Added an early browser-side guard for mistyped admin URLs such as `/#projects/admin`, `#/admin`, or `#admin`.
+- Direct `/admin` already responded normally, but hash fragments are not sent to the server, so this guard redirects those hash URLs to `/admin` before the home page interaction continues.
+- Bumped the service worker cache name so older cached home HTML is cleared and the admin hash guard reaches repeat visitors.

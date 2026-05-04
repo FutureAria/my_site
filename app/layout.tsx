@@ -72,7 +72,7 @@ export default function RootLayout({
         {/* 다크모드 플래시 방지: 렌더 전 localStorage 확인 */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.style.colorScheme='light';}else{document.documentElement.style.colorScheme='dark';}}catch(e){}})();`,
+            __html: `(function(){try{var h=window.location.hash;if(h&&/admin/i.test(h)){window.location.replace('/admin');return;}var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.style.colorScheme='light';}else{document.documentElement.style.colorScheme='dark';}}catch(e){}})();`,
           }}
         />
       </head>
