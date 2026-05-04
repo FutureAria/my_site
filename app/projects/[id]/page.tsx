@@ -21,6 +21,14 @@ interface ProjectDemo {
   note?: string;
 }
 
+interface ProjectDocument {
+  title?: string;
+  description?: string;
+  file?: string;
+  preview?: string;
+  type?: string;
+}
+
 interface Project {
   title: string;
   period: string;
@@ -30,6 +38,7 @@ interface Project {
   link: string;
   github: string;
   demo?: ProjectDemo;
+  documents?: ProjectDocument[];
   detail?: ProjectDetail;
 }
 
@@ -88,6 +97,7 @@ export default async function ProjectPage({
   const takeaways = detail.takeaways || [];
   const screenshots = detail.images || [];
   const demo = project.demo;
+  const documents = project.documents || [];
   const hasDemoGuide = Boolean(demo?.password || demo?.note);
 
   return (
@@ -304,12 +314,61 @@ export default async function ProjectPage({
           </section>
         )}
 
+        {documents.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-4">
+              기획자료
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {documents.map((doc, docIndex) => (
+                <div
+                  key={`${doc.file || doc.preview || docIndex}`}
+                  className="glass rounded-2xl p-5 border border-[var(--border-color)]"
+                >
+                  <p className="text-base font-bold text-[var(--text-primary)]">
+                    {doc.title || "프로젝트 문서"}
+                  </p>
+                  {doc.description && (
+                    <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
+                      {doc.description}
+                    </p>
+                  )}
+                  <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                    <Link
+                      href={`/projects/${idx}/documents/${docIndex}`}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 transition-colors hover:bg-emerald-500/15"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12 18 18.75 12 18.75 2.25 12 2.25 12z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      사이트에서 보기
+                    </Link>
+                    {doc.file && (
+                      <a
+                        href={doc.file}
+                        download
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border-color)] px-4 py-2 text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M7.5 12l4.5 4.5m0 0l4.5-4.5M12 16.5V3" />
+                        </svg>
+                        다운로드
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <ProjectScreenshotGallery
           projectTitle={project.title}
           screenshots={screenshots}
         />
 
-        {!role && features.length === 0 && challengeSections.length === 0 && takeaways.length === 0 && screenshots.length === 0 && (
+        {!role && features.length === 0 && challengeSections.length === 0 && takeaways.length === 0 && screenshots.length === 0 && documents.length === 0 && (
           <div className="glass rounded-2xl p-10 text-center">
             <p className="text-[var(--text-secondary)] text-sm">
               상세 내용은 관리자 페이지에서 추가할 수 있습니다.

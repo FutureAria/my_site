@@ -24,6 +24,14 @@ interface ProjectDemo {
   note?: string;
 }
 
+interface ProjectDocument {
+  title?: string;
+  description?: string;
+  file?: string;
+  preview?: string;
+  type?: string;
+}
+
 interface Project {
   title: string;
   period: string;
@@ -33,6 +41,7 @@ interface Project {
   link: string;
   github: string;
   demo?: ProjectDemo;
+  documents?: ProjectDocument[];
   detail: ProjectDetail;
 }
 
@@ -717,6 +726,164 @@ export default function AdminPage() {
                   />
                 </details>
 
+                <details className="mt-4">
+                  <summary className="text-sm text-emerald-400 cursor-pointer hover:text-emerald-300 transition-colors mb-3">
+                    기획자료 / 첨부 문서
+                  </summary>
+                  <div className="pl-2 border-l-2 border-emerald-500/20 ml-1 mt-3 space-y-4">
+                    {(project.documents || []).map((doc, docIndex) => (
+                      <div
+                        key={docIndex}
+                        className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3 mb-3">
+                          <p className="text-sm font-semibold text-white">
+                            문서 {docIndex + 1}
+                          </p>
+                          <button
+                            onClick={() => {
+                              const projects = [...data.projects];
+                              const documents = [
+                                ...(projects[i].documents || []),
+                              ];
+                              documents.splice(docIndex, 1);
+                              projects[i] = { ...projects[i], documents };
+                              setData({ ...data, projects });
+                            }}
+                            className="text-xs text-red-400 hover:text-red-300 transition-colors"
+                          >
+                            삭제
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <Field
+                            label="문서 제목"
+                            value={doc.title || ""}
+                            placeholder="프로젝트 기획자료"
+                            onChange={(v) => {
+                              const projects = [...data.projects];
+                              const documents = [
+                                ...(projects[i].documents || []),
+                              ];
+                              documents[docIndex] = {
+                                ...documents[docIndex],
+                                title: v,
+                              };
+                              projects[i] = { ...projects[i], documents };
+                              setData({ ...data, projects });
+                            }}
+                          />
+                          <Field
+                            label="문서 타입"
+                            value={doc.type || ""}
+                            placeholder="xlsx"
+                            onChange={(v) => {
+                              const projects = [...data.projects];
+                              const documents = [
+                                ...(projects[i].documents || []),
+                              ];
+                              documents[docIndex] = {
+                                ...documents[docIndex],
+                                type: v,
+                              };
+                              projects[i] = { ...projects[i], documents };
+                              setData({ ...data, projects });
+                            }}
+                          />
+                        </div>
+                        <TextArea
+                          label="문서 설명"
+                          value={doc.description || ""}
+                          rows={3}
+                          onChange={(v) => {
+                            const projects = [...data.projects];
+                            const documents = [
+                              ...(projects[i].documents || []),
+                            ];
+                            documents[docIndex] = {
+                              ...documents[docIndex],
+                              description: v,
+                            };
+                            projects[i] = { ...projects[i], documents };
+                            setData({ ...data, projects });
+                          }}
+                        />
+                        <Field
+                          label="다운로드 파일 URL"
+                          value={doc.file || ""}
+                          placeholder="/uploads/project-docs/example.xlsx"
+                          onChange={(v) => {
+                            const projects = [...data.projects];
+                            const documents = [
+                              ...(projects[i].documents || []),
+                            ];
+                            documents[docIndex] = {
+                              ...documents[docIndex],
+                              file: v,
+                            };
+                            projects[i] = { ...projects[i], documents };
+                            setData({ ...data, projects });
+                          }}
+                        />
+                        <Field
+                          label="사이트 미리보기 URL (선택)"
+                          value={doc.preview || ""}
+                          placeholder="/uploads/project-docs/example.html"
+                          onChange={(v) => {
+                            const projects = [...data.projects];
+                            const documents = [
+                              ...(projects[i].documents || []),
+                            ];
+                            documents[docIndex] = {
+                              ...documents[docIndex],
+                              preview: v,
+                            };
+                            projects[i] = { ...projects[i], documents };
+                            setData({ ...data, projects });
+                          }}
+                        />
+                        <FileUpload
+                          accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                          label="엑셀 파일 업로드"
+                          onUploaded={(url) => {
+                            const projects = [...data.projects];
+                            const documents = [
+                              ...(projects[i].documents || []),
+                            ];
+                            documents[docIndex] = {
+                              ...documents[docIndex],
+                              file: url,
+                              type: documents[docIndex]?.type || "xlsx",
+                            };
+                            projects[i] = { ...projects[i], documents };
+                            setData({ ...data, projects });
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <button
+                      onClick={() => {
+                        const projects = [...data.projects];
+                        const documents = [
+                          ...(projects[i].documents || []),
+                          {
+                            title: "프로젝트 기획자료",
+                            description: "",
+                            file: "",
+                            preview: "",
+                            type: "xlsx",
+                          },
+                        ];
+                        projects[i] = { ...projects[i], documents };
+                        setData({ ...data, projects });
+                      }}
+                      className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+                    >
+                      + 문서 추가
+                    </button>
+                  </div>
+                </details>
+
                 {/* Detail section */}
                 <details className="mt-4">
                   <summary className="text-sm text-blue-400 cursor-pointer hover:text-blue-300 transition-colors mb-3">
@@ -844,6 +1011,7 @@ export default function AdminPage() {
                         password: "",
                         note: "",
                       },
+                      documents: [],
                       detail: {
                         role: "",
                         features: [],

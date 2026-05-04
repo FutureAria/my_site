@@ -134,3 +134,13 @@
 - Rebuilt the CRUD static app and deployed it to `/home/ubuntu/juyoung-crud`.
 - Updated Caddy so Vite `/assets/*` files use long immutable caching.
 - Verified the deployed HTML includes `물품 관리 시스템 로딩 중`, and the JS asset is served with gzip compression and long cache headers.
+
+### Project Planning Documents
+
+- Generated public-safe planning XLSX files for all six portfolio projects using the MajorLink planning workbook as the structure reference.
+- Added lightweight HTML previews beside each XLSX file so visitors can open the planning document inside the portfolio and also download the original Excel file.
+- Added a project document viewer route at `/projects/[id]/documents/[docIndex]`.
+- Added project document links to project cards and project detail pages.
+- Added admin project document management fields for title, description, file URL, preview URL, type, add, delete, and XLSX upload.
+- Extended `/api/upload` to accept Excel files while keeping image WebP compression for images only.
+- Local production build completed successfully with Next.js `15.5.15`.

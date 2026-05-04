@@ -10,9 +10,11 @@ const allowedTypes = new Set([
   "image/webp",
   "image/gif",
   "application/pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
 ]);
 const imageMaxFileSize = 8 * 1024 * 1024;
-const pdfMaxFileSize = 20 * 1024 * 1024;
+const documentMaxFileSize = 20 * 1024 * 1024;
 const maxFiles = 20;
 const targetImageMaxSize = 1.2 * 1024 * 1024;
 const extensionByType: Record<string, string> = {
@@ -21,6 +23,8 @@ const extensionByType: Record<string, string> = {
   "image/webp": "webp",
   "image/gif": "gif",
   "application/pdf": "pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+  "application/vnd.ms-excel": "xls",
 };
 
 async function optimizeImage(bytes: Buffer) {
@@ -81,15 +85,18 @@ export async function POST(request: Request) {
     }
 
     const invalidFile = files.find((file) => {
-      const maxFileSize =
-        file.type === "application/pdf" ? pdfMaxFileSize : imageMaxFileSize;
+      const isDocument =
+        file.type === "application/pdf" ||
+        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        file.type === "application/vnd.ms-excel";
+      const maxFileSize = isDocument ? documentMaxFileSize : imageMaxFileSize;
       return !allowedTypes.has(file.type) || file.size > maxFileSize;
     });
 
     if (invalidFile) {
       if (!allowedTypes.has(invalidFile.type)) {
         return NextResponse.json(
-          { message: "jpg, png, webp, gif, pdf 파일만 업로드할 수 있습니다." },
+          { message: "jpg, png, webp, gif, pdf, xlsx 파일만 업로드할 수 있습니다." },
           { status: 400 },
         );
       }
@@ -97,7 +104,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           message:
-            "서버 용량 보호를 위해 이미지는 8MB, PDF는 20MB까지 업로드할 수 있습니다.",
+            "서버 용량 보호를 위해 이미지는 8MB, 문서는 20MB까지 업로드할 수 있습니다.",
         },
         { status: 413 },
       );
@@ -108,7 +115,7 @@ export async function POST(request: Request) {
     const paths = await Promise.all(
       files.map(async (file, index) => {
         const isOptimizableImage =
-          file.type !== "application/pdf" && file.type !== "image/gif";
+          file.type.startsWith("image/") && file.type !== "image/gif";
         const ext = isOptimizableImage
           ? "webp"
           : extensionByType[file.type] || "bin";
