@@ -85,3 +85,44 @@
 - Project technology filters now show only the important tags first.
 - Deployment-related tags such as Oracle Cloud and Caddy are prioritized because they help explain the deployed projects.
 - Less important tags are hidden behind a `+ n개 더보기` control to keep the project section easier to scan.
+
+### Dependency Maintenance
+
+- Updated `next` from `15.5.14` to `15.5.15`.
+- Updated `nodemailer` from `8.0.5` to `8.0.7`.
+- Local production build completed successfully with Next.js `15.5.15`.
+- `npm audit --omit=dev` still reports a moderate `postcss` advisory through Next.js internal dependency `next/node_modules/postcss`.
+- Do not run `npm audit fix --force` for this warning: npm currently proposes installing `next@9.3.3`, which would be a breaking downgrade.
+- Checked `next@16.2.4`; it still declares internal `postcss` as `8.4.31`, so a major Next.js upgrade alone may not clear this specific audit warning.
+
+### KIS Demo Guidance
+
+- Added a read-only demo guide to the KIS AI Trader project detail page.
+- The live demo CTA now can use a project-specific label such as `읽기 전용 데모 입장`.
+- Added public read-mode password display for portfolio reviewers; this is separate from the portfolio admin password.
+- Added copy explaining that all visitors see the same shared read-only demo screen and cannot use admin or real-order features.
+- Added admin form fields for project demo CTA label, public read-mode password, and read-only guide text.
+- Updated the KIS live demo link to `/read-demo`, which should issue a read-only session and redirect reviewers to the shared web dashboard when the KIS panel is deployed.
+- Deployed the KIS panel `control_panel.py` update to Oracle.
+- Added KIS `/read-demo` and `/demo` routes that issue only the existing read-only `view` session cookie, then redirect to `/web#summary`.
+- Verified `https://juyoung-quant.duckdns.org/read-demo` returns `303` to `/web#summary`, and the followed page returns `200` with `data-mode="readonly"`.
+- Deployed the portfolio site to Oracle and updated the server-side `data/portfolio.json` KIS project entry without overwriting the whole data file.
+- Verified `https://juyoung-portfolio.duckdns.org/projects/3` shows `읽기 전용 데모 입장`, `/read-demo`, the public read password `021111`, and the shared read-only demo notice.
+
+### Project Screenshot Lightbox
+
+- Added a reusable project screenshot gallery component.
+- Project detail screenshots now open in a large modal when clicked.
+- The modal supports close button, outside-click close, Escape close, and left/right navigation.
+- Local production build completed successfully after the gallery change.
+
+### Portfolio Project GitHub Links
+
+- Found and prepared public-safe copies for three older portfolio projects.
+- Uploaded `장바구니 기능 기반 수강신청 웹 플랫폼` to `https://github.com/FutureAria/Course-registration`.
+- Uploaded `CRUD 기반 물품 관리 웹 시스템` to `https://github.com/FutureAria/CRUD`.
+- Uploaded `데이터 기반 AI 상권 분석 및 추천 서비스` to `https://github.com/FutureAria/Commercial-District`.
+- Excluded `.env`, `node_modules`, `target`, build outputs, logs, `.DS_Store`, and local backup artifacts from the public uploads.
+- Replaced public upload copies of API keys, DB passwords, and map/API keys with environment-variable placeholders before committing.
+- Updated portfolio project source links so the source-code buttons point to the new GitHub repositories.
+- Added the CRUD live demo link `https://juyoung-crud.duckdns.org` to the portfolio project card.

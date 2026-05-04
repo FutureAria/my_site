@@ -18,6 +18,12 @@ interface ProjectDetail {
   images: string[];
 }
 
+interface ProjectDemo {
+  ctaLabel?: string;
+  password?: string;
+  note?: string;
+}
+
 interface Project {
   title: string;
   period: string;
@@ -26,6 +32,7 @@ interface Project {
   image: string;
   link: string;
   github: string;
+  demo?: ProjectDemo;
   detail: ProjectDetail;
 }
 
@@ -662,6 +669,53 @@ export default function AdminPage() {
                     }}
                   />
                 </div>
+                <details className="mt-4">
+                  <summary className="text-sm text-emerald-400 cursor-pointer hover:text-emerald-300 transition-colors mb-3">
+                    읽기 전용 데모 안내
+                  </summary>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Field
+                      label="데모 버튼 문구"
+                      value={project.demo?.ctaLabel || ""}
+                      placeholder="읽기 전용 데모 입장"
+                      onChange={(v) => {
+                        const projects = [...data.projects];
+                        projects[i] = {
+                          ...projects[i],
+                          demo: { ...projects[i].demo, ctaLabel: v },
+                        };
+                        setData({ ...data, projects });
+                      }}
+                    />
+                    <Field
+                      label="공개 읽기모드 비밀번호"
+                      value={project.demo?.password || ""}
+                      placeholder="공개 데모용 비밀번호만 입력"
+                      onChange={(v) => {
+                        const projects = [...data.projects];
+                        projects[i] = {
+                          ...projects[i],
+                          demo: { ...projects[i].demo, password: v },
+                        };
+                        setData({ ...data, projects });
+                      }}
+                    />
+                  </div>
+                  <TextArea
+                    label="읽기 전용 안내 문구"
+                    value={project.demo?.note || ""}
+                    placeholder="모든 방문자는 같은 공통 읽기 전용 화면을 봅니다."
+                    rows={3}
+                    onChange={(v) => {
+                      const projects = [...data.projects];
+                      projects[i] = {
+                        ...projects[i],
+                        demo: { ...projects[i].demo, note: v },
+                      };
+                      setData({ ...data, projects });
+                    }}
+                  />
+                </details>
 
                 {/* Detail section */}
                 <details className="mt-4">
@@ -785,6 +839,11 @@ export default function AdminPage() {
                       image: "",
                       link: "",
                       github: "",
+                      demo: {
+                        ctaLabel: "",
+                        password: "",
+                        note: "",
+                      },
                       detail: {
                         role: "",
                         features: [],
@@ -1337,11 +1396,13 @@ function TextArea({
   label,
   value,
   onChange,
+  placeholder,
   rows = 3,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  placeholder?: string;
   rows?: number;
 }) {
   return (
@@ -1351,6 +1412,7 @@ function TextArea({
       </label>
       <textarea
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => { e.stopPropagation(); }}
         onKeyUp={(e) => e.stopPropagation()}

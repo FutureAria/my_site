@@ -99,7 +99,7 @@
       ],
       "image": "/uploads/project-1775108245161.webp",
       "link": "https://juwwkd.dothome.co.kr/3team/3team_webpage.php",
-      "github": "",
+      "github": "https://github.com/FutureAria/Course-registration",
       "detail": {
         "role": "수강신청 흐름의 DB 테이블을 설계하고, 장바구니에서 신청 처리까지 이어지는 서버 로직과 동시성 제어 방식을 구현했습니다.",
         "features": [
@@ -136,8 +136,8 @@
         "UI/UX"
       ],
       "image": "/uploads/project-1775116821521.webp",
-      "link": "",
-      "github": "",
+      "link": "https://juyoung-crud.duckdns.org",
+      "github": "https://github.com/FutureAria/CRUD",
       "detail": {
         "role": "물품 목록 상태의 소유 위치를 정리하고, 등록·수정·삭제 후 API 응답을 기준으로 화면이 다시 갱신되도록 구현했습니다.",
         "features": [
@@ -176,7 +176,7 @@
       ],
       "image": "/uploads/project-1775108081787.webp",
       "link": "https://juwwkd.dothome.co.kr/server/bu-dev1/",
-      "github": "",
+      "github": "https://github.com/FutureAria/Commercial-District",
       "detail": {
         "role": "공공 API 수집, 결측치와 이상치 정제, DB 저장 구조, 분석 결과를 제공하는 API와 추천 로직 구현을 담당했습니다.",
         "features": [
@@ -217,8 +217,13 @@
         "로그 추적"
       ],
       "image": "/uploads/kis-summary.webp",
-      "link": "https://juyoung-quant.duckdns.org",
+      "link": "https://juyoung-quant.duckdns.org/read-demo",
       "github": "https://github.com/FutureAria/KIS-AI-Project",
+      "demo": {
+        "ctaLabel": "읽기 전용 데모 입장",
+        "password": "021111",
+        "note": "포트폴리오 방문자는 모두 같은 공통 읽기 전용 화면을 봅니다. 관리자 기능과 실제 주문 기능은 제공하지 않습니다."
+      },
       "detail": {
         "role": "시장 데이터 수집, 모의투자 판단 흐름, 관리자/읽기모드 화면, 검증기간과 실거래 전환 잠금 구조를 직접 설계하고 구현했습니다. 자동매매가 임의로 주문하지 않도록 데이터 수집, 판단, 기록, 승인 단계를 분리하고 각 단계의 상태를 화면에 설명하도록 정리했습니다.",
         "features": [
