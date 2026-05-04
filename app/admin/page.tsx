@@ -20,7 +20,6 @@ interface ProjectDetail {
 
 interface ProjectDemo {
   ctaLabel?: string;
-  password?: string;
   note?: string;
 }
 
@@ -682,7 +681,7 @@ export default function AdminPage() {
                   <summary className="text-sm text-emerald-400 cursor-pointer hover:text-emerald-300 transition-colors mb-3">
                     읽기 전용 데모 안내
                   </summary>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <Field
                       label="데모 버튼 문구"
                       value={project.demo?.ctaLabel || ""}
@@ -692,19 +691,6 @@ export default function AdminPage() {
                         projects[i] = {
                           ...projects[i],
                           demo: { ...projects[i].demo, ctaLabel: v },
-                        };
-                        setData({ ...data, projects });
-                      }}
-                    />
-                    <Field
-                      label="공개 읽기모드 비밀번호"
-                      value={project.demo?.password || ""}
-                      placeholder="공개 데모용 비밀번호만 입력"
-                      onChange={(v) => {
-                        const projects = [...data.projects];
-                        projects[i] = {
-                          ...projects[i],
-                          demo: { ...projects[i].demo, password: v },
                         };
                         setData({ ...data, projects });
                       }}
@@ -1008,7 +994,6 @@ export default function AdminPage() {
                       github: "",
                       demo: {
                         ctaLabel: "",
-                        password: "",
                         note: "",
                       },
                       documents: [],

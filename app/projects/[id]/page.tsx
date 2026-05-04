@@ -17,7 +17,6 @@ interface ProjectDetail {
 
 interface ProjectDemo {
   ctaLabel?: string;
-  password?: string;
   note?: string;
 }
 
@@ -98,7 +97,7 @@ export default async function ProjectPage({
   const screenshots = detail.images || [];
   const demo = project.demo;
   const documents = project.documents || [];
-  const hasDemoGuide = Boolean(demo?.password || demo?.note);
+  const hasDemoGuide = Boolean(demo?.note);
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
@@ -202,16 +201,6 @@ export default async function ProjectPage({
                       </p>
                     )}
                   </div>
-                  {demo?.password && (
-                    <div className="shrink-0 rounded-xl border border-emerald-400/30 bg-[var(--bg-primary)]/60 px-4 py-3">
-                      <p className="text-[11px] font-semibold tracking-widest uppercase text-emerald-300">
-                        읽기모드 비밀번호
-                      </p>
-                      <p className="mt-1 font-mono text-lg font-bold text-[var(--text-primary)]">
-                        {demo.password}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
             )}

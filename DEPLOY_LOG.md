@@ -107,7 +107,7 @@
 - Added KIS `/read-demo` and `/demo` routes that issue only the existing read-only `view` session cookie, then redirect to `/web#summary`.
 - Verified `https://juyoung-quant.duckdns.org/read-demo` returns `303` to `/web#summary`, and the followed page returns `200` with `data-mode="readonly"`.
 - Deployed the portfolio site to Oracle and updated the server-side `data/portfolio.json` KIS project entry without overwriting the whole data file.
-- Verified `https://juyoung-portfolio.duckdns.org/projects/3` shows `읽기 전용 데모 입장`, `/read-demo`, the public read password `021111`, and the shared read-only demo notice.
+- Verified `https://juyoung-portfolio.duckdns.org/projects/3` showed the previous public read password before the read demo was later changed to passwordless entry.
 
 ### Project Screenshot Lightbox
 
@@ -165,3 +165,9 @@
 - Updated generated project planning documents so completed projects show `완료`, KIS and AI emotion analysis remain `진행 중`, and BASE CHAIN is labeled `고도화 중`.
 - Updated the BASE CHAIN portfolio period label from `진행 중` to `고도화 중`.
 - Updated the Oracle deploy script to overwrite only `public/uploads/project-docs` while still preserving other uploaded files.
+
+### Public KIS Read Demo
+
+- Removed the public read-mode password from the KIS portfolio detail page and admin editor.
+- Kept the KIS demo CTA on `/read-demo` so portfolio reviewers enter the shared read-only demo directly.
+- Deployed the KIS read-only panel so `/read-demo` issues a public read-only session without requiring a read-mode password.
