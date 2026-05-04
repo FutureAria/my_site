@@ -171,3 +171,10 @@
 - Removed the public read-mode password from the KIS portfolio detail page and admin editor.
 - Kept the KIS demo CTA on `/read-demo` so portfolio reviewers enter the shared read-only demo directly.
 - Deployed the KIS read-only panel so `/read-demo` issues a public read-only session without requiring a read-mode password.
+
+### KIS Demo First Load Optimization
+
+- Removed the heavy live status lookup from the public KIS start page so `https://juyoung-quant.duckdns.org/` can render from lightweight fixed mode labels.
+- Avoided the local IP lookup on public-domain requests; it now only runs for local `localhost` or `127.*` requests.
+- Added a short private browser cache for the public KIS start page to make refreshes and quick revisits faster without caching admin or API pages.
+- Deployed the KIS read-only panel update to Oracle and verified the service stayed active.
