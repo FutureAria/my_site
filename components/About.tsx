@@ -9,6 +9,8 @@ interface TimelineItem {
   desc: string;
   type: string;
   image?: string;
+  certificateImage?: string;
+  certificateFile?: string;
   subjects?: string[];
 }
 
@@ -124,6 +126,7 @@ export default function About({ data }: { data: AboutData }) {
 
 function TimelineCard({ item }: { item: TimelineItem }) {
   const meta = timelineTypeMeta[item.type] || timelineTypeMeta.training;
+  const hasCertificate = Boolean(item.certificateImage || item.certificateFile);
 
   return (
     <div className="glass rounded-xl p-4 sm:p-5 hover:bg-white/[0.06] transition-all duration-300 group max-w-md w-full">
@@ -145,6 +148,11 @@ function TimelineCard({ item }: { item: TimelineItem }) {
           >
             {meta.label}
           </span>
+          {hasCertificate && (
+            <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-md mb-2 ml-2 bg-amber-500/15 text-amber-200 border border-amber-400/10">
+              상장 있음
+            </span>
+          )}
           <span className="sm:hidden text-xs text-gray-500 ml-2">{item.year}</span>
           <h3 className="text-white font-semibold text-lg group-hover:gradient-text transition-all duration-300">
             {item.title}
@@ -154,6 +162,60 @@ function TimelineCard({ item }: { item: TimelineItem }) {
           </p>
         </div>
       </div>
+      {hasCertificate && (
+        <div className="mt-4 pt-4 border-t border-white/5">
+          {item.certificateImage && (
+            <a
+              href={item.certificateImage}
+              target="_blank"
+              rel="noreferrer"
+              className="block rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] hover:border-blue-400/40 transition-colors"
+              aria-label={`${item.title} 상장 이미지 열기`}
+            >
+              <span className="relative block aspect-[16/9]">
+                <Image
+                  src={item.certificateImage}
+                  alt={`${item.title} 상장`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 90vw, 400px"
+                />
+              </span>
+            </a>
+          )}
+          <div className="mt-3 flex flex-wrap gap-2">
+            {item.certificateImage && (
+              <a
+                href={item.certificateImage}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/5 text-gray-200 border border-white/10 hover:border-blue-400/40 hover:text-white transition-colors"
+              >
+                상장 이미지 열기
+              </a>
+            )}
+            {item.certificateFile && (
+              <>
+                <a
+                  href={item.certificateFile}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500/15 text-blue-200 border border-blue-400/15 hover:border-blue-400/40 hover:text-white transition-colors"
+                >
+                  PDF 보기
+                </a>
+                <a
+                  href={item.certificateFile}
+                  download
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 border border-white/10 hover:border-emerald-400/40 hover:text-white transition-colors"
+                >
+                  PDF 다운로드
+                </a>
+              </>
+            )}
+          </div>
+        </div>
+      )}
       {item.subjects && item.subjects.length > 0 && (
         <div className="mt-3 pt-3 border-t border-white/5">
           <p className="text-xs text-gray-500 font-medium mb-2">주요 과목</p>

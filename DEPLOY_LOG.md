@@ -186,3 +186,11 @@
 - Added a frontend safety filter so stale cached weekend records are ignored by the history calendar.
 - Updated empty weekend cells to show as closed days instead of looking like valid paper-trading history records.
 - Deployed the KIS read-only panel update to Oracle and verified `2026-05-02` and `2026-05-03` no longer appear in `/api/brain_paper_daily_results`.
+
+### Award Certificate Attachments
+
+- Added optional certificate image and certificate PDF fields to about timeline items.
+- Award and certificate cards now show a `상장 있음` badge when proof files are attached.
+- Certificate images can be opened from the portfolio card, while certificate PDFs support both view and download actions.
+- Admin timeline items now provide separate upload, view, and delete controls for certificate PNG/JPG images and PDF files.
+- Local production build completed successfully after the award attachment update.
