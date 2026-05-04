@@ -178,3 +178,11 @@
 - Avoided the local IP lookup on public-domain requests; it now only runs for local `localhost` or `127.*` requests.
 - Added a short private browser cache for the public KIS start page to make refreshes and quick revisits faster without caching admin or API pages.
 - Deployed the KIS read-only panel update to Oracle and verified the service stayed active.
+
+### KIS History Trading-Day Filter
+
+- Updated the KIS history API so paper daily result records are kept only for KRX trading days.
+- Weekend and exchange-holiday dates are filtered out before selected-date, calendar, rail, and archive records are calculated.
+- Added a frontend safety filter so stale cached weekend records are ignored by the history calendar.
+- Updated empty weekend cells to show as closed days instead of looking like valid paper-trading history records.
+- Deployed the KIS read-only panel update to Oracle and verified `2026-05-02` and `2026-05-03` no longer appear in `/api/brain_paper_daily_results`.
