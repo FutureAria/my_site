@@ -126,3 +126,11 @@
 - Replaced public upload copies of API keys, DB passwords, and map/API keys with environment-variable placeholders before committing.
 - Updated portfolio project source links so the source-code buttons point to the new GitHub repositories.
 - Added the CRUD live demo link `https://juyoung-crud.duckdns.org` to the portfolio project card.
+
+### CRUD Demo Loading Screen
+
+- Added a lightweight inline loading screen to the CRUD demo `index.html`.
+- The loader uses only text, system fonts, and three CSS dots; no image or extra network request was added.
+- Rebuilt the CRUD static app and deployed it to `/home/ubuntu/juyoung-crud`.
+- Updated Caddy so Vite `/assets/*` files use long immutable caching.
+- Verified the deployed HTML includes `물품 관리 시스템 로딩 중`, and the JS asset is served with gzip compression and long cache headers.
