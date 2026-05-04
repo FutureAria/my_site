@@ -159,3 +159,9 @@
 - Added an early browser-side guard for mistyped admin URLs such as `/#projects/admin`, `#/admin`, or `#admin`.
 - Direct `/admin` already responded normally, but hash fragments are not sent to the server, so this guard redirects those hash URLs to `/admin` before the home page interaction continues.
 - Bumped the service worker cache name so older cached home HTML is cleared and the admin hash guard reaches repeat visitors.
+
+### Project Document Status Labels
+
+- Updated generated project planning documents so completed projects show `완료`, KIS and AI emotion analysis remain `진행 중`, and BASE CHAIN is labeled `고도화 중`.
+- Updated the BASE CHAIN portfolio period label from `진행 중` to `고도화 중`.
+- Updated the Oracle deploy script to overwrite only `public/uploads/project-docs` while still preserving other uploaded files.

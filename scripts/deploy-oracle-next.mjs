@@ -54,10 +54,18 @@ const seedBase = [
   sshTransport,
 ];
 
+const projectDocsSync = [
+  "-az",
+  "--delete",
+  "-e",
+  sshTransport,
+];
+
 await run("rsync", [...rsyncBase, "./", remote]);
-await run("ssh", [...sshBaseArgs(), `mkdir -p ${oracleEnv.remoteDir}/data ${oracleEnv.remoteDir}/public/uploads`]);
+await run("ssh", [...sshBaseArgs(), `mkdir -p ${oracleEnv.remoteDir}/data ${oracleEnv.remoteDir}/public/uploads/project-docs`]);
 await run("rsync", [...seedBase, "data/portfolio.json", `${oracleEnv.user}@${oracleEnv.host}:${oracleEnv.remoteDir}/data/portfolio.json`]);
 await run("rsync", [...seedBase, "public/uploads/", `${oracleEnv.user}@${oracleEnv.host}:${oracleEnv.remoteDir}/public/uploads/`]);
+await run("rsync", [...projectDocsSync, "public/uploads/project-docs/", `${oracleEnv.user}@${oracleEnv.host}:${oracleEnv.remoteDir}/public/uploads/project-docs/`]);
 
 const normalizeUploadPathsScript = `
 const fs = require("fs");

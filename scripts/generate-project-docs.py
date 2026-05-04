@@ -125,6 +125,23 @@ def note_for(project: dict) -> dict:
     }
 
 
+def project_status(project: dict) -> str:
+    title = project["title"]
+    period = project["period"]
+    if "KIS" in title or "음악" in title or "개발 중" in title:
+        return "진행 중"
+    if "BASE" in title or "고도화" in period:
+        return "고도화 중"
+    return "완료"
+
+
+def implementation_status(project: dict) -> str:
+    status = project_status(project)
+    if status == "완료":
+        return "구현 완료"
+    return status
+
+
 def clear_sheet(ws):
     for row in ws.iter_rows():
         for cell in row:
@@ -166,8 +183,7 @@ def rewrite_mvp(ws, project, note):
         role = "백엔드+프론트" if idx <= 5 else "프론트/운영"
         priority = "P0 필수" if idx <= 4 else "P1 중요"
         difficulty = "중간" if idx <= 6 else "낮음"
-        status = "구현 완료" if "진행 중" not in project["period"] and "개발 중" not in project["title"] else "진행 중"
-        write_row(ws, 3 + idx, [f"F{idx:02d}", category, feature[:28], feature, role, priority, difficulty, "2~4일", status, note["risk"] if idx == 1 else ""])
+        write_row(ws, 3 + idx, [f"F{idx:02d}", category, feature[:28], feature, role, priority, difficulty, "2~4일", implementation_status(project), note["risk"] if idx == 1 else ""])
 
 
 def rewrite_schedule(ws, project, note):
@@ -261,11 +277,12 @@ def rewrite_meeting(ws, project, note):
     set_cell(ws, 1, 1, f"{project['title']} 기획 회의록")
     set_cell(ws, 2, 1, "프로젝트 진행 단계별 결정 사항을 기록합니다.")
     write_row(ws, 3, ["No", "날짜", "회의 유형", "참석 분야", "", "회의 주제", "", "결정 사항", "", "담당", "다음 액션", "완료 여부"])
+    status = project_status(project)
     rows = [
         [1, project["period"].split("~")[0].strip(), "킥오프", "전체", "", "문제 정의와 MVP 범위 확정", "", note["problem"], "", "전체", "핵심 기능 목록 작성", "완료"],
-        [2, "개발 초반", "기술 설계", "백엔드/프론트", "", "데이터 구조와 화면 흐름 결정", "", note["core"], "", "개발", "API와 UI 연결", "완료" if "진행 중" not in project["period"] else "진행중"],
-        [3, "개발 중반", "중간 점검", "전체", "", "기능 구현 현황과 문제 해결", "", project.get("detail", {}).get("challenges", "").split("\n\n")[0][:120], "", "전체", "트러블슈팅 정리", "완료" if "진행 중" not in project["period"] else "진행중"],
-        [4, "정리 단계", "발표/문서", "전체", "", "GitHub, 데모, 포트폴리오 문서화", "", "README와 기획자료를 공개 가능한 범위로 정리", "", "전체", "포트폴리오 반영", "진행중"],
+        [2, "개발 초반", "기술 설계", "백엔드/프론트", "", "데이터 구조와 화면 흐름 결정", "", note["core"], "", "개발", "API와 UI 연결", "완료" if status == "완료" else status],
+        [3, "개발 중반", "중간 점검", "전체", "", "기능 구현 현황과 문제 해결", "", project.get("detail", {}).get("challenges", "").split("\n\n")[0][:120], "", "전체", "트러블슈팅 정리", "완료" if status == "완료" else status],
+        [4, "정리 단계", "발표/문서", "전체", "", "GitHub, 데모, 포트폴리오 문서화", "", "README와 기획자료를 공개 가능한 범위로 정리", "", "전체", "포트폴리오 반영", status],
     ]
     for r, row in enumerate(rows, start=4):
         write_row(ws, r, row)
@@ -277,8 +294,10 @@ def rewrite_ui(ws, project, note):
     set_cell(ws, 2, 1, "화면별 UI 구성과 개발 연계 포인트를 정리합니다.")
     write_row(ws, 3, ["No", "화면 구분", "화면명", "", "담당 분야", "", "주요 컴포넌트 / UI 요소", "", "", "디자인 요구사항", "", "상태", "개발 연계", "완료 여부"])
     screens = ["메인/대시보드", "목록/검색", "상세/결과", "입력/관리", "오류/빈 상태", "모바일 반응형"]
+    status = project_status(project)
     for idx, screen in enumerate(screens, start=1):
-        write_row(ws, 3 + idx, [idx, "핵심 화면", screen, "", "프론트/디자인", "", f"{project['title']}의 {screen} 화면", "", "", "정보가 겹치지 않고 핵심 행동이 먼저 보이도록 구성", "", "완료" if idx <= 4 else "점검", note["frontend"], "완료" if "개발 중" not in project["title"] else "진행중"])
+        row_status = "완료" if status == "완료" and idx <= 4 else "점검"
+        write_row(ws, 3 + idx, [idx, "핵심 화면", screen, "", "프론트/디자인", "", f"{project['title']}의 {screen} 화면", "", "", "정보가 겹치지 않고 핵심 행동이 먼저 보이도록 구성", "", row_status, note["frontend"], status])
 
 
 def rewrite_qa(ws, project, note):
