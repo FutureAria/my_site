@@ -144,3 +144,12 @@
 - Added admin project document management fields for title, description, file URL, preview URL, type, add, delete, and XLSX upload.
 - Extended `/api/upload` to accept Excel files while keeping image WebP compression for images only.
 - Local production build completed successfully with Next.js `15.5.15`.
+
+### Portfolio Home Speed Optimization
+
+- Converted the portfolio home page from fully dynamic rendering to a 60-second revalidated static page.
+- Reduced home page payload by sending only project card data and blog summaries to the first page instead of full project details and blog bodies.
+- Deferred below-the-fold sections after the hero so the first HTML focuses on the opening screen.
+- Updated the service worker cache version and added a 500ms navigation fallback to cached home content for repeat visits.
+- Updated Caddy on Oracle so `/_next/static/*` files are served by Caddy instead of Node while the home route keeps Next.js revalidation for admin edits.
+- Local built home HTML dropped from about 132KB to about 35KB, and gzip size dropped to about 10KB.

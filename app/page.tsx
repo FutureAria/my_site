@@ -2,21 +2,39 @@ import fs from "fs";
 import path from "path";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import CoreStrengths from "@/components/CoreStrengths";
-import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Blog from "@/components/Blog";
-import Contact from "@/components/Contact";
+import DeferredHomeSections from "@/components/DeferredHomeSections";
 import Footer from "@/components/Footer";
 
 async function getPortfolioData() {
   const filePath = path.join(process.cwd(), "data", "portfolio.json");
   const raw = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(raw);
+  const data = JSON.parse(raw);
+
+  return {
+    ...data,
+    projects: (data.projects || []).map((project: any) => ({
+      title: project.title,
+      period: project.period,
+      desc: project.desc,
+      techs: project.techs || [],
+      image: project.image,
+      link: project.link,
+      github: project.github,
+      documents: project.documents || [],
+      detail: {
+        role: project.detail?.role || "",
+      },
+    })),
+    blog: (data.blog || []).map((post: any) => ({
+      title: post.title,
+      date: post.date,
+      tags: post.tags || [],
+      summary: post.summary,
+    })),
+  };
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function Home() {
   const data = await getPortfolioData();
@@ -26,12 +44,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero data={data.hero} />
-        <About data={data.about} />
-        <CoreStrengths />
-        <Projects data={data.projects} />
-        <Skills data={data.skills} />
-        <Blog data={data.blog || []} />
-        <Contact data={data.contact} />
+        <DeferredHomeSections data={data} />
       </main>
       <Footer />
     </>

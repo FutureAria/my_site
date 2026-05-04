@@ -8,7 +8,6 @@ interface BlogPost {
   date: string;
   tags: string[];
   summary: string;
-  content: string;
 }
 
 export default function Blog({ data }: { data: BlogPost[] }) {

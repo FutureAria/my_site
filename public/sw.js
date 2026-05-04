@@ -1,5 +1,6 @@
-const CACHE_NAME = "jy-portfolio-v1";
+const CACHE_NAME = "jy-portfolio-v2";
 const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg", "/icon-192.png", "/icon-512.png"];
+const NETWORK_TIMEOUT_MS = 500;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -28,6 +29,26 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) return;
+
+  if (request.mode === "navigate" || url.pathname === "/") {
+    event.respondWith(
+      Promise.race([
+        fetch(request).then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put("/", copy));
+          }
+          return response;
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            caches.match("/").then((cached) => (cached ? resolve(cached) : reject()));
+          }, NETWORK_TIMEOUT_MS);
+        }),
+      ]).catch(() => caches.match("/").then((cached) => cached || fetch(request))),
+    );
+    return;
+  }
 
   event.respondWith(
     fetch(request)
