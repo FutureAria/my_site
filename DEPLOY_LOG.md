@@ -200,3 +200,12 @@
 - Expanded the proof upload controls from only award/certificate items to every about timeline type: education, training, career, award, and certificate.
 - Renamed the public badge and admin labels from award-specific wording to `증빙 있음` and `증빙 자료` so they fit school, education, career, awards, and certificates.
 - Local production build completed successfully after expanding the timeline proof controls.
+
+### Portfolio Evaluation Evidence Fields
+
+- Added project-level evaluation fields for core impact, problem, solution, result, architecture, ERD/DB design, API spec, troubleshooting, README/document link, mobile check, browser compatibility, performance, security, and operations notes.
+- Project cards now surface `핵심 성과` when it is available so reviewers can understand the project value before opening the detail page.
+- Project detail pages now show dedicated sections for `문제 · 해결 · 결과`, `설계 / 문서`, `트러블슈팅`, and `검증 / 운영 기록`.
+- Admin project editing now supports all added fields, so the portfolio can keep updating the same JSON data without code edits.
+- Filled the six current portfolio projects with public-safe project evidence text based on existing implementation scope and deployment notes.
+- Synced the public-safe live portfolio JSON back to the local repository data so admin-added projects such as `Major_Link` are not lost in future GitHub/deploy cycles.

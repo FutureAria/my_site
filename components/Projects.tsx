@@ -20,6 +20,7 @@ interface ProjectItem {
   }>;
   detail?: {
     role?: string;
+    impact?: string;
   };
 }
 
@@ -249,6 +250,16 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                       </p>
                       <p className="readable-copy mobile-clamp-2 mt-1 text-xs leading-6 text-gray-300 text-left">
                         {project.detail.role}
+                      </p>
+                    </div>
+                  )}
+                  {project.detail?.impact && (
+                    <div className="mb-4 rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-2">
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
+                        핵심 성과
+                      </p>
+                      <p className="readable-copy mobile-clamp-2 mt-1 text-xs leading-6 text-gray-300 text-left">
+                        {project.detail.impact}
                       </p>
                     </div>
                   )}

@@ -9,6 +9,20 @@ export const dynamic = "force-dynamic";
 
 interface ProjectDetail {
   role?: string;
+  impact?: string;
+  problem?: string;
+  solution?: string;
+  result?: string;
+  architecture?: string;
+  erd?: string;
+  apiSpec?: string;
+  troubleshooting?: string;
+  readme?: string;
+  mobileCheck?: string;
+  compatibilityCheck?: string;
+  performance?: string;
+  security?: string;
+  operations?: string;
   features?: string[];
   challenges?: string;
   takeaways?: string[];
@@ -91,6 +105,23 @@ export default async function ProjectPage({
 
   const detail: ProjectDetail = project.detail || {};
   const role = detail.role || "";
+  const outcomeItems = [
+    { label: "문제", body: detail.problem },
+    { label: "해결", body: detail.solution },
+    { label: "결과", body: detail.result },
+  ].filter((item) => item.body);
+  const documentItems = [
+    { label: "아키텍처", body: detail.architecture },
+    { label: "ERD / DB", body: detail.erd },
+    { label: "API 명세", body: detail.apiSpec },
+  ].filter((item) => item.body);
+  const validationItems = [
+    { label: "모바일 확인", body: detail.mobileCheck },
+    { label: "브라우저 호환", body: detail.compatibilityCheck },
+    { label: "성능 측정", body: detail.performance },
+    { label: "보안 체크", body: detail.security },
+    { label: "운영 경험", body: detail.operations },
+  ].filter((item) => item.body);
   const features = detail.features || [];
   const challengeSections = parseChallenges(detail.challenges || "");
   const takeaways = detail.takeaways || [];
@@ -232,6 +263,113 @@ export default async function ProjectPage({
           </section>
         )}
 
+        {(detail.impact || outcomeItems.length > 0) && (
+          <section className="mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">
+              문제 · 해결 · 결과
+            </h2>
+            {detail.impact && (
+              <div className="mb-4 rounded-2xl border border-blue-500/25 bg-blue-500/10 p-6">
+                <p className="text-xs font-semibold tracking-widest uppercase text-blue-300">
+                  핵심 성과
+                </p>
+                <p className="readable-copy mt-2 text-[var(--text-secondary)] leading-8 text-left">
+                  {detail.impact}
+                </p>
+              </div>
+            )}
+            {outcomeItems.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {outcomeItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className="glass rounded-xl border border-[var(--border-color)] p-5"
+                  >
+                    <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
+                      {item.label}
+                    </p>
+                    <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {documentItems.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-cyan-400 mb-4">
+              설계 / 문서
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {documentItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-5"
+                >
+                  <p className="text-xs font-semibold tracking-widest uppercase text-cyan-300">
+                    {item.label}
+                  </p>
+                  <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {detail.readme && (
+              <a
+                href={detail.readme}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-400 transition-colors hover:text-blue-300"
+              >
+                README / 문서 링크 보기
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+              </a>
+            )}
+          </section>
+        )}
+
+        {detail.troubleshooting && (
+          <section className="mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-amber-400 mb-4">
+              트러블슈팅
+            </h2>
+            <div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 p-6">
+              <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
+                {detail.troubleshooting}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {validationItems.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-purple-400 mb-4">
+              검증 / 운영 기록
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {validationItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="glass rounded-xl border border-[var(--border-color)] p-5"
+                >
+                  <p className="text-xs font-semibold tracking-widest uppercase text-purple-300">
+                    {item.label}
+                  </p>
+                  <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {features.length > 0 && (
           <section className="mb-12">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">주요 기능</h2>
@@ -357,7 +495,7 @@ export default async function ProjectPage({
           screenshots={screenshots}
         />
 
-        {!role && features.length === 0 && challengeSections.length === 0 && takeaways.length === 0 && screenshots.length === 0 && documents.length === 0 && (
+        {!role && !detail.impact && outcomeItems.length === 0 && documentItems.length === 0 && !detail.troubleshooting && validationItems.length === 0 && features.length === 0 && challengeSections.length === 0 && takeaways.length === 0 && screenshots.length === 0 && documents.length === 0 && (
           <div className="glass rounded-2xl p-10 text-center">
             <p className="text-[var(--text-secondary)] text-sm">
               상세 내용은 관리자 페이지에서 추가할 수 있습니다.

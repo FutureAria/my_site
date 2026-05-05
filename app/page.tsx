@@ -23,6 +23,7 @@ async function getPortfolioData() {
       documents: project.documents || [],
       detail: {
         role: project.detail?.role || "",
+        impact: project.detail?.impact || "",
       },
     })),
     blog: (data.blog || []).map((post: any) => ({

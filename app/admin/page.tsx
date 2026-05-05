@@ -15,6 +15,20 @@ interface TimelineItem {
 
 interface ProjectDetail {
   role: string;
+  impact?: string;
+  problem?: string;
+  solution?: string;
+  result?: string;
+  architecture?: string;
+  erd?: string;
+  apiSpec?: string;
+  troubleshooting?: string;
+  readme?: string;
+  mobileCheck?: string;
+  compatibilityCheck?: string;
+  performance?: string;
+  security?: string;
+  operations?: string;
   features: string[];
   challenges: string;
   images: string[];
@@ -654,6 +668,14 @@ export default function AdminPage() {
                 else next.add(i);
                 setOpenProjects(next);
               };
+              const updateDetail = (patch: Partial<ProjectDetail>) => {
+                const projects = [...data.projects];
+                projects[i] = {
+                  ...projects[i],
+                  detail: { ...projects[i].detail, ...patch },
+                };
+                setData({ ...data, projects });
+              };
               return (
               <div key={i} className="glass rounded-xl mb-4 overflow-hidden">
                 {/* Header with move/delete - always visible */}
@@ -987,42 +1009,111 @@ export default function AdminPage() {
                       label="담당 역할"
                       value={project.detail?.role || ""}
                       placeholder="예: 백엔드 개발 및 DB 설계 담당"
-                      onChange={(v) => {
-                        const projects = [...data.projects];
-                        projects[i] = {
-                          ...projects[i],
-                          detail: { ...projects[i].detail, role: v },
-                        };
-                        setData({ ...data, projects });
-                      }}
+                      onChange={(v) => updateDetail({ role: v })}
                     />
+                    <TextArea
+                      label="핵심 성과"
+                      value={project.detail?.impact || ""}
+                      placeholder="예: 동시 요청에서 정원 초과가 발생하지 않도록 트랜잭션 기준을 정리했습니다."
+                      rows={3}
+                      onChange={(v) => updateDetail({ impact: v })}
+                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <TextArea
+                        label="문제"
+                        value={project.detail?.problem || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ problem: v })}
+                      />
+                      <TextArea
+                        label="해결"
+                        value={project.detail?.solution || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ solution: v })}
+                      />
+                      <TextArea
+                        label="결과"
+                        value={project.detail?.result || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ result: v })}
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <TextArea
+                        label="아키텍처 / 구조"
+                        value={project.detail?.architecture || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ architecture: v })}
+                      />
+                      <TextArea
+                        label="ERD / DB 설계"
+                        value={project.detail?.erd || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ erd: v })}
+                      />
+                    </div>
+                    <TextArea
+                      label="API 명세"
+                      value={project.detail?.apiSpec || ""}
+                      rows={3}
+                      onChange={(v) => updateDetail({ apiSpec: v })}
+                    />
+                    <TextArea
+                      label="트러블슈팅 상세"
+                      value={project.detail?.troubleshooting || ""}
+                      rows={4}
+                      onChange={(v) => updateDetail({ troubleshooting: v })}
+                    />
+                    <Field
+                      label="README / 문서 링크"
+                      value={project.detail?.readme || ""}
+                      placeholder="https://github.com/... 또는 /uploads/..."
+                      onChange={(v) => updateDetail({ readme: v })}
+                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <TextArea
+                        label="모바일 / 실기기 확인"
+                        value={project.detail?.mobileCheck || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ mobileCheck: v })}
+                      />
+                      <TextArea
+                        label="Windows / Chrome / Safari 호환 확인"
+                        value={project.detail?.compatibilityCheck || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ compatibilityCheck: v })}
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <TextArea
+                        label="성능 측정 결과"
+                        value={project.detail?.performance || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ performance: v })}
+                      />
+                      <TextArea
+                        label="보안 체크리스트"
+                        value={project.detail?.security || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ security: v })}
+                      />
+                      <TextArea
+                        label="운영 / 배포 경험"
+                        value={project.detail?.operations || ""}
+                        rows={3}
+                        onChange={(v) => updateDetail({ operations: v })}
+                      />
+                    </div>
                     <DelimitedField
                       label="주요 기능 (쉼표로 구분)"
                       values={project.detail?.features || []}
                       placeholder="예: 위치 기반 추천, 실시간 채팅, 데이터 시각화"
-                      onCommit={(features) => {
-                        const projects = [...data.projects];
-                        projects[i] = {
-                          ...projects[i],
-                          detail: {
-                            ...projects[i].detail,
-                            features,
-                          },
-                        };
-                        setData({ ...data, projects });
-                      }}
+                      onCommit={(features) => updateDetail({ features })}
                     />
                     <TextArea
                       label="문제 해결 / 트러블슈팅"
                       value={project.detail?.challenges || ""}
-                      onChange={(v) => {
-                        const projects = [...data.projects];
-                        projects[i] = {
-                          ...projects[i],
-                          detail: { ...projects[i].detail, challenges: v },
-                        };
-                        setData({ ...data, projects });
-                      }}
+                      onChange={(v) => updateDetail({ challenges: v })}
                       rows={4}
                     />
                     {/* Detail images */}
@@ -1106,6 +1197,20 @@ export default function AdminPage() {
                       documents: [],
                       detail: {
                         role: "",
+                        impact: "",
+                        problem: "",
+                        solution: "",
+                        result: "",
+                        architecture: "",
+                        erd: "",
+                        apiSpec: "",
+                        troubleshooting: "",
+                        readme: "",
+                        mobileCheck: "",
+                        compatibilityCheck: "",
+                        performance: "",
+                        security: "",
+                        operations: "",
                         features: [],
                         challenges: "",
                         images: [],
