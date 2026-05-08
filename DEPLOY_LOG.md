@@ -229,3 +229,8 @@
 - Updated the admin upload button label from `엑셀 파일 업로드` to `문서 파일 업로드`.
 - The uploaded document type now follows the actual uploaded file extension instead of defaulting to `xlsx`.
 - Removed unverified mobile-check text from Course Registration, CRUD, and Commercial District project evidence fields.
+
+### Remove Unverified Project Claims
+
+- Cleared project evidence fields for mobile/device checks, browser compatibility checks, performance results, security checklist, and operations/deployment notes across all projects.
+- These fields should be filled only after the specific project has actually been checked or the evidence is documented.
