@@ -981,17 +981,18 @@ export default function AdminPage() {
                           }}
                         />
                         <FileUpload
-                          accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-                          label="엑셀 파일 업로드"
+                          accept=".xlsx,.xls,.pptx,.ppt,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint,application/pdf"
+                          label="문서 파일 업로드"
                           onUploaded={(url) => {
                             const projects = [...data.projects];
                             const documents = [
                               ...(projects[i].documents || []),
                             ];
+                            const ext = url.split(".").pop()?.toLowerCase() || "file";
                             documents[docIndex] = {
                               ...documents[docIndex],
                               file: url,
-                              type: documents[docIndex]?.type || "xlsx",
+                              type: ext,
                             };
                             projects[i] = { ...projects[i], documents };
                             setData({ ...data, projects });
@@ -1009,7 +1010,7 @@ export default function AdminPage() {
                             description: "",
                             file: "",
                             preview: "",
-                            type: "xlsx",
+                            type: "file",
                           },
                         ];
                         projects[i] = { ...projects[i], documents };
@@ -1949,19 +1950,30 @@ function FileUpload({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleUpload = async (file: File) => {
     setUploading(true);
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: form });
-    const json = await res.json();
-    if (json.url) onUploaded(json.url);
-    setUploading(false);
+    setError("");
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok || !json.url) {
+        setError(json.message || json.error || "업로드에 실패했습니다.");
+        return;
+      }
+      onUploaded(json.url);
+    } catch {
+      setError("업로드 중 네트워크 오류가 발생했습니다.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
-    <>
+    <div className="space-y-2">
       <button
         onClick={() => inputRef.current?.click()}
         disabled={uploading}
@@ -1980,6 +1992,7 @@ function FileUpload({
           e.target.value = "";
         }}
       />
-    </>
+      {error && <p className="text-xs text-red-400">{error}</p>}
+    </div>
   );
 }

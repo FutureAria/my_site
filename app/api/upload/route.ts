@@ -12,6 +12,8 @@ const allowedTypes = new Set([
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.ms-powerpoint",
 ]);
 const imageMaxFileSize = 8 * 1024 * 1024;
 const documentMaxFileSize = 20 * 1024 * 1024;
@@ -25,7 +27,17 @@ const extensionByType: Record<string, string> = {
   "application/pdf": "pdf",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
   "application/vnd.ms-excel": "xls",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
+  "application/vnd.ms-powerpoint": "ppt",
 };
+
+const documentTypes = new Set([
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.ms-powerpoint",
+]);
 
 async function optimizeImage(bytes: Buffer) {
   const attempts = [
@@ -85,10 +97,7 @@ export async function POST(request: Request) {
     }
 
     const invalidFile = files.find((file) => {
-      const isDocument =
-        file.type === "application/pdf" ||
-        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-        file.type === "application/vnd.ms-excel";
+      const isDocument = documentTypes.has(file.type);
       const maxFileSize = isDocument ? documentMaxFileSize : imageMaxFileSize;
       return !allowedTypes.has(file.type) || file.size > maxFileSize;
     });
@@ -96,7 +105,7 @@ export async function POST(request: Request) {
     if (invalidFile) {
       if (!allowedTypes.has(invalidFile.type)) {
         return NextResponse.json(
-          { message: "jpg, png, webp, gif, pdf, xlsx 파일만 업로드할 수 있습니다." },
+          { message: "jpg, png, webp, gif, pdf, xlsx, xls, pptx, ppt 파일만 업로드할 수 있습니다." },
           { status: 400 },
         );
       }

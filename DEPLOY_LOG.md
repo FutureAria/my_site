@@ -222,3 +222,10 @@
 - Updated admin project accordion headers so long project titles and periods wrap cleanly on mobile.
 - Moved project move/delete actions below the title row on small screens to prevent overlap and improve touch spacing.
 - Added a compact mobile category badge in collapsed project headers so project grouping remains visible while editing.
+
+### Project Document Upload Fix
+
+- Expanded project document uploads from Excel-only to `xlsx`, `xls`, `pptx`, `ppt`, and `pdf`.
+- Updated the admin upload button label from `엑셀 파일 업로드` to `문서 파일 업로드`.
+- The uploaded document type now follows the actual uploaded file extension instead of defaulting to `xlsx`.
+- Removed unverified mobile-check text from Course Registration, CRUD, and Commercial District project evidence fields.
