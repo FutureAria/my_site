@@ -20,6 +20,7 @@ async function getPortfolioData() {
       image: project.image,
       link: project.link,
       github: project.github,
+      category: project.category || "기타 프로젝트",
       documents: project.documents || [],
       detail: {
         role: project.detail?.role || "",

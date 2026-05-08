@@ -145,7 +145,8 @@
           "preview": "/uploads/project-docs/course-registration-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "백엔드 기초 프로젝트"
     },
     {
       "title": "CRUD 기반 물품 관리 웹 시스템",
@@ -207,7 +208,8 @@
           "preview": "/uploads/project-docs/crud-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "백엔드 기초 프로젝트"
     },
     {
       "title": "데이터 기반 AI 상권 분석 및 추천 서비스",
@@ -269,7 +271,8 @@
           "preview": "/uploads/project-docs/commercial-district-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "대표 프로젝트"
     },
     {
       "title": "KIS AI 트레이더",
@@ -350,7 +353,8 @@
           "preview": "/uploads/project-docs/kis-ai-trader-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "대표 프로젝트"
     },
     {
       "title": "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼",
@@ -444,7 +448,8 @@
           "preview": "/uploads/project-docs/base-chain-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "대표 프로젝트"
     },
     {
       "title": "AI 감정 분석 기반 음악 추천 서비스 (개발 중)",
@@ -502,7 +507,8 @@
           "preview": "/uploads/project-docs/emotion-music-planning.html",
           "type": "xlsx"
         }
-      ]
+      ],
+      "category": "개발 중 · 기획 프로젝트"
     },
     {
       "title": "Major_Link",
@@ -544,7 +550,8 @@
         "performance": "초기에는 무거운 기능보다 정적 문서 열람과 다운로드 중심으로 구성해 로딩 부담을 낮췄습니다.",
         "security": "기획자료에는 공개 가능한 내용만 포함하고, 실제 개인정보나 비공개 운영 정보는 넣지 않는 기준으로 관리합니다.",
         "operations": "관리자에서 기획자료 파일을 교체하고 포트폴리오에서 바로 열람/다운로드할 수 있는 방식으로 운영합니다."
-      }
+      },
+      "category": "대표 프로젝트"
     }
   ],
   "skills": {

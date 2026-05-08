@@ -209,3 +209,10 @@
 - Admin project editing now supports all added fields, so the portfolio can keep updating the same JSON data without code edits.
 - Filled the six current portfolio projects with public-safe project evidence text based on existing implementation scope and deployment notes.
 - Synced the public-safe live portfolio JSON back to the local repository data so admin-added projects such as `Major_Link` are not lost in future GitHub/deploy cycles.
+
+### Project Category Sections
+
+- Added a project `category` field and grouped the portfolio project list into `대표 프로젝트`, `백엔드 기초 프로젝트`, `개발 중 · 기획 프로젝트`, and `기타 프로젝트`.
+- Assigned KIS AI Trader, BASE CHAIN, Commercial District, and Major_Link as representative projects.
+- Assigned Course Registration and CRUD as backend foundation projects, and AI emotion music as a development/planning project.
+- Added an admin project category field so future projects can be moved between sections without code changes.

@@ -55,6 +55,7 @@ interface Project {
   image: string;
   link: string;
   github: string;
+  category?: string;
   demo?: ProjectDemo;
   documents?: ProjectDocument[];
   detail: ProjectDetail;
@@ -763,6 +764,16 @@ export default function AdminPage() {
                     }}
                   />
                 </div>
+                <Field
+                  label="프로젝트 분류"
+                  value={project.category || ""}
+                  placeholder="대표 프로젝트 / 백엔드 기초 프로젝트 / 개발 중 · 기획 프로젝트"
+                  onChange={(v) => {
+                    const projects = [...data.projects];
+                    projects[i] = { ...projects[i], category: v };
+                    setData({ ...data, projects });
+                  }}
+                />
                 <TextArea
                   label="설명"
                   value={project.desc}
@@ -1190,6 +1201,7 @@ export default function AdminPage() {
                       image: "",
                       link: "",
                       github: "",
+                      category: "기타 프로젝트",
                       demo: {
                         ctaLabel: "",
                         note: "",
