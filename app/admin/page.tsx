@@ -90,6 +90,13 @@ interface PortfolioData {
   };
 }
 
+const DEFAULT_PROJECT_CATEGORIES = [
+  "대표 프로젝트",
+  "백엔드 기초 프로젝트",
+  "개발 중 · 기획 프로젝트",
+  "기타 프로젝트",
+];
+
 function swap<T>(arr: T[], i: number, j: number): T[] {
   const copy = [...arr];
   [copy[i], copy[j]] = [copy[j], copy[i]];
@@ -198,6 +205,12 @@ export default function AdminPage() {
     { id: "skills", label: "기술 스택" },
     { id: "contact", label: "연락처" },
   ];
+  const projectCategoryOptions = Array.from(
+    new Set([
+      ...DEFAULT_PROJECT_CATEGORIES,
+      ...data.projects.map((project) => project.category || "").filter(Boolean),
+    ]),
+  );
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -776,16 +789,60 @@ export default function AdminPage() {
                     }}
                   />
                 </div>
-                <Field
-                  label="프로젝트 분류"
-                  value={project.category || ""}
-                  placeholder="대표 프로젝트 / 백엔드 기초 프로젝트 / 개발 중 · 기획 프로젝트"
-                  onChange={(v) => {
-                    const projects = [...data.projects];
-                    projects[i] = { ...projects[i], category: v };
-                    setData({ ...data, projects });
-                  }}
-                />
+                <div className="mb-4">
+                  <label className="block text-xs text-gray-400 font-medium mb-1.5">
+                    프로젝트 분류
+                  </label>
+                  <select
+                    value={project.category || ""}
+                    onChange={(e) => {
+                      const projects = [...data.projects];
+                      projects[i] = { ...projects[i], category: e.target.value };
+                      setData({ ...data, projects });
+                    }}
+                    onKeyDown={(e) => { e.stopPropagation(); }}
+                    className="w-full bg-gray-900 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/25 transition-all"
+                  >
+                    <option value="">분류 선택</option>
+                    {projectCategoryOptions.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="text"
+                    value={project.category || ""}
+                    placeholder="새 분류를 직접 입력"
+                    onChange={(e) => {
+                      const projects = [...data.projects];
+                      projects[i] = { ...projects[i], category: e.target.value };
+                      setData({ ...data, projects });
+                    }}
+                    onKeyDown={(e) => { e.stopPropagation(); }}
+                    className="mt-2 w-full bg-gray-900 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/25 transition-all"
+                  />
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {projectCategoryOptions.map((category) => (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => {
+                          const projects = [...data.projects];
+                          projects[i] = { ...projects[i], category };
+                          setData({ ...data, projects });
+                        }}
+                        className={`rounded-lg border px-2.5 py-1 text-xs transition-colors ${
+                          project.category === category
+                            ? "border-blue-500/40 bg-blue-500/15 text-blue-300"
+                            : "border-white/10 bg-white/5 text-gray-400 hover:border-white/20 hover:text-gray-200"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <TextArea
                   label="설명"
                   value={project.desc}

@@ -239,3 +239,8 @@
 
 - Changed individual project document editor cards into collapsible rows.
 - Document items now show only the document number, title, and type until opened, reducing admin page height when multiple files are attached.
+
+### Admin Project Category Picker
+
+- Replaced the project category free-text field with a dropdown plus direct input.
+- Existing categories are shown as selectable options and quick buttons, while new categories can still be typed manually.
