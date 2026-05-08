@@ -234,3 +234,8 @@
 
 - Cleared project evidence fields for mobile/device checks, browser compatibility checks, performance results, security checklist, and operations/deployment notes across all projects.
 - These fields should be filled only after the specific project has actually been checked or the evidence is documented.
+
+### Admin Document Item Collapse
+
+- Changed individual project document editor cards into collapsible rows.
+- Document items now show only the document number, title, and type until opened, reducing admin page height when multiple files are attached.

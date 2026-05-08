@@ -870,16 +870,24 @@ export default function AdminPage() {
                   </summary>
                   <div className="pl-2 border-l-2 border-emerald-500/20 ml-1 mt-3 space-y-4">
                     {(project.documents || []).map((doc, docIndex) => (
-                      <div
+                      <details
                         key={docIndex}
                         className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
                       >
-                        <div className="flex items-center justify-between gap-3 mb-3">
-                          <p className="text-sm font-semibold text-white">
-                            문서 {docIndex + 1}
-                          </p>
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-white">
+                              문서 {docIndex + 1}
+                            </p>
+                            <p className="mt-1 truncate text-xs text-gray-500">
+                              {doc.title || "제목 없음"}
+                              {doc.type ? ` · ${doc.type}` : ""}
+                            </p>
+                          </div>
                           <button
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
                               const projects = [...data.projects];
                               const documents = [
                                 ...(projects[i].documents || []),
@@ -892,8 +900,8 @@ export default function AdminPage() {
                           >
                             삭제
                           </button>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        </summary>
+                        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <Field
                             label="문서 제목"
                             value={doc.title || ""}
@@ -998,7 +1006,7 @@ export default function AdminPage() {
                             setData({ ...data, projects });
                           }}
                         />
-                      </div>
+                      </details>
                     ))}
                     <button
                       onClick={() => {
