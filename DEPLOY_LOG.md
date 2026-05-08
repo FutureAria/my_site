@@ -216,3 +216,9 @@
 - Assigned KIS AI Trader, BASE CHAIN, Commercial District, and Major_Link as representative projects.
 - Assigned Course Registration and CRUD as backend foundation projects, and AI emotion music as a development/planning project.
 - Added an admin project category field so future projects can be moved between sections without code changes.
+
+### Admin Project Header Mobile Fix
+
+- Updated admin project accordion headers so long project titles and periods wrap cleanly on mobile.
+- Moved project move/delete actions below the title row on small screens to prevent overlap and improve touch spacing.
+- Added a compact mobile category badge in collapsed project headers so project grouping remains visible while editing.

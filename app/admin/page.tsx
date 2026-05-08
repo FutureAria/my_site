@@ -681,24 +681,36 @@ export default function AdminPage() {
               <div key={i} className="glass rounded-xl mb-4 overflow-hidden">
                 {/* Header with move/delete - always visible */}
                 <div
-                  className="flex items-center justify-between p-5 cursor-pointer hover:bg-white/[0.03] transition-colors"
+                  className="flex flex-col gap-4 p-4 cursor-pointer hover:bg-white/[0.03] transition-colors sm:flex-row sm:items-center sm:justify-between sm:p-5"
                   onClick={toggleOpen}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center">
                     <svg
-                      className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
+                      className={`mt-1 h-4 w-4 shrink-0 text-gray-400 transition-transform duration-200 sm:mt-0 ${isOpen ? "rotate-90" : ""}`}
                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
-                    <h3 className="text-white font-semibold">
-                      {project.title || `프로젝트 ${i + 1}`}
-                    </h3>
-                    {project.period && (
-                      <span className="text-xs text-gray-500">{project.period}</span>
-                    )}
+                    <div className="min-w-0">
+                      <h3 className="break-keep text-base font-semibold leading-7 text-white sm:text-lg">
+                        {project.title || `프로젝트 ${i + 1}`}
+                      </h3>
+                      {project.period && (
+                        <span className="mt-1 block text-xs leading-5 text-gray-500 sm:inline sm:ml-2 sm:mt-0">
+                          {project.period}
+                        </span>
+                      )}
+                      {project.category && (
+                        <span className="mt-2 inline-flex rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-gray-400 sm:hidden">
+                          {project.category}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                  <div
+                    className="flex w-full items-center justify-end gap-1 border-t border-white/5 pt-3 sm:w-auto sm:border-t-0 sm:pt-0"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <MoveButton
                       direction="up"
                       disabled={i === 0}
