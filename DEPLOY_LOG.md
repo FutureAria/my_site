@@ -244,3 +244,10 @@
 
 - Replaced the project category free-text field with a dropdown plus direct input.
 - Existing categories are shown as selectable options and quick buttons, while new categories can still be typed manually.
+
+### Portfolio Security Hardening
+
+- Added admin login failure throttling so repeated wrong password attempts are temporarily blocked.
+- Changed uploaded file names from timestamp-based names to random UUID-based names.
+- Added file signature checks for image, PDF, Excel, and PowerPoint uploads before saving files.
+- Added site-wide security headers including CSP, `nosniff`, frame blocking, referrer policy, and restricted browser permissions.

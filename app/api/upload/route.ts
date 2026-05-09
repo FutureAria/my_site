@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import crypto from "crypto";
 import { NextResponse } from "next/server";
 import sharp from "sharp";
 
@@ -38,6 +39,34 @@ const documentTypes = new Set([
   "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   "application/vnd.ms-powerpoint",
 ]);
+
+function startsWithSignature(bytes: Buffer, signature: number[]) {
+  if (bytes.length < signature.length) return false;
+  return signature.every((value, index) => bytes[index] === value);
+}
+
+function isValidFileSignature(type: string, bytes: Buffer) {
+  switch (type) {
+    case "image/jpeg":
+      return startsWithSignature(bytes, [0xff, 0xd8, 0xff]);
+    case "image/png":
+      return startsWithSignature(bytes, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    case "image/webp":
+      return bytes.slice(0, 4).toString("ascii") === "RIFF" && bytes.slice(8, 12).toString("ascii") === "WEBP";
+    case "image/gif":
+      return bytes.slice(0, 6).toString("ascii") === "GIF87a" || bytes.slice(0, 6).toString("ascii") === "GIF89a";
+    case "application/pdf":
+      return bytes.slice(0, 5).toString("ascii") === "%PDF-";
+    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+    case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+      return startsWithSignature(bytes, [0x50, 0x4b, 0x03, 0x04]) || startsWithSignature(bytes, [0x50, 0x4b, 0x05, 0x06]) || startsWithSignature(bytes, [0x50, 0x4b, 0x07, 0x08]);
+    case "application/vnd.ms-excel":
+    case "application/vnd.ms-powerpoint":
+      return startsWithSignature(bytes, [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
+    default:
+      return false;
+  }
+}
 
 async function optimizeImage(bytes: Buffer) {
   const attempts = [
@@ -128,8 +157,13 @@ export async function POST(request: Request) {
         const ext = isOptimizableImage
           ? "webp"
           : extensionByType[file.type] || "bin";
-        const safeName = `admin-${Date.now()}-${index}.${ext}`;
+        const safeName = `admin-${crypto.randomUUID()}-${index}.${ext}`;
         const bytes = Buffer.from(await file.arrayBuffer());
+
+        if (!isValidFileSignature(file.type, bytes)) {
+          throw new Error("INVALID_FILE_SIGNATURE");
+        }
+
         const output = isOptimizableImage ? await optimizeImage(bytes) : bytes;
         await fs.writeFile(path.join(uploadDir, safeName), output);
         return `/uploads/${safeName}`;
@@ -137,7 +171,14 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json({ url: paths[0], paths });
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && error.message === "INVALID_FILE_SIGNATURE") {
+      return NextResponse.json(
+        { message: "파일 형식이 확장자와 일치하지 않습니다. 원본 파일을 다시 확인해주세요." },
+        { status: 400 },
+      );
+    }
+
     return NextResponse.json(
       { message: "파일 업로드 중 오류가 발생했습니다." },
       { status: 500 },
