@@ -26,7 +26,7 @@ const categoryMeta: Record<
       </svg>
     ),
   },
-  "Database & DevOps": {
+  Database: {
     color: "from-amber-500 to-orange-400",
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/20",
@@ -36,13 +36,33 @@ const categoryMeta: Record<
       </svg>
     ),
   },
-  "Blockchain & Tools": {
+  DevOps: {
+    color: "from-sky-500 to-blue-400",
+    bgColor: "bg-sky-500/10",
+    borderColor: "border-sky-500/20",
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V21m0-4.5l3-3m-3 3l-3-3M6.75 18a4.5 4.5 0 01-.71-8.944 5.25 5.25 0 0110.42-1.685A3.75 3.75 0 1117.25 18H6.75z" />
+      </svg>
+    ),
+  },
+  Blockchain: {
     color: "from-purple-500 to-pink-400",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+      </svg>
+    ),
+  },
+  "Collaboration Tools": {
+    color: "from-rose-500 to-orange-400",
+    bgColor: "bg-rose-500/10",
+    borderColor: "border-rose-500/20",
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a8.96 8.96 0 01-6 2.28 8.96 8.96 0 01-6-2.28m12 0a3 3 0 10-4.243-4.243M18 18.72l-4.243-4.243m-7.514 4.243a3 3 0 114.243-4.243M6.243 18.72l4.243-4.243m3.271 0a3 3 0 10-3.514 0m3.514 0a3 3 0 01-3.514 0M12 3a3 3 0 013 3v.75a3 3 0 11-6 0V6a3 3 0 013-3z" />
       </svg>
     ),
   },
@@ -62,9 +82,11 @@ const defaultMeta = {
 
 const categoryLabelMap: Record<string, string> = {
   Backend: "백엔드",
-  "Database & DevOps": "데이터베이스 · 데브옵스",
+  Database: "데이터베이스",
+  DevOps: "데브옵스",
   Frontend: "프론트엔드",
-  "Blockchain & Tools": "블록체인 · 도구",
+  Blockchain: "블록체인",
+  "Collaboration Tools": "협업 도구",
 };
 
 export default function Skills({ data }: { data: Record<string, string[]> }) {

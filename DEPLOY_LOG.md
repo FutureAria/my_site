@@ -251,3 +251,11 @@
 - Changed uploaded file names from timestamp-based names to random UUID-based names.
 - Added file signature checks for image, PDF, Excel, and PowerPoint uploads before saving files.
 - Added site-wide security headers including CSP, `nosniff`, frame blocking, referrer policy, and restricted browser permissions.
+
+### Portfolio Reviewer Feedback Updates
+
+- Updated the hero and about copy to introduce Park Ju-young as a computer science student and backend developer candidate with a clearer 2021-2025 learning narrative.
+- Added a 2021-2025 timeline item so the portfolio no longer looks empty before the recent project period.
+- Split the skill section into backend, database, frontend, DevOps, blockchain, and collaboration tools.
+- Changed project role labels to `내 역할 · 규모` and rewrote role text to include project scale without adding unverified claims.
+- Removed public phone and Notion homepage contact exposure; the contact menu now leads to contact information, while contact CTA buttons lead directly to the message form.

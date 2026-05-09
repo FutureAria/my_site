@@ -254,7 +254,7 @@ export default async function ProjectPage({
 
         {role && (
           <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-4">담당 역할</h2>
+              <h2 className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-4">내 역할 · 규모</h2>
             <div className="glass rounded-2xl p-6 border-l-4 border-emerald-500/40">
               <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
                 {role}

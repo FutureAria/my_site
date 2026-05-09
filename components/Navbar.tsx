@@ -90,8 +90,8 @@ export default function Navbar() {
             })}
             <li>
               <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, "#contact")}
+                href="#contact-form"
+                onClick={(e) => handleNavClick(e, "#contact-form")}
                 className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 transition-all duration-200 shadow-lg shadow-blue-500/20"
               >
                 연락하기

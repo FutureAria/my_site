@@ -201,7 +201,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
           {project.detail?.role && (
             <div className="mb-4 rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-2">
               <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
-                역할
+                내 역할 · 규모
               </p>
               <p className="readable-copy mobile-clamp-2 mt-1 text-xs leading-6 text-gray-300 text-left">
                 {project.detail.role}

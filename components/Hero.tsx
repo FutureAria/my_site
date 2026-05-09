@@ -101,7 +101,7 @@ export default function Hero({ data }: { data: HeroData }) {
             프로젝트 보기
           </button>
           <button
-            onClick={() => handleScrollTo("contact")}
+            onClick={() => handleScrollTo("contact-form")}
             className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-gray-300 border border-white/10 hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
           >
             연락하기
