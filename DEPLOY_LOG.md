@@ -259,3 +259,10 @@
 - Split the skill section into backend, database, frontend, DevOps, blockchain, and collaboration tools.
 - Changed project role labels to `내 역할 · 규모` and rewrote role text to include project scale without adding unverified claims.
 - Removed public phone and Notion homepage contact exposure; the contact menu now leads to contact information, while contact CTA buttons lead directly to the message form.
+
+### Contact Navigation Refinement
+
+- Kept the top `연락처` menu anchored to the contact information section.
+- Kept `연락하기` CTA buttons anchored to the message form.
+- Added the public email address inside the message form so reviewers can see the destination even when they jump directly to the form.
+- Removed phone and homepage rendering from the public contact component to prevent stale contact data from showing again.
