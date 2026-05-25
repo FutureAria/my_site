@@ -266,3 +266,56 @@
 - Kept `연락하기` CTA buttons anchored to the message form.
 - Added the public email address inside the message form so reviewers can see the destination even when they jump directly to the form.
 - Removed phone and homepage rendering from the public contact component to prevent stale contact data from showing again.
+
+### Backend Control Room Local Prototype
+
+- Added a separate local prototype route at `/control-room` for a `Backend Control Room` style first-screen concept.
+- The prototype keeps the current production homepage untouched while testing a server-status style hero, email CTA, core strengths, and project category preview.
+- Local production build completed successfully after adding the prototype page.
+
+### Portfolio Concept Gallery Prototype
+
+- Added a local-only concept comparison route at `/concepts`.
+- Included five lightweight frontend directions: `Backend Runtime`, `Developer Logbook`, `API Documentation`, `JY Workspace`, and `Resolved Issues`.
+- Kept the current public homepage unchanged so the concepts can be reviewed before choosing one to promote.
+- Local production build completed successfully after adding the concept gallery page.
+
+### AI-Assisted Concept Gallery Revision
+
+- Replaced the first `/concepts` comparison set with AI-assisted portfolio concepts.
+- Added five new directions: `AI Command Center`, `AI Pair Programming Desk`, `AI Workflow Timeline`, `AI Lab Notebook`, and `Human + AI Console`.
+- Framed AI usage as requirement structuring, implementation support, verification, documentation, and deployment review rather than as automatic replacement.
+- Local production build completed successfully after replacing the concept gallery.
+
+### Ten Local Portfolio Concept Pages
+
+- Rebuilt `/concepts` as a local index for ten independent portfolio concept prototypes.
+- Added individual local pages for `AI Lab Notebook`, `AI Pair Developer`, `Backend Runtime`, `Developer Growth Map`, `Problem Solver Casebook`, `JY Build Pipeline`, `AI Command Desk`, `Project Archive Room`, `Recruiter Briefing Mode`, and `Human Verified AI Work`.
+- Kept the current public homepage unchanged; these concept pages are for local review only.
+- Local production build completed successfully, and all `/concepts` pages returned `200` after restarting the local dev server with a clean `.next` directory.
+
+### Remove Local Concept Pages
+
+- Removed the `/concepts` local index and all ten independent concept prototype pages.
+- Kept the existing `/control-room` prototype untouched because it was created separately from the ten-page concept set.
+
+### Portfolio Impact Rework
+
+- Created a rollback checkpoint stash before editing: `checkpoint before portfolio impact rework`.
+- Reworked the first screen around a stronger backend problem-solver headline and concise bullet-style introduction.
+- Added a `제가 풀어본 문제들` section before the project list, linking problem statements to related project details.
+- Rewrote the 2021~2025 timeline item to explain why the backend direction became interesting.
+- Reorganized public skill categories into Backend, DB, DevOps, Blockchain, and Tools.
+- Reduced public contact exposure to email and separated the contact information anchor from the message form anchor.
+
+### Timeline Readability Refinement
+
+- Changed growth timeline cards to show short summary text by default.
+- Added click-to-expand behavior so reviewers can open detailed notes, evidence images, PDF links, and keywords only when needed.
+- Shortened timeline descriptions for education, 2021~2025 direction change, award, K-Digital training, and Linux study items.
+
+### Project Card Curiosity Refinement
+
+- Reworked project cards to lead with a problem-style hook instead of long role and result text.
+- Added short `problem` and `teaser` fields for each project so reviewers see what was built and why it matters before opening details.
+- Reduced visible card body text to compact role/result snippets, fewer tech chips, and a stronger `어떻게 풀었는지 보기` detail link.

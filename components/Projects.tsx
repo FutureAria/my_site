@@ -9,6 +9,8 @@ interface ProjectItem {
   title: string;
   period: string;
   desc: string;
+  problem?: string;
+  teaser?: string;
   techs: string[];
   image: string;
   link: string;
@@ -43,7 +45,7 @@ const colors = [
   { gradient: "from-purple-500/20 to-blue-500/20", accent: "text-purple-400" },
 ];
 
-const MOBILE_TECH_LIMIT = 4;
+const CARD_TECH_LIMIT = 3;
 const DEFAULT_FILTER_LIMIT = 14;
 const IMPORTANT_TECHS = [
   "Oracle Cloud",
@@ -68,22 +70,22 @@ const PROJECT_GROUPS = [
   {
     id: "대표 프로젝트",
     title: "대표 프로젝트",
-    desc: "운영, 배포, 데이터 흐름, API 설계 경험이 잘 드러나는 프로젝트입니다.",
+    desc: "제가 가장 보여주고 싶은 문제 해결 카드입니다. 궁금한 카드를 눌러 구현 과정을 확인할 수 있습니다.",
   },
   {
     id: "백엔드 기초 프로젝트",
     title: "백엔드 기초 프로젝트",
-    desc: "CRUD, DB 설계, 트랜잭션처럼 기본기를 확인할 수 있는 프로젝트입니다.",
+    desc: "정원, 상태, DB 흐름처럼 기본기에서 자주 터지는 문제를 직접 풀어본 기록입니다.",
   },
   {
     id: "개발 중 · 기획 프로젝트",
     title: "개발 중 · 기획 프로젝트",
-    desc: "현재 확장하거나 기획을 정리 중인 프로젝트입니다.",
+    desc: "아직 만들고 있거나 검증 중인 아이디어입니다. 지금 어떤 문제를 풀려는지 먼저 보여줍니다.",
   },
   {
     id: "기타 프로젝트",
     title: "기타 프로젝트",
-    desc: "추가로 정리한 프로젝트입니다.",
+    desc: "추가로 정리한 실험과 기록입니다.",
   },
 ];
 
@@ -149,6 +151,12 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
   ) => {
     const originalIndex = data.indexOf(project);
     const color = colors[originalIndex % colors.length];
+    const categoryLabel = project.category || "기타 프로젝트";
+    const hook = project.problem || project.desc;
+    const teaser = project.teaser || project.detail?.impact || project.desc;
+    const role = project.detail?.role;
+    const impact = project.detail?.impact;
+    const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
 
     return (
       <div
@@ -163,7 +171,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
       >
         {/* Card header - image or gradient */}
         {project.image ? (
-            <div className="h-40 sm:h-44 relative overflow-hidden">
+          <div className="h-44 sm:h-48 relative overflow-hidden">
             <Image
               src={project.image}
               alt={project.title}
@@ -171,11 +179,19 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               className="object-cover group-hover:scale-105 transition-transform duration-500"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-4">
+              <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
+                이걸 해결했습니다
+              </span>
+              <p className="readable-copy mt-2 line-clamp-2 text-base font-bold leading-6 text-white">
+                {hook}
+              </p>
+            </div>
           </div>
         ) : (
           <div
-            className={`h-32 bg-gradient-to-br ${color.gradient} flex items-center justify-center relative overflow-hidden`}
+            className={`h-44 sm:h-48 bg-gradient-to-br ${color.gradient} flex items-center justify-center relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent" />
             <div
@@ -185,58 +201,71 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                 {icons[originalIndex % icons.length]}
               </div>
             </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-4">
+              <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
+                이걸 해결했습니다
+              </span>
+              <p className="readable-copy mt-2 line-clamp-2 text-base font-bold leading-6 text-white">
+                {hook}
+              </p>
+            </div>
           </div>
         )}
 
         {/* Card body */}
         <div className="p-5 sm:p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-white font-bold text-lg leading-tight">
-              {project.title}
-            </h3>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <span className="line-clamp-1 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-gray-300">
+              {categoryLabel}
+            </span>
+            <span className="shrink-0 text-xs text-gray-500 font-medium">
+              {project.period}
+            </span>
           </div>
-          <span className="inline-block text-xs text-gray-500 font-medium mb-3">
-            {project.period}
-          </span>
-          {project.detail?.role && (
-            <div className="mb-4 rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
-                내 역할 · 규모
-              </p>
-              <p className="readable-copy mobile-clamp-2 mt-1 text-xs leading-6 text-gray-300 text-left">
-                {project.detail.role}
-              </p>
-            </div>
-          )}
-          {project.detail?.impact && (
-            <div className="mb-4 rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
-                핵심 성과
-              </p>
-              <p className="readable-copy mobile-clamp-2 mt-1 text-xs leading-6 text-gray-300 text-left">
-                {project.detail.impact}
-              </p>
-            </div>
-          )}
-          <p className="readable-copy mobile-clamp-3 text-gray-400 text-sm leading-7 text-left mb-5">
-            {project.desc}
+          <h3 className="text-white font-bold text-lg leading-tight">
+            {project.title}
+          </h3>
+          <p className="readable-copy mt-3 line-clamp-2 text-gray-400 text-sm leading-7 text-left">
+            {teaser}
           </p>
+
+          <div className="my-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {role && (
+              <div className="rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
+                  내가 맡은 것
+                </p>
+                <p className="readable-copy mt-1 line-clamp-2 text-xs leading-5 text-gray-300 text-left">
+                  {role}
+                </p>
+              </div>
+            )}
+            {impact && (
+              <div className="rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
+                  결과
+                </p>
+                <p className="readable-copy mt-1 line-clamp-2 text-xs leading-5 text-gray-300 text-left">
+                  {impact}
+                </p>
+              </div>
+            )}
+          </div>
 
           {/* Tech tags */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.techs.map((tech, techIndex) => (
+            {visibleCardTechs.map((tech) => (
               <span
                 key={tech}
-                className={`text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 text-gray-300 border border-white/5 group-hover:border-white/10 transition-colors ${
-                  techIndex >= MOBILE_TECH_LIMIT ? "hidden sm:inline-flex" : ""
-                }`}
+                className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 text-gray-300 border border-white/5 group-hover:border-white/10 transition-colors"
               >
                 {tech}
               </span>
             ))}
-            {project.techs.length > MOBILE_TECH_LIMIT && (
-              <span className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 text-gray-400 border border-white/5 sm:hidden">
-                +{project.techs.length - MOBILE_TECH_LIMIT}
+            {project.techs.length > CARD_TECH_LIMIT && (
+              <span className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 text-gray-400 border border-white/5">
+                +{project.techs.length - CARD_TECH_LIMIT}
               </span>
             )}
           </div>
@@ -248,13 +277,13 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-white/5">
             <a
               href={`/projects/${originalIndex}`}
-              className="flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>
-              상세 보기
+              어떻게 풀었는지 보기
             </a>
             {project.link && (
               <a

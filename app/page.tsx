@@ -16,6 +16,8 @@ async function getPortfolioData() {
       title: project.title,
       period: project.period,
       desc: project.desc,
+      problem: project.problem || "",
+      teaser: project.teaser || "",
       techs: project.techs || [],
       image: project.image,
       link: project.link,
@@ -45,7 +47,7 @@ export default async function Home() {
     <>
       <Navbar />
       <main>
-        <Hero data={data.hero} />
+        <Hero data={{ ...data.hero, email: data.contact?.email }} />
         <DeferredHomeSections data={data} />
       </main>
       <Footer />

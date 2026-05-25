@@ -26,7 +26,7 @@ const categoryMeta: Record<
       </svg>
     ),
   },
-  Database: {
+  DB: {
     color: "from-amber-500 to-orange-400",
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/20",
@@ -56,7 +56,7 @@ const categoryMeta: Record<
       </svg>
     ),
   },
-  "Collaboration Tools": {
+  Tools: {
     color: "from-rose-500 to-orange-400",
     bgColor: "bg-rose-500/10",
     borderColor: "border-rose-500/20",
@@ -82,11 +82,10 @@ const defaultMeta = {
 
 const categoryLabelMap: Record<string, string> = {
   Backend: "백엔드",
-  Database: "데이터베이스",
+  DB: "DB",
   DevOps: "데브옵스",
-  Frontend: "프론트엔드",
   Blockchain: "블록체인",
-  "Collaboration Tools": "협업 도구",
+  Tools: "도구 / 프론트 기초",
 };
 
 export default function Skills({ data }: { data: Record<string, string[]> }) {
@@ -108,11 +107,6 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
 
   return (
     <section id="skills" ref={ref} className="py-20 sm:py-24 px-4 sm:px-6 relative">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl" />
-      </div>
-
       <div className="max-w-6xl mx-auto">
         <div
           className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}

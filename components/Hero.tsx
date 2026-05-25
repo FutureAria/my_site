@@ -7,16 +7,12 @@ interface HeroData {
   name: string;
   subtitle: string;
   resumeFile?: string;
+  email?: string;
 }
 
 export default function Hero({ data }: { data: HeroData }) {
-  const [visible, setVisible] = useState(false);
+  const [visible] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   useEffect(() => {
     if (previewOpen) {
@@ -33,21 +29,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
   return (
     <>
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-0 pt-24 pb-10 sm:pt-28 sm:pb-16 supports-[height:100dvh]:min-h-[100dvh]">
-      {/* Animated background blobs */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1.5s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-2xl animate-pulse"
-          style={{ animationDelay: "0.8s" }}
-        />
-      </div>
-
-      {/* Grid pattern */}
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden px-4 pt-24 pb-12 sm:px-6 sm:pt-28 sm:pb-16 supports-[height:100dvh]:min-h-[100dvh]">
       <div
         className="absolute inset-0 -z-10 opacity-[0.03]"
         style={{
@@ -56,92 +38,147 @@ export default function Hero({ data }: { data: HeroData }) {
           backgroundSize: "60px 60px",
         }}
       />
+      <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        {/* Badge */}
-        <div
-          className={`inline-flex max-w-full flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-xs sm:text-sm font-medium leading-5 text-center mb-6 sm:mb-8 transition-all duration-700 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          {data.badge}
-        </div>
-
-        {/* Main heading */}
-        <h1
-          className={`mobile-safe-wrap text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-5 sm:mb-6 transition-all duration-700 delay-100 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          안녕하세요,{" "}
-          <span className="gradient-text block sm:inline">{data.name}</span>
-          입니다.
-        </h1>
-
-        {/* Subtitle */}
-        <p
-          className={`readable-copy mobile-clamp-3 text-sm sm:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-10 leading-7 sm:leading-9 text-center sm:text-left transition-all duration-700 delay-200 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          {data.subtitle}
-        </p>
-
-        {/* CTA Buttons */}
-        <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 delay-300 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          <button
-            onClick={() => handleScrollTo("projects")}
-            className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 active:translate-y-0"
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.04fr_0.96fr]">
+        <div className="text-left">
+          <div
+            className={`mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold leading-5 text-blue-300 transition-all duration-700 sm:px-4 sm:text-sm ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
           >
-            프로젝트 보기
-          </button>
-          <button
-            onClick={() => handleScrollTo("contact-form")}
-            className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-gray-300 border border-white/10 hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            {data.badge}
+          </div>
+
+          <h1
+            className={`mobile-safe-wrap mb-5 text-4xl font-black leading-tight tracking-tight text-white transition-all duration-700 delay-100 sm:text-6xl lg:text-7xl ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
           >
-            연락하기
-          </button>
+            AI로 질문을 구조화하고,
+            <span className="gradient-text block">백엔드 흐름으로</span>
+            <span className="gradient-text block">검증합니다.</span>
+          </h1>
+
+          <p
+            className={`readable-copy mobile-safe-wrap mb-6 max-w-2xl text-base leading-8 text-gray-300 transition-all duration-700 delay-200 sm:text-lg ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            {data.subtitle}
+          </p>
+
+          <div
+            className={`mb-8 grid gap-3 text-sm text-gray-300 transition-all duration-700 delay-300 sm:grid-cols-2 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            {[
+              "컴퓨터공학부 · 백엔드 개발자 지망생",
+              "API 설계와 DB 흐름을 중심으로 학습",
+              "트랜잭션, 데이터 정합성, 배포 경험 기록",
+              "AI는 정리 도구로 쓰고 구현과 검증은 직접 확인",
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                <span className="leading-7">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className={`flex flex-col gap-3 transition-all duration-700 delay-500 sm:flex-row sm:items-center ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <button
+              onClick={() => handleScrollTo("projects")}
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-7 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600 hover:shadow-blue-500/40 active:translate-y-0 sm:w-auto"
+            >
+              프로젝트 보기
+            </button>
+            {data.email && (
+              <a
+                href={`mailto:${data.email}`}
+                className="mobile-safe-wrap inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-white/5 hover:text-white active:translate-y-0 sm:w-auto"
+              >
+                <svg className="h-4 w-4 shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                {data.email}
+              </a>
+            )}
+          </div>
+
           {data.resumeFile && (
-            <>
+            <div className="mt-4 flex flex-wrap gap-2">
               <button
                 onClick={() => setPreviewOpen(true)}
-                className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-gray-300 border border-white/10 hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
                 이력서 미리보기
               </button>
               <a
                 href={data.resumeFile}
                 download
-                className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-gray-300 border border-white/10 hover:bg-white/5 hover:text-white hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
                 이력서 다운로드
               </a>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Scroll indicator */}
         <div
-          className={`mt-14 hidden sm:flex flex-col items-center gap-2 transition-all duration-700 delay-500 ${
-            visible ? "opacity-100" : "opacity-0"
+          className={`relative transition-all duration-700 delay-300 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
+          aria-label="백엔드 문제 해결 흐름"
         >
-          <span className="text-gray-600 text-xs tracking-widest uppercase">
-            아래로 이동
-          </span>
-          <div className="w-px h-10 bg-gradient-to-b from-gray-600 to-transparent animate-float" />
+          <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6">
+            <div className="mb-6 flex flex-col items-start gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
+                  Work Flow
+                </p>
+                <h2 className="mt-2 text-xl font-bold text-white">
+                  문제를 백엔드 구조로 바꾸는 과정
+                </h2>
+              </div>
+              <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+                Human Verified
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {[
+                ["01", "질문 정리", "요구사항과 예외 상황을 먼저 쪼갭니다."],
+                ["02", "API / DB 설계", "데이터 흐름과 저장 구조를 연결합니다."],
+                ["03", "구현", "기능보다 상태 변화가 맞는지 확인합니다."],
+                ["04", "검증 / 배포", "로컬 빌드, 운영 로그, 수정 기록을 남깁니다."],
+              ].map(([number, title, body]) => (
+                <div
+                  key={number}
+                  className="grid grid-cols-[2.75rem_1fr] gap-3 rounded-2xl border border-white/10 bg-gray-950/40 p-3"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">
+                    {number}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-white">{title}</p>
+                    <p className="mt-1 text-sm leading-6 text-gray-400">{body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-gray-300">
+              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">API</span>
+              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">DB</span>
+              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">Deploy</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import About from "@/components/About";
 import CoreStrengths from "@/components/CoreStrengths";
+import ProblemSolving from "@/components/ProblemSolving";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Blog from "@/components/Blog";
@@ -41,6 +42,7 @@ export default function DeferredHomeSections({ data }: DeferredHomeSectionsProps
     <>
       <About data={data.about} />
       <CoreStrengths />
+      <ProblemSolving />
       <Projects data={data.projects} />
       <Skills data={data.skills} />
       <Blog data={data.blog || []} />

@@ -51,6 +51,8 @@ interface Project {
   title: string;
   period: string;
   desc: string;
+  problem?: string;
+  teaser?: string;
   techs: string[];
   image: string;
   link: string;
@@ -852,6 +854,28 @@ export default function AdminPage() {
                     setData({ ...data, projects });
                   }}
                 />
+                <TextArea
+                  label="카드 문제 질문"
+                  value={project.problem || ""}
+                  placeholder="동시에 눌러도 정원이 초과되지 않는 수강신청을 만들 수 있을까?"
+                  rows={2}
+                  onChange={(v) => {
+                    const projects = [...data.projects];
+                    projects[i] = { ...projects[i], problem: v };
+                    setData({ ...data, projects });
+                  }}
+                />
+                <TextArea
+                  label="카드 한 줄 요약"
+                  value={project.teaser || ""}
+                  placeholder="카드에서 먼저 보여줄 짧은 결과 요약"
+                  rows={2}
+                  onChange={(v) => {
+                    const projects = [...data.projects];
+                    projects[i] = { ...projects[i], teaser: v };
+                    setData({ ...data, projects });
+                  }}
+                />
                 <DelimitedField
                   label="기술 스택 (쉼표로 구분)"
                   values={project.techs}
@@ -1275,6 +1299,8 @@ export default function AdminPage() {
                       title: "",
                       period: "",
                       desc: "",
+                      problem: "",
+                      teaser: "",
                       techs: [],
                       image: "",
                       link: "",
