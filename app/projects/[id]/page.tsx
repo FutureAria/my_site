@@ -321,15 +321,17 @@ export default async function ProjectPage({
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
                 먼저 볼 핵심
               </p>
-              <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight text-white sm:text-3xl">
+              <h2 className="mt-2 max-w-2xl text-xl font-black leading-tight text-white sm:text-3xl">
                 {projectHook}
               </h2>
               <p className="readable-copy mt-4 text-sm leading-7 text-[var(--text-secondary)] text-left sm:text-base">
                 {projectTeaser}
               </p>
-              <p className="readable-copy mt-3 text-sm leading-7 text-gray-400 text-left">
-                {project.desc}
-              </p>
+              {!compactCopy && (
+                <p className="readable-copy mt-3 line-clamp-2 text-sm leading-7 text-gray-400 text-left">
+                  {project.desc}
+                </p>
+              )}
 
               {(project.link || project.github || documents.length > 0 || screenshots.length > 0 || detail.readme) && (
                 <div className="mt-6 flex flex-wrap gap-2">
@@ -393,7 +395,7 @@ export default async function ProjectPage({
                     <p className="text-xs font-semibold tracking-widest text-emerald-300">
                       {item.label}
                     </p>
-                    <p className="readable-copy mt-2 line-clamp-3 text-sm leading-7 text-gray-300 text-left">
+                    <p className="readable-copy mt-2 line-clamp-2 text-sm leading-7 text-gray-300 text-left">
                       {item.body}
                     </p>
                   </div>

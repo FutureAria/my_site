@@ -10,6 +10,11 @@ interface HeroData {
   email?: string;
 }
 
+const HERO_INTRO = [
+  "컴퓨터공학부에서 백엔드와 데이터 흐름을 중심으로 프로젝트를 구현하고 있습니다.",
+  "API 설계, DB 구조, 배포 환경까지 직접 다루며 작동하는 서비스로 문제를 설명합니다.",
+];
+
 export default function Hero({ data }: { data: HeroData }) {
   const [visible] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -65,7 +70,11 @@ export default function Hero({ data }: { data: HeroData }) {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            {data.subtitle}
+            {HERO_INTRO.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
           </p>
 
           <div

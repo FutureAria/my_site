@@ -38,6 +38,8 @@ const rsyncBase = [
   "--exclude",
   "CoverLetter/",
   "--exclude",
+  "app/control-room/",
+  "--exclude",
   ".env*",
   "--exclude",
   "data/portfolio.json",
@@ -86,6 +88,7 @@ await run("ssh", [
   ...sshBaseArgs(),
   [
     `cd ${oracleEnv.remoteDir}`,
+    "rm -rf app/control-room .next",
     `node -e ${shellQuote(normalizeUploadPathsScript)}`,
     "npm ci",
     "npm run build",

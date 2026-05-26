@@ -373,3 +373,10 @@
 - Replaced long project-detail question headlines with compact per-project summaries and three short proof cards.
 - Collapsed the `문제 · 해결 · 결과` detail block by default so long explanations do not dominate the first view.
 - Added light-theme overrides for the hero map, project proof cards, and detail proof cards so they no longer look disabled or gray.
+
+### Oracle Deploy Follow-Up Cleanup
+
+- Fixed the local `Cannot find module './331.js'` dev error by clearing the stale `.next` cache and restarting the dev server.
+- Made the hero intro use short fixed lines so older server-side admin data cannot re-expand the first screen copy.
+- Shortened the project detail hero by hiding duplicated long descriptions when a curated compact summary exists.
+- Excluded the local-only `app/control-room` experiment from Oracle deploys and added remote cleanup for stale `.next` output.

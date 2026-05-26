@@ -17,3 +17,6 @@ next-env.d.ts
 .env.local
 .env.oracle
 .env.production.local
+
+# local experiments
+app/control-room/
