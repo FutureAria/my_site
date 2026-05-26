@@ -400,3 +400,9 @@
 - Added the latest BASE CHAIN screens: home, ticket list, MOCK Toss payment, my tickets, resale, market, raffle, exchange, physical exchange, community, and notice.
 - Rewrote the BASE CHAIN copy around the latest contribution: code merge, frontend/mobile fixes, backend API fixes, internal error cleanup, MOCK Toss payment, QR entry, points/membership, and Oracle demo flow.
 - Kept real payment/onchain wording explicit as `mock/demo-only` so the portfolio does not imply production Toss or real minting.
+
+### BASE CHAIN Contribution Framing
+
+- Added screenshot captions so each BASE CHAIN image explains what the interviewer is looking at before opening the modal.
+- Added a dedicated `전체 프로젝트 기능 / 제가 맡아 정리한 부분` section to separate team-wide functionality from the latest personal contribution.
+- Tightened the BASE CHAIN card teaser so the first read emphasizes the current Oracle demo flow instead of the older mini-project framing.

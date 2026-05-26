@@ -6,15 +6,19 @@ import { useEffect, useState } from "react";
 interface ProjectScreenshotGalleryProps {
   projectTitle: string;
   screenshots: string[];
+  captions?: string[];
 }
 
 export default function ProjectScreenshotGallery({
   projectTitle,
   screenshots,
+  captions = [],
 }: ProjectScreenshotGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const selectedImage =
     selectedIndex === null ? null : screenshots[selectedIndex] || null;
+  const selectedCaption =
+    selectedIndex === null ? "" : captions[selectedIndex] || "";
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -76,17 +80,26 @@ export default function ProjectScreenshotGallery({
               onClick={() => setSelectedIndex(i)}
               className="rounded-xl overflow-hidden border border-[var(--border-color)] relative h-48 sm:h-56 group text-left focus:outline-none focus:ring-2 focus:ring-emerald-400/70 focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)]"
               aria-label={`${projectTitle} 스크린샷 ${i + 1} 크게 보기`}
-            >
-              <Image
-                src={img}
-                alt={`${projectTitle} 스크린샷 ${i + 1}`}
+              >
+                <Image
+                  src={img}
+                  alt={`${projectTitle} 스크린샷 ${i + 1}`}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, 50vw"
-              />
-              <span className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-10 text-xs font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                <span>크게 보기</span>
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+              <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/78 to-transparent px-4 pb-3 pt-12 text-white transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-visible:opacity-100">
+                <span>
+                  <span className="block text-[11px] font-semibold text-emerald-200">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {captions[i] && (
+                    <span className="mt-1 line-clamp-2 block text-sm font-bold leading-5">
+                      {captions[i]}
+                    </span>
+                  )}
+                </span>
+                <span className="shrink-0 text-xs font-semibold">크게 보기</span>
               </span>
             </button>
           ))}
@@ -111,8 +124,11 @@ export default function ProjectScreenshotGallery({
                   Screenshot {selectedIndex + 1} / {screenshots.length}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-white">
-                  {projectTitle}
+                  {selectedCaption || projectTitle}
                 </p>
+                {selectedCaption && (
+                  <p className="mt-1 text-xs text-gray-300">{projectTitle}</p>
+                )}
               </div>
               <button
                 type="button"

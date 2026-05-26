@@ -9,6 +9,10 @@ export const dynamic = "force-dynamic";
 
 interface ProjectDetail {
   role?: string;
+  contribution?: {
+    overall?: string[];
+    owned?: string[];
+  };
   impact?: string;
   problem?: string;
   solution?: string;
@@ -27,6 +31,7 @@ interface ProjectDetail {
   challenges?: string;
   takeaways?: string[];
   images?: string[];
+  imageCaptions?: string[];
 }
 
 interface ProjectDemo {
@@ -474,6 +479,44 @@ export default async function ProjectPage({
           </DetailSection>
         )}
 
+        {(detail.contribution?.overall?.length || detail.contribution?.owned?.length) && (
+          <DetailSection title="전체 기능 / 제 기여" eyebrow="contribution" tone="emerald" defaultOpen>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {detail.contribution?.overall?.length ? (
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-cyan-300">
+                    전체 프로젝트 기능
+                  </p>
+                  <ul className="mt-3 space-y-2 text-left text-sm leading-7 text-[var(--text-secondary)]">
+                    {detail.contribution.overall.map((item) => (
+                      <li key={item} className="readable-copy flex gap-2">
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300/80" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {detail.contribution?.owned?.length ? (
+                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-5">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
+                    제가 맡아 정리한 부분
+                  </p>
+                  <ul className="mt-3 space-y-2 text-left text-sm leading-7 text-[var(--text-secondary)]">
+                    {detail.contribution.owned.map((item) => (
+                      <li key={item} className="readable-copy flex gap-2">
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-300/80" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </DetailSection>
+        )}
+
         {(detail.impact || outcomeItems.length > 0) && (
           <DetailSection title="문제 · 해결 · 결과" eyebrow="case flow" tone="blue">
             {detail.impact && (
@@ -689,6 +732,7 @@ export default async function ProjectPage({
             <ProjectScreenshotGallery
               projectTitle={project.title}
               screenshots={screenshots}
+              captions={detail.imageCaptions}
             />
           </section>
         )}
