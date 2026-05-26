@@ -406,3 +406,10 @@
 - Added screenshot captions so each BASE CHAIN image explains what the interviewer is looking at before opening the modal.
 - Added a dedicated `전체 프로젝트 기능 / 제가 맡아 정리한 부분` section to separate team-wide functionality from the latest personal contribution.
 - Tightened the BASE CHAIN card teaser so the first read emphasizes the current Oracle demo flow instead of the older mini-project framing.
+
+### Interview Route Navigation
+
+- Added a first-screen recommended reading path: BASE CHAIN, KIS AI Trader, then MajorLink.
+- Added the same interview route above the project filters so reviewers can jump to the strongest evidence without scanning every card.
+- Updated the BASE CHAIN project card copy to emphasize the latest integrated demo, MOCK payment, QR entry, and Oracle deployment evidence.
+- Checked 390px mobile home and BASE CHAIN detail with browser automation; fixed the BASE CHAIN Korean title wrapping so words like `야구` do not split awkwardly.

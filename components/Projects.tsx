@@ -89,6 +89,27 @@ const PROJECT_GROUPS = [
   },
 ];
 
+const INTERVIEW_ROUTE = [
+  {
+    href: "/projects/4",
+    title: "BASE CHAIN",
+    label: "1순위",
+    body: "최신 운영 배포본, 코드 통합, MOCK 결제, QR 입장 흐름",
+  },
+  {
+    href: "/projects/3",
+    title: "KIS AI 트레이더",
+    label: "2순위",
+    body: "AI 판단 근거, 읽기 전용 화면, 주문 안전장치 분리",
+  },
+  {
+    href: "/projects/6",
+    title: "MajorLink",
+    label: "3순위",
+    body: "아이디어를 MVP 범위, 일정, 역할, 비용 문서로 정리",
+  },
+];
+
 const PROJECT_CARD_COPY: Record<
   string,
   {
@@ -123,10 +144,10 @@ const PROJECT_CARD_COPY: Record<
     impact: "방문자는 읽기 전용, 주문은 승인 후만",
   },
   "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼": {
-    hook: "암표 방지 티켓 흐름",
-    teaser: "예매, NFT 발급, QR 검표를 하나로 연결했습니다.",
-    role: "예매, NFT 발급, 검표 상태 흐름 설계",
-    impact: "암표 제한 로직을 티켓 흐름에 연결",
+    hook: "최신 시연본 통합",
+    teaser: "예매부터 MOCK 결제, QR 입장까지 운영 서버에서 보여줍니다.",
+    role: "코드 통합, 프론트/백엔드 수정, 시연 오류 정리",
+    impact: "운영 배포본 기준으로 최신 화면 갱신",
   },
   "AI 감정 분석 기반 음악 추천 서비스 (개발 중)": {
     hook: "감정 기반 추천 설계",
@@ -400,6 +421,51 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             주요 <span className="gradient-text">프로젝트</span>
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto" />
+        </div>
+
+        <div
+          className={`mb-8 rounded-3xl border border-emerald-400/15 bg-gradient-to-br from-emerald-400/[0.08] via-white/[0.03] to-blue-400/[0.06] p-4 transition-all duration-700 delay-75 sm:p-5 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
+                Interview Route
+              </p>
+              <h3 className="mt-1 text-lg font-bold text-white">
+                면접관 추천 열람 순서
+              </h3>
+            </div>
+            <p className="text-sm leading-6 text-gray-400">
+              가장 설명력이 큰 프로젝트부터 배치했습니다.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {INTERVIEW_ROUTE.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="group rounded-2xl border border-white/10 bg-gray-950/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-400/25 hover:bg-white/[0.055]"
+              >
+                <span className="text-xs font-semibold text-emerald-300">
+                  {item.label}
+                </span>
+                <p className="mt-2 text-base font-bold text-white">
+                  {item.title}
+                </p>
+                <p className="readable-copy mt-2 text-left text-sm leading-6 text-gray-400">
+                  {item.body}
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-blue-300">
+                  상세 보기
+                  <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* 검색 + 필터 */}

@@ -329,7 +329,7 @@ export default async function ProjectPage({
               <span className="inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300 mb-2">
                 Project · {String(idx + 1).padStart(2, "0")}
               </span>
-              <h1 className="mobile-safe-wrap max-w-[18rem] break-all text-[1.4rem] font-black leading-tight sm:max-w-full sm:break-normal sm:text-4xl">
+              <h1 className="korean-title-wrap max-w-[20rem] text-[1.4rem] font-black leading-tight sm:max-w-full sm:text-4xl">
                 {project.title}
               </h1>
               <p className="text-sm text-gray-300 mt-2">{project.period}</p>
@@ -342,7 +342,7 @@ export default async function ProjectPage({
             <span className="inline-block text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-3">
               Project · {String(idx + 1).padStart(2, "0")}
             </span>
-            <h1 className="mobile-safe-wrap mb-3 text-3xl font-black leading-tight sm:text-5xl">
+            <h1 className="korean-title-wrap mb-3 text-3xl font-black leading-tight sm:text-5xl">
               {project.title}
             </h1>
             <p className="text-sm text-[var(--text-secondary)]">{project.period}</p>

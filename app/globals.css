@@ -93,6 +93,11 @@ html.light {
   word-break: break-word;
 }
 
+.korean-title-wrap {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 639px) {
   .mobile-clamp-2,
   .mobile-clamp-3 {

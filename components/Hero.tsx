@@ -15,6 +15,24 @@ const HERO_INTRO = [
   "API 설계, DB 구조, 배포 환경까지 직접 다루며 작동하는 서비스로 문제를 설명합니다.",
 ];
 
+const RECOMMENDED_PROJECTS = [
+  {
+    href: "/projects/4",
+    title: "BASE CHAIN",
+    body: "코드 통합, MOCK 결제, QR 입장",
+  },
+  {
+    href: "/projects/3",
+    title: "KIS AI Trader",
+    body: "AI 판단 근거와 운영 안전장치",
+  },
+  {
+    href: "/projects/6",
+    title: "MajorLink",
+    body: "MVP 범위와 기획 검증",
+  },
+];
+
 export default function Hero({ data }: { data: HeroData }) {
   const [visible] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -91,6 +109,25 @@ export default function Hero({ data }: { data: HeroData }) {
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
                 <span className="leading-7">{item}</span>
               </div>
+            ))}
+          </div>
+
+          <div
+            className={`mb-5 flex flex-wrap items-center gap-2 text-xs transition-all duration-700 delay-[420ms] ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <span className="font-semibold uppercase tracking-[0.18em] text-emerald-300">
+              추천 순서
+            </span>
+            {RECOMMENDED_PROJECTS.map((project, index) => (
+              <a
+                key={project.href}
+                href={project.href}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-semibold text-gray-300 transition-colors hover:border-emerald-400/25 hover:text-white"
+              >
+                {index + 1}. {project.title}
+              </a>
             ))}
           </div>
 
@@ -186,10 +223,34 @@ export default function Hero({ data }: { data: HeroData }) {
               ))}
             </div>
 
-            <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-gray-300">
-              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">API</span>
-              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">DB</span>
-              <span className="rounded-xl border border-white/10 bg-white/5 px-2 py-2">Deploy</span>
+            <div className="mt-5 rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.04] p-3">
+              <p className="px-1 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
+                추천 열람 순서
+              </p>
+              <div className="mt-3 grid gap-2">
+                {RECOMMENDED_PROJECTS.map((project, index) => (
+                  <a
+                    key={project.href}
+                    href={project.href}
+                    className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2.5 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.06]"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-xs font-black text-emerald-200">
+                      {index + 1}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-bold text-white">
+                        {project.title}
+                      </span>
+                      <span className="mobile-safe-wrap mt-0.5 block text-xs leading-5 text-gray-400">
+                        {project.body}
+                      </span>
+                    </span>
+                    <svg className="ml-auto h-4 w-4 shrink-0 text-gray-500 transition-colors group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
