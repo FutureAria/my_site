@@ -56,8 +56,8 @@ export default function Hero({ data }: { data: HeroData }) {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            AI로 질문을 구조화하고,
-            <span className="gradient-text block">백엔드 흐름으로</span>
+            문제를 쪼개고,
+            <span className="gradient-text block">백엔드 구조로</span>
             <span className="gradient-text block">검증합니다.</span>
           </h1>
 
@@ -76,9 +76,9 @@ export default function Hero({ data }: { data: HeroData }) {
           >
             {[
               "컴퓨터공학부 · 백엔드 개발자 지망생",
-              "API 설계와 DB 흐름을 중심으로 학습",
-              "트랜잭션, 데이터 정합성, 배포 경험 기록",
-              "AI는 정리 도구로 쓰고 구현과 검증은 직접 확인",
+              "API, DB, 배포 흐름을 프로젝트로 검증",
+              "동시성, 데이터 정합성, 운영 로그 중심 기록",
+              "AI는 정리 도구, 구현과 확인은 직접 수행",
             ].map((item) => (
               <div key={item} className="flex items-start gap-2">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
@@ -97,6 +97,12 @@ export default function Hero({ data }: { data: HeroData }) {
               className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-7 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600 hover:shadow-blue-500/40 active:translate-y-0 sm:w-auto"
             >
               프로젝트 보기
+            </button>
+            <button
+              onClick={() => handleScrollTo("problems")}
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-5 py-3 text-sm font-semibold text-blue-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300/40 hover:bg-blue-400/15 hover:text-white active:translate-y-0 sm:w-auto"
+            >
+              제가 푼 문제들
             </button>
             {data.email && (
               <a
@@ -140,10 +146,10 @@ export default function Hero({ data }: { data: HeroData }) {
             <div className="mb-6 flex flex-col items-start gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
-                  Work Flow
+                  Interview Map
                 </p>
                 <h2 className="mt-2 text-xl font-bold text-white">
-                  문제를 백엔드 구조로 바꾸는 과정
+                  눌러서 확인할 수 있는 흐름
                 </h2>
               </div>
               <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
@@ -153,10 +159,10 @@ export default function Hero({ data }: { data: HeroData }) {
 
             <div className="space-y-3">
               {[
-                ["01", "질문 정리", "요구사항과 예외 상황을 먼저 쪼갭니다."],
-                ["02", "API / DB 설계", "데이터 흐름과 저장 구조를 연결합니다."],
-                ["03", "구현", "기능보다 상태 변화가 맞는지 확인합니다."],
-                ["04", "검증 / 배포", "로컬 빌드, 운영 로그, 수정 기록을 남깁니다."],
+                ["01", "문제", "왜 이 기능이 필요한지 한 문장으로 먼저 보여줍니다."],
+                ["02", "역할", "내가 맡은 API, DB, 배포 흐름을 분리해 설명합니다."],
+                ["03", "증거", "데모, GitHub, 기획자료, 스크린샷으로 확인하게 합니다."],
+                ["04", "검증", "실행 결과와 운영 기록을 남긴 부분만 공개합니다."],
               ].map(([number, title, body]) => (
                 <div
                   key={number}

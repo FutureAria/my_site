@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const categoryMeta: Record<
@@ -88,6 +89,44 @@ const categoryLabelMap: Record<string, string> = {
   Tools: "도구 / 프론트 기초",
 };
 
+const categoryEvidenceMap: Record<
+  string,
+  { summary: string; projects: Array<{ label: string; href: string }> }
+> = {
+  Backend: {
+    summary: "요청-응답 흐름과 상태 변화를 설명할 수 있는 프로젝트에서 사용했습니다.",
+    projects: [
+      { label: "CRUD", href: "/projects/1" },
+      { label: "KIS", href: "/projects/3" },
+    ],
+  },
+  DB: {
+    summary: "정원, 좌석, 추천 점수처럼 값이 어긋나면 문제가 되는 기능에서 다뤘습니다.",
+    projects: [
+      { label: "수강신청", href: "/projects/0" },
+      { label: "상권 분석", href: "/projects/2" },
+    ],
+  },
+  DevOps: {
+    summary: "로컬에서 끝내지 않고 도메인, HTTPS, 서버 로그까지 확인한 경험입니다.",
+    projects: [
+      { label: "KIS", href: "/projects/3" },
+      { label: "BASE CHAIN", href: "/projects/4" },
+    ],
+  },
+  Blockchain: {
+    summary: "NFT 티켓 발급과 재판매 제한처럼 상태 흐름이 중요한 기능에 연결했습니다.",
+    projects: [{ label: "BASE CHAIN", href: "/projects/4" }],
+  },
+  Tools: {
+    summary: "협업, API 확인, 화면 구현, AI 기반 요구사항 정리에 사용하는 도구입니다.",
+    projects: [
+      { label: "Major Link", href: "/projects/6" },
+      { label: "포트폴리오", href: "/#projects" },
+    ],
+  },
+};
+
 export default function Skills({ data }: { data: Record<string, string[]> }) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -112,18 +151,22 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
           className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <span className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-3 block">
-            기술 스택
+            skill map
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            기술 <span className="gradient-text">스택</span>
+            어디에 썼는지 보이는 <span className="gradient-text">기술</span>
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto" />
+          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto mb-6" />
+          <p className="mx-auto max-w-3xl text-center text-sm leading-7 text-gray-400 sm:text-base">
+            단순 나열보다, 어떤 문제를 풀 때 사용했는지 함께 보여주도록 정리했습니다.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {categories.map(([category, skills], i) => {
             const meta = categoryMeta[category] || defaultMeta;
             const displayCategory = categoryLabelMap[category] || category;
+            const evidence = categoryEvidenceMap[category];
             return (
               <div
                 key={category}
@@ -144,6 +187,24 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
                     {displayCategory}
                   </h3>
                 </div>
+                {evidence && (
+                  <div className="mb-5 rounded-xl border border-white/10 bg-white/[0.035] p-4">
+                    <p className="text-sm leading-7 text-gray-300">
+                      {evidence.summary}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {evidence.projects.map((project) => (
+                        <Link
+                          key={`${category}-${project.label}`}
+                          href={project.href}
+                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-gray-300 transition-colors hover:border-white/25 hover:text-white"
+                        >
+                          {project.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <span

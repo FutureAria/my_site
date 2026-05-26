@@ -46,6 +46,9 @@ interface Project {
   title: string;
   period: string;
   desc: string;
+  category?: string;
+  problem?: string;
+  teaser?: string;
   techs: string[];
   image: string;
   link: string;
@@ -81,6 +84,59 @@ function parseChallenges(text: string) {
     if (match) return { key: match[1], body: match[2].trim() };
     return { key: "", body: block };
   });
+}
+
+const sectionToneClasses = {
+  emerald: "border-emerald-500/20 bg-emerald-500/[0.04] text-emerald-300",
+  blue: "border-blue-500/20 bg-blue-500/[0.04] text-blue-300",
+  cyan: "border-cyan-500/20 bg-cyan-500/[0.04] text-cyan-300",
+  amber: "border-amber-500/20 bg-amber-500/[0.05] text-amber-300",
+  purple: "border-purple-500/20 bg-purple-500/[0.04] text-purple-300",
+  rose: "border-rose-500/20 bg-rose-500/[0.04] text-rose-300",
+};
+
+function DetailSection({
+  title,
+  eyebrow,
+  children,
+  defaultOpen = false,
+  tone = "blue",
+}: {
+  title: string;
+  eyebrow?: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  tone?: keyof typeof sectionToneClasses;
+}) {
+  const toneClass = sectionToneClasses[tone];
+
+  return (
+    <details
+      open={defaultOpen}
+      className={`group mb-4 rounded-2xl border ${toneClass} transition-colors open:bg-white/[0.035]`}
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6">
+        <div>
+          {eyebrow && (
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-90">
+              {eyebrow}
+            </p>
+          )}
+          <h2 className="mt-1 text-base font-bold text-[var(--text-primary)]">
+            {title}
+          </h2>
+        </div>
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[var(--text-secondary)] transition-transform group-open:rotate-180">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
+      </summary>
+      <div className="border-t border-white/10 px-5 pb-5 pt-4 sm:px-6">
+        {children}
+      </div>
+    </details>
+  );
 }
 
 async function getData() {
@@ -129,6 +185,13 @@ export default async function ProjectPage({
   const demo = project.demo;
   const documents = project.documents || [];
   const hasDemoGuide = Boolean(demo?.note);
+  const projectHook = project.problem || detail.problem || project.desc;
+  const projectTeaser = project.teaser || detail.impact || project.desc;
+  const snapshotItems = [
+    { label: "문제", body: detail.problem || projectHook },
+    { label: "내 역할", body: role },
+    { label: "확인 결과", body: detail.impact || detail.result },
+  ].filter((item) => item.body);
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
@@ -185,58 +248,109 @@ export default async function ProjectPage({
           </div>
         )}
 
-        <p className="readable-copy text-[var(--text-secondary)] text-base sm:text-lg leading-8 sm:leading-9 text-left mb-10">
-          {project.desc}
-        </p>
-
-        {(project.link || project.github) && (
-          <div className="mb-12 space-y-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 text-white text-sm font-semibold hover:from-blue-600 hover:to-emerald-600 transition-all shadow-lg shadow-blue-500/25 hover:-translate-y-0.5"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                  </svg>
-                  {demo?.ctaLabel || "라이브 데모"}
-                </a>
+        <section className="mb-10 overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-white/[0.03] to-emerald-500/10 p-5 shadow-2xl shadow-black/10 sm:p-7">
+          <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+            <div>
+              {project.category && (
+                <span className="inline-flex rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                  {project.category}
+                </span>
               )}
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[var(--border-color)] text-[var(--text-secondary)] text-sm font-semibold hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all hover:-translate-y-0.5"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                  소스 코드
-                </a>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
+                이 프로젝트, 뭐가 궁금한가요?
+              </p>
+              <h2 className="mt-2 text-2xl font-black leading-tight text-white sm:text-3xl">
+                {projectHook}
+              </h2>
+              <p className="readable-copy mt-4 text-sm leading-7 text-[var(--text-secondary)] text-left sm:text-base">
+                {projectTeaser}
+              </p>
+              <p className="readable-copy mt-3 text-sm leading-7 text-gray-400 text-left">
+                {project.desc}
+              </p>
+
+              {(project.link || project.github || documents.length > 0 || screenshots.length > 0 || detail.readme) && (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600"
+                    >
+                      {demo?.ctaLabel || "데모 보기"}
+                    </a>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-200 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white"
+                    >
+                      GitHub
+                    </a>
+                  )}
+                  {documents.length > 0 && (
+                    <Link
+                      href={`/projects/${idx}/documents/0`}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 transition-all hover:-translate-y-0.5 hover:bg-emerald-500/15"
+                    >
+                      기획자료
+                    </Link>
+                  )}
+                  {screenshots.length > 0 && (
+                    <a
+                      href="#screenshots"
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300 transition-all hover:-translate-y-0.5 hover:bg-cyan-500/15"
+                    >
+                      화면 보기
+                    </a>
+                  )}
+                  {detail.readme && (
+                    <a
+                      href={detail.readme}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white"
+                    >
+                      README
+                    </a>
+                  )}
+                </div>
               )}
             </div>
-            {hasDemoGuide && (
-              <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-5">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
-                      읽기 전용 데모 안내
+
+            {snapshotItems.length > 0 && (
+              <div className="grid gap-3">
+                {snapshotItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-white/10 bg-gray-950/35 p-4"
+                  >
+                    <p className="text-xs font-semibold tracking-widest text-emerald-300">
+                      {item.label}
                     </p>
-                    {demo?.note && (
-                      <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
-                        {demo.note}
-                      </p>
-                    )}
+                    <p className="readable-copy mt-2 line-clamp-3 text-sm leading-7 text-gray-300 text-left">
+                      {item.body}
+                    </p>
                   </div>
-                </div>
+                ))}
               </div>
             )}
           </div>
-        )}
+
+          {hasDemoGuide && demo?.note && (
+            <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4">
+              <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
+                읽기 전용 데모 안내
+              </p>
+              <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
+                {demo.note}
+              </p>
+            </div>
+          )}
+        </section>
 
         <section className="mb-12">
           <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">기술 스택</h2>
@@ -253,21 +367,15 @@ export default async function ProjectPage({
         </section>
 
         {role && (
-          <section className="mb-12">
-              <h2 className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-4">내 역할 · 규모</h2>
-            <div className="glass rounded-2xl p-6 border-l-4 border-emerald-500/40">
-              <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
-                {role}
-              </p>
-            </div>
-          </section>
+          <DetailSection title="내 역할 · 규모" eyebrow="role" tone="emerald">
+            <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
+              {role}
+            </p>
+          </DetailSection>
         )}
 
         {(detail.impact || outcomeItems.length > 0) && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">
-              문제 · 해결 · 결과
-            </h2>
+          <DetailSection title="문제 · 해결 · 결과" eyebrow="case flow" tone="blue" defaultOpen>
             {detail.impact && (
               <div className="mb-4 rounded-2xl border border-blue-500/25 bg-blue-500/10 p-6">
                 <p className="text-xs font-semibold tracking-widest uppercase text-blue-300">
@@ -295,14 +403,11 @@ export default async function ProjectPage({
                 ))}
               </div>
             )}
-          </section>
+          </DetailSection>
         )}
 
         {documentItems.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-cyan-400 mb-4">
-              설계 / 문서
-            </h2>
+          <DetailSection title="설계 / 문서" eyebrow="architecture" tone="cyan">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {documentItems.map((item) => (
                 <div
@@ -331,27 +436,21 @@ export default async function ProjectPage({
                 </svg>
               </a>
             )}
-          </section>
+          </DetailSection>
         )}
 
         {detail.troubleshooting && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-amber-400 mb-4">
-              트러블슈팅
-            </h2>
+          <DetailSection title="트러블슈팅" eyebrow="debugging" tone="amber">
             <div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 p-6">
               <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
                 {detail.troubleshooting}
               </p>
             </div>
-          </section>
+          </DetailSection>
         )}
 
         {validationItems.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-purple-400 mb-4">
-              검증 / 운영 기록
-            </h2>
+          <DetailSection title="검증 / 운영 기록" eyebrow="verification" tone="purple">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {validationItems.map((item) => (
                 <div
@@ -367,12 +466,11 @@ export default async function ProjectPage({
                 </div>
               ))}
             </div>
-          </section>
+          </DetailSection>
         )}
 
         {features.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">주요 기능</h2>
+          <DetailSection title="주요 기능" eyebrow="features" tone="blue">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {features.map((f, i) => (
                 <div
@@ -384,14 +482,11 @@ export default async function ProjectPage({
                 </div>
               ))}
             </div>
-          </section>
+          </DetailSection>
         )}
 
         {challengeSections.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-amber-400 mb-4">
-              문제 해결 과정
-            </h2>
+          <DetailSection title="문제 해결 과정" eyebrow="problem solving" tone="amber">
             <div className="space-y-4">
               {challengeSections.map((block, i) => {
                 const meta = challengeBlocks[block.key];
@@ -415,14 +510,11 @@ export default async function ProjectPage({
                 );
               })}
             </div>
-          </section>
+          </DetailSection>
         )}
 
         {takeaways.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-purple-400 mb-4">
-              프로젝트에서 배운 것
-            </h2>
+          <DetailSection title="프로젝트에서 배운 것" eyebrow="takeaways" tone="purple">
             <div className="space-y-3">
               {takeaways.map((item, i) => (
                 <div
@@ -438,14 +530,11 @@ export default async function ProjectPage({
                 </div>
               ))}
             </div>
-          </section>
+          </DetailSection>
         )}
 
         {documents.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-4">
-              기획자료
-            </h2>
+          <DetailSection title="기획자료 / 첨부 문서" eyebrow="documents" tone="emerald">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {documents.map((doc, docIndex) => (
                 <div
@@ -487,13 +576,17 @@ export default async function ProjectPage({
                 </div>
               ))}
             </div>
-          </section>
+          </DetailSection>
         )}
 
-        <ProjectScreenshotGallery
-          projectTitle={project.title}
-          screenshots={screenshots}
-        />
+        {screenshots.length > 0 && (
+          <section id="screenshots" className="mt-10">
+            <ProjectScreenshotGallery
+              projectTitle={project.title}
+              screenshots={screenshots}
+            />
+          </section>
+        )}
 
         {!role && !detail.impact && outcomeItems.length === 0 && documentItems.length === 0 && !detail.troubleshooting && validationItems.length === 0 && features.length === 0 && challengeSections.length === 0 && takeaways.length === 0 && screenshots.length === 0 && documents.length === 0 && (
           <div className="glass rounded-2xl p-10 text-center">

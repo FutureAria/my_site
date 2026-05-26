@@ -1,36 +1,45 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const strengths = [
   {
-    title: "API 설계와 서버 구조 이해",
+    title: "API 흐름 설계",
     description:
-      "웹 서비스 프로젝트를 통해 API 설계와 서버 구조에 대한 이해를 쌓아왔습니다.",
+      "화면 요청이 어떤 서버 응답과 상태 변화로 이어지는지 먼저 쪼개고, 기능별 책임을 나눕니다.",
+    proof: "CRUD · KIS · BASE CHAIN",
+    href: "/projects/1",
     accent: "from-blue-500/20 to-cyan-400/20",
     border: "border-blue-500/20",
     text: "text-blue-300",
   },
   {
-    title: "데이터 처리와 DB 구조 고려",
+    title: "DB 정합성 관점",
     description:
-      "데이터 처리 흐름과 DB 구조를 고려하며 기능을 구현하는 데 익숙합니다.",
+      "정원, 좌석, 추천 점수처럼 어긋나면 바로 문제가 되는 데이터를 기준으로 저장 흐름을 설계합니다.",
+    proof: "수강신청 · 상권 분석 · 티켓 상태",
+    href: "/projects/0",
     accent: "from-emerald-500/20 to-teal-400/20",
     border: "border-emerald-500/20",
     text: "text-emerald-300",
   },
   {
-    title: "안정적인 서비스 운영 관심",
+    title: "배포와 운영 기록",
     description:
-      "트랜잭션 처리와 데이터 정합성처럼 안정적인 서비스 운영에 필요한 요소에 관심이 많습니다.",
+      "Oracle, Caddy, DuckDNS, 로그 확인처럼 보여주는 데서 끝나지 않고 운영 환경까지 확인합니다.",
+    proof: "KIS · BASE CHAIN · 포트폴리오",
+    href: "/projects/3",
     accent: "from-amber-500/20 to-orange-400/20",
     border: "border-amber-500/20",
     text: "text-amber-300",
   },
   {
-    title: "AI 도구 활용",
+    title: "AI 활용 방식",
     description:
-      "AI 도구를 활용해 학습 속도를 높이고 구현 과정의 문제를 빠르게 분석하고 있습니다.",
+      "AI를 자동 결정자가 아니라 요구사항 정리, 판단 근거 요약, 검증 체크리스트 작성 도구로 씁니다.",
+    proof: "KIS · 음악 추천 · 문서 정리",
+    href: "/projects/5",
     accent: "from-purple-500/20 to-pink-400/20",
     border: "border-purple-500/20",
     text: "text-purple-300",
@@ -67,14 +76,14 @@ export default function CoreStrengths() {
           }`}
         >
           <span className="text-sm font-semibold tracking-widest uppercase text-emerald-400 mb-3 block">
-            핵심 역량
+            evidence
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            핵심 <span className="gradient-text">역량</span>
+            말로 끝나지 않는 <span className="gradient-text">근거</span>
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto mb-6" />
           <p className="readable-copy text-gray-400 text-base max-w-3xl mx-auto leading-8 text-center">
-            프로젝트를 수행하며 꾸준히 쌓아온 백엔드 중심 역량을 정리했습니다.
+            면접에서 바로 이어서 설명할 수 있도록 역량을 실제 프로젝트 증거와 묶었습니다.
           </p>
         </div>
 
@@ -96,6 +105,21 @@ export default function CoreStrengths() {
               <p className="readable-copy text-gray-400 text-sm leading-7 text-left">
                 {item.description}
               </p>
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <p className={`mb-3 text-xs font-semibold ${item.text}`}>
+                  확인할 수 있는 프로젝트
+                </p>
+                <p className="text-sm leading-6 text-gray-300">{item.proof}</p>
+                <Link
+                  href={item.href}
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gray-300 transition-colors hover:text-white"
+                >
+                  근거 보기
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

@@ -319,3 +319,10 @@
 - Reworked project cards to lead with a problem-style hook instead of long role and result text.
 - Added short `problem` and `teaser` fields for each project so reviewers see what was built and why it matters before opening details.
 - Reduced visible card body text to compact role/result snippets, fewer tech chips, and a stronger `어떻게 풀었는지 보기` detail link.
+
+### Interview-Focused Evidence Flow
+
+- Updated the hero copy to emphasize backend problem decomposition, implementation, and verification rather than a long self-introduction.
+- Reworked strengths and skill sections so each item points to project evidence instead of only listing abilities.
+- Changed blog cards into interview-question-style notes that start from a concrete problem.
+- Rebuilt project detail pages around a question hook, short evidence summary, proof links, and collapsible detail sections.
