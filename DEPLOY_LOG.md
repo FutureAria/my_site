@@ -393,3 +393,10 @@
 - Oracle deploy completed successfully; remote build used Next.js `15.5.18`, service restarted as `active (running)`, and `/control-room` stayed excluded from the deployed route list.
 - Production checks after deploy: `/` returned `200`, `/projects/4` returned `200`, and `/control-room` returned `404`.
 - Oracle capacity after deploy: `45G` total, `9.5G` used, `36G` available, `/home/ubuntu/my_site` at `620M`.
+
+### BASE CHAIN Latest Contribution Refresh
+
+- Replaced old BASE CHAIN portfolio screenshots with new Oracle-deployed captures under `/uploads/basechain-latest/`.
+- Added the latest BASE CHAIN screens: home, ticket list, MOCK Toss payment, my tickets, resale, market, raffle, exchange, physical exchange, community, and notice.
+- Rewrote the BASE CHAIN copy around the latest contribution: code merge, frontend/mobile fixes, backend API fixes, internal error cleanup, MOCK Toss payment, QR entry, points/membership, and Oracle demo flow.
+- Kept real payment/onchain wording explicit as `mock/demo-only` so the portfolio does not imply production Toss or real minting.
