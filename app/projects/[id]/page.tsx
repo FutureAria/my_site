@@ -76,6 +76,67 @@ const challengeBlocks: Record<string, { label: string; cls: string; dot: string 
   },
 };
 
+const PROJECT_DETAIL_COPY: Record<
+  string,
+  {
+    headline: string;
+    summary: string;
+    problem: string;
+    role: string;
+    result: string;
+  }
+> = {
+  "장바구니 기능 기반 수강신청 웹 플랫폼": {
+    headline: "동시 신청에도 정원 초과 방지",
+    summary: "장바구니에서 신청 확정까지 이어지는 흐름을 트랜잭션과 행 잠금 기준으로 정리했습니다.",
+    problem: "동시에 신청하면 정원 초과가 생길 수 있었습니다.",
+    role: "신청 DB와 트랜잭션 처리 흐름을 맡았습니다.",
+    result: "정원, 장바구니, 신청 내역의 정합성을 설명할 수 있게 정리했습니다.",
+  },
+  "CRUD 기반 물품 관리 웹 시스템": {
+    headline: "저장 결과 즉시 반영",
+    summary: "등록, 수정, 삭제 이후 API 응답을 기준으로 목록 상태가 다시 맞춰지도록 구성했습니다.",
+    problem: "저장 후 화면 상태가 늦게 바뀌거나 어긋났습니다.",
+    role: "목록 상태, 입력 폼, API 갱신 흐름을 분리했습니다.",
+    result: "사용자가 저장 결과를 바로 확인할 수 있게 했습니다.",
+  },
+  "데이터 기반 AI 상권 분석 및 추천 서비스": {
+    headline: "공공데이터를 상권 점수로 전환",
+    summary: "공공 API 데이터를 수집·정제하고 추천 기준으로 연결해 상권 판단 화면을 만들었습니다.",
+    problem: "흩어진 공공데이터만으로는 상권 판단 기준이 보이지 않았습니다.",
+    role: "API 수집, 결측치 정리, 점수화 흐름을 맡았습니다.",
+    result: "상권 추천 결과를 화면에서 비교할 수 있게 했습니다.",
+  },
+  "KIS AI 트레이더": {
+    headline: "읽기 전용 / 주문 권한 분리",
+    summary: "시장 데이터, 판단 근거, 주문 상태가 섞이지 않도록 방문자 화면과 관리자 흐름을 나눴습니다.",
+    problem: "방문자가 주문 상태를 오해하면 실거래 전환도 위험해질 수 있었습니다.",
+    role: "데이터 수집, 판단 근거, 읽기모드/관리자 흐름을 설계했습니다.",
+    result: "읽기 전용 데모와 운영 잠금 구조를 분리했습니다.",
+  },
+  "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼": {
+    headline: "예매와 NFT 티켓 상태 연결",
+    summary: "예매, NFT 발급, QR 검표, 재판매 제한 흐름을 하나의 티켓 상태 관리 구조로 묶었습니다.",
+    problem: "예매와 검표, 재판매 상태가 분리되면 암표 제한을 설명하기 어려웠습니다.",
+    role: "좌석 예매 API와 NFT 티켓 상태 흐름을 설계했습니다.",
+    result: "티켓 발급부터 입장 검증까지 한 흐름으로 정리했습니다.",
+  },
+  "AI 감정 분석 기반 음악 추천 서비스 (개발 중)": {
+    headline: "감정 기록 기반 추천 설계",
+    summary: "Gemini 응답과 사용자 감정 히스토리를 추천 데이터로 연결하는 구조를 설계하고 있습니다.",
+    problem: "감정 분석 결과를 추천 기준으로 바로 쓰기 어려웠습니다.",
+    role: "감정 분석 응답과 추천 기준 연결 구조를 정리했습니다.",
+    result: "사용자 히스토리 기반 추천 흐름을 검증 중입니다.",
+  },
+  Major_Link: {
+    headline: "MVP 범위 먼저 검증",
+    summary: "기능, 일정, 역할 분담, 비용 계획을 개발 전에 확인할 수 있는 공개 문서로 정리했습니다.",
+    problem: "아이디어만 있으면 개발 범위와 검증 기준이 흐려졌습니다.",
+    role: "MVP 정의, 일정표, 역할 분담표, 비용 계획을 정리했습니다.",
+    result: "개발 전에 무엇을 만들고 확인할지 기준을 잡았습니다.",
+  },
+};
+
 function parseChallenges(text: string) {
   if (!text) return [] as Array<{ key: string; body: string }>;
   const blocks = text.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
@@ -113,7 +174,7 @@ function DetailSection({
   return (
     <details
       open={defaultOpen}
-      className={`group mb-4 rounded-2xl border ${toneClass} transition-colors open:bg-white/[0.035]`}
+      className={`detail-accordion group mb-4 rounded-2xl border ${toneClass} transition-colors open:bg-white/[0.035]`}
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6">
         <div>
@@ -132,7 +193,7 @@ function DetailSection({
           </svg>
         </span>
       </summary>
-      <div className="border-t border-white/10 px-5 pb-5 pt-4 sm:px-6">
+      <div className="detail-accordion-body border-t border-white/10 px-5 pb-5 pt-4 sm:px-6">
         {children}
       </div>
     </details>
@@ -185,12 +246,13 @@ export default async function ProjectPage({
   const demo = project.demo;
   const documents = project.documents || [];
   const hasDemoGuide = Boolean(demo?.note);
-  const projectHook = project.problem || detail.problem || project.desc;
-  const projectTeaser = project.teaser || detail.impact || project.desc;
+  const compactCopy = PROJECT_DETAIL_COPY[project.title];
+  const projectHook = compactCopy?.headline || project.problem || detail.problem || project.desc;
+  const projectTeaser = compactCopy?.summary || project.teaser || detail.impact || project.desc;
   const snapshotItems = [
-    { label: "문제", body: detail.problem || projectHook },
-    { label: "내 역할", body: role },
-    { label: "확인 결과", body: detail.impact || detail.result },
+    { label: "문제", body: compactCopy?.problem || detail.problem || projectHook },
+    { label: "내 역할", body: compactCopy?.role || role },
+    { label: "확인 결과", body: compactCopy?.result || detail.impact || detail.result },
   ].filter((item) => item.body);
 
   return (
@@ -248,7 +310,7 @@ export default async function ProjectPage({
           </div>
         )}
 
-        <section className="mb-10 overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-white/[0.03] to-emerald-500/10 p-5 shadow-2xl shadow-black/10 sm:p-7">
+        <section className="project-detail-hero mb-10 overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-white/[0.03] to-emerald-500/10 p-5 shadow-2xl shadow-black/10 sm:p-7">
           <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
               {project.category && (
@@ -257,9 +319,9 @@ export default async function ProjectPage({
                 </span>
               )}
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
-                이 프로젝트, 뭐가 궁금한가요?
+                먼저 볼 핵심
               </p>
-              <h2 className="mt-2 text-2xl font-black leading-tight text-white sm:text-3xl">
+              <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight text-white sm:text-3xl">
                 {projectHook}
               </h2>
               <p className="readable-copy mt-4 text-sm leading-7 text-[var(--text-secondary)] text-left sm:text-base">
@@ -326,7 +388,7 @@ export default async function ProjectPage({
                 {snapshotItems.map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-2xl border border-white/10 bg-gray-950/35 p-4"
+                    className="detail-proof-card rounded-2xl border border-white/10 bg-gray-950/35 p-4"
                   >
                     <p className="text-xs font-semibold tracking-widest text-emerald-300">
                       {item.label}
@@ -341,7 +403,7 @@ export default async function ProjectPage({
           </div>
 
           {hasDemoGuide && demo?.note && (
-            <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4">
+            <div className="detail-demo-note mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4">
               <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
                 읽기 전용 데모 안내
               </p>
@@ -375,7 +437,7 @@ export default async function ProjectPage({
         )}
 
         {(detail.impact || outcomeItems.length > 0) && (
-          <DetailSection title="문제 · 해결 · 결과" eyebrow="case flow" tone="blue" defaultOpen>
+          <DetailSection title="문제 · 해결 · 결과" eyebrow="case flow" tone="blue">
             {detail.impact && (
               <div className="mb-4 rounded-2xl border border-blue-500/25 bg-blue-500/10 p-6">
                 <p className="text-xs font-semibold tracking-widest uppercase text-blue-300">

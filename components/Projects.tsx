@@ -236,7 +236,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4">
-              <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
+              <span className="project-card-state inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
                 {cardBadge}
               </span>
               <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
@@ -258,7 +258,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4">
-              <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
+              <span className="project-card-state inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
                 {cardBadge}
               </span>
               <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
@@ -271,7 +271,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
         {/* Card body */}
         <div className="p-5 sm:p-6">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <span className="line-clamp-1 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-gray-300">
+            <span className="project-card-category line-clamp-1 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-gray-300">
               {categoryLabel}
             </span>
             <span className="shrink-0 text-xs text-gray-500 font-medium">
@@ -287,7 +287,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
 
           <div className="my-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {role && (
-              <div className="rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-2.5">
+              <div className="project-card-note project-card-note-role rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-2.5">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
                   내가 맡은 것
                 </p>
@@ -297,7 +297,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               </div>
             )}
             {impact && (
-              <div className="rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-2.5">
+              <div className="project-card-note project-card-note-result rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-2.5">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
                   결과
                 </p>

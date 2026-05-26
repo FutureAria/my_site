@@ -282,6 +282,116 @@ html.light textarea {
   color: #111827 !important;
 }
 
+/* Portfolio readability refinements */
+.hero-map-shell,
+.project-detail-hero,
+.detail-proof-card,
+.project-card-note {
+  text-align: left;
+}
+
+.hero-map-step,
+.detail-proof-card,
+.project-card-note,
+.detail-accordion {
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+html.light .hero-secondary-cta {
+  background: #eff6ff !important;
+  border-color: #bfdbfe !important;
+  color: #1d4ed8 !important;
+}
+
+html.light .hero-secondary-cta:hover {
+  background: #dbeafe !important;
+  border-color: #93c5fd !important;
+  color: #1e40af !important;
+}
+
+html.light .hero-email-cta {
+  background: #ffffff !important;
+  border-color: #d1fae5 !important;
+  color: #111827 !important;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+html.light .hero-map-shell {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.10) !important;
+}
+
+html.light .hero-map-step {
+  background: #f8fafc !important;
+  border-color: #dbeafe !important;
+}
+
+html.light .hero-map-token {
+  background: #eff6ff !important;
+  border-color: #bfdbfe !important;
+  color: #1d4ed8 !important;
+}
+
+html.light .hero-map-step-copy {
+  color: #4b5563 !important;
+}
+
+html.light .project-card-category {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #374151 !important;
+}
+
+html.light .project-card-state {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+html.light .project-card-note {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.02);
+}
+
+html.light .project-card-note-role {
+  border-color: #bbf7d0 !important;
+}
+
+html.light .project-card-note-result {
+  border-color: #bfdbfe !important;
+}
+
+html.light .project-detail-hero {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 46%, #ecfdf5 100%) !important;
+  border-color: #bfdbfe !important;
+  box-shadow: 0 24px 70px rgba(37, 99, 235, 0.10) !important;
+}
+
+html.light .detail-proof-card {
+  background: #ffffff !important;
+  border-color: #dbeafe !important;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+}
+
+html.light .detail-demo-note {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .detail-accordion {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+html.light .detail-accordion[open] {
+  background: #ffffff !important;
+}
+
+html.light .detail-accordion-body {
+  border-color: #e5e7eb !important;
+}
+
 @media (max-width: 480px) {
   .readable-copy {
     word-break: keep-all;

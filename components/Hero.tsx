@@ -52,13 +52,12 @@ export default function Hero({ data }: { data: HeroData }) {
           </div>
 
           <h1
-            className={`mobile-safe-wrap mb-5 text-4xl font-black leading-tight tracking-tight text-white transition-all duration-700 delay-100 sm:text-6xl lg:text-7xl ${
+            className={`mobile-safe-wrap mb-5 text-4xl font-black leading-[1.05] tracking-tight text-white transition-all duration-700 delay-100 sm:text-5xl lg:text-6xl ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
             문제를 쪼개고,
-            <span className="gradient-text block">백엔드 구조로</span>
-            <span className="gradient-text block">검증합니다.</span>
+            <span className="gradient-text block">구조로 증명합니다.</span>
           </h1>
 
           <p
@@ -77,8 +76,7 @@ export default function Hero({ data }: { data: HeroData }) {
             {[
               "컴퓨터공학부 · 백엔드 개발자 지망생",
               "API, DB, 배포 흐름을 프로젝트로 검증",
-              "동시성, 데이터 정합성, 운영 로그 중심 기록",
-              "AI는 정리 도구, 구현과 확인은 직접 수행",
+              "AI는 정리 도구, 검증은 직접 수행",
             ].map((item) => (
               <div key={item} className="flex items-start gap-2">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
@@ -100,14 +98,14 @@ export default function Hero({ data }: { data: HeroData }) {
             </button>
             <button
               onClick={() => handleScrollTo("problems")}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-5 py-3 text-sm font-semibold text-blue-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300/40 hover:bg-blue-400/15 hover:text-white active:translate-y-0 sm:w-auto"
+              className="hero-secondary-cta inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-5 py-3 text-sm font-semibold text-blue-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300/40 hover:bg-blue-400/15 hover:text-white active:translate-y-0 sm:w-auto"
             >
-              제가 푼 문제들
+              문제 보기
             </button>
             {data.email && (
               <a
                 href={`mailto:${data.email}`}
-                className="mobile-safe-wrap inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-white/5 hover:text-white active:translate-y-0 sm:w-auto"
+                className="hero-email-cta mobile-safe-wrap inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-gray-200 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-white/5 hover:text-white active:translate-y-0 sm:w-auto"
               >
                 <svg className="h-4 w-4 shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -142,14 +140,14 @@ export default function Hero({ data }: { data: HeroData }) {
           }`}
           aria-label="백엔드 문제 해결 흐름"
         >
-          <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6">
+          <div className="hero-map-shell rounded-3xl border border-white/10 bg-white/[0.035] p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6">
             <div className="mb-6 flex flex-col items-start gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
                   Interview Map
                 </p>
                 <h2 className="mt-2 text-xl font-bold text-white">
-                  눌러서 확인할 수 있는 흐름
+                  눌러서 확인하는 흐름
                 </h2>
               </div>
               <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
@@ -159,21 +157,21 @@ export default function Hero({ data }: { data: HeroData }) {
 
             <div className="space-y-3">
               {[
-                ["01", "문제", "왜 이 기능이 필요한지 한 문장으로 먼저 보여줍니다."],
-                ["02", "역할", "내가 맡은 API, DB, 배포 흐름을 분리해 설명합니다."],
-                ["03", "증거", "데모, GitHub, 기획자료, 스크린샷으로 확인하게 합니다."],
-                ["04", "검증", "실행 결과와 운영 기록을 남긴 부분만 공개합니다."],
+                ["01", "문제", "왜 만들었는지 먼저 보여줍니다."],
+                ["02", "역할", "API, DB, 배포에서 맡은 부분을 나눕니다."],
+                ["03", "증거", "데모와 GitHub로 확인하게 합니다."],
+                ["04", "검증", "실행한 기록만 남깁니다."],
               ].map(([number, title, body]) => (
                 <div
                   key={number}
-                  className="grid grid-cols-[2.75rem_1fr] gap-3 rounded-2xl border border-white/10 bg-gray-950/40 p-3"
+                  className="hero-map-step grid grid-cols-[2.75rem_1fr] gap-3 rounded-2xl border border-white/10 bg-gray-950/40 p-3"
                 >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">
+                  <span className="hero-map-token flex h-11 w-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">
                     {number}
                   </span>
                   <div>
                     <p className="font-semibold text-white">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-gray-400">{body}</p>
+                    <p className="hero-map-step-copy mt-1 text-sm leading-6 text-gray-400">{body}</p>
                   </div>
                 </div>
               ))}

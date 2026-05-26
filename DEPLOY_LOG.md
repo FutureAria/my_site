@@ -366,3 +366,10 @@
 - Reworked strengths and skill sections so each item points to project evidence instead of only listing abilities.
 - Changed blog cards into interview-question-style notes that start from a concrete problem.
 - Rebuilt project detail pages around a question hook, short evidence summary, proof links, and collapsible detail sections.
+
+### Portfolio Readability And Light Theme Refinement
+
+- Shortened the first-screen headline and intro bullets so the hero reads faster.
+- Replaced long project-detail question headlines with compact per-project summaries and three short proof cards.
+- Collapsed the `문제 · 해결 · 결과` detail block by default so long explanations do not dominate the first view.
+- Added light-theme overrides for the hero map, project proof cards, and detail proof cards so they no longer look disabled or gray.
