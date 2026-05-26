@@ -33,6 +33,13 @@
 - Removed the extra proof rows, project names, and `근거 보기` links that made the section feel too large and text-heavy.
 - Oracle production deployment has not been run for this rollback yet.
 
+### Project Card Copy Compacting
+
+- Shortened the project card overlay badge from a long solved-message style to compact `해결` / `진행` labels.
+- Added compact card-only hooks, teasers, role notes, and result notes so project cards scan in one glance before opening details.
+- Reduced visible teaser, role, and result copy on cards to one-line summaries and shortened the detail CTA to `상세 보기`.
+- Oracle production deployment has not been run for this project-card cleanup yet.
+
 ## 2026-05-03
 
 ### Current Production

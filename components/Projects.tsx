@@ -70,17 +70,17 @@ const PROJECT_GROUPS = [
   {
     id: "대표 프로젝트",
     title: "대표 프로젝트",
-    desc: "제가 가장 보여주고 싶은 문제 해결 카드입니다. 궁금한 카드를 눌러 구현 과정을 확인할 수 있습니다.",
+    desc: "가장 보여주고 싶은 문제 해결 기록입니다.",
   },
   {
     id: "백엔드 기초 프로젝트",
     title: "백엔드 기초 프로젝트",
-    desc: "정원, 상태, DB 흐름처럼 기본기에서 자주 터지는 문제를 직접 풀어본 기록입니다.",
+    desc: "정원, 상태, DB 흐름을 다룬 기본기 기록입니다.",
   },
   {
     id: "개발 중 · 기획 프로젝트",
     title: "개발 중 · 기획 프로젝트",
-    desc: "아직 만들고 있거나 검증 중인 아이디어입니다. 지금 어떤 문제를 풀려는지 먼저 보여줍니다.",
+    desc: "검증 중인 아이디어와 기획 기록입니다.",
   },
   {
     id: "기타 프로젝트",
@@ -88,6 +88,59 @@ const PROJECT_GROUPS = [
     desc: "추가로 정리한 실험과 기록입니다.",
   },
 ];
+
+const PROJECT_CARD_COPY: Record<
+  string,
+  {
+    hook: string;
+    teaser: string;
+    role?: string;
+    impact?: string;
+  }
+> = {
+  "장바구니 기능 기반 수강신청 웹 플랫폼": {
+    hook: "정원 초과 방지",
+    teaser: "트랜잭션과 행 잠금으로 신청 흐름을 정리했습니다.",
+    role: "신청 DB와 트랜잭션 처리 담당",
+    impact: "정원 초과 없이 신청 흐름 정리",
+  },
+  "CRUD 기반 물품 관리 웹 시스템": {
+    hook: "저장 후 화면 동기화",
+    teaser: "API 응답 기준으로 목록 상태를 다시 맞췄습니다.",
+    role: "목록 상태와 API 갱신 흐름 담당",
+    impact: "저장 결과가 즉시 보이도록 개선",
+  },
+  "데이터 기반 AI 상권 분석 및 추천 서비스": {
+    hook: "공공데이터 추천 점수화",
+    teaser: "공공 API를 정제해 상권 점수로 연결했습니다.",
+    role: "API 수집, 정제, 점수화 흐름 담당",
+    impact: "상권 추천 판단 기준을 화면에 연결",
+  },
+  "KIS AI 트레이더": {
+    hook: "AI 판단 이유 공개",
+    teaser: "데이터와 모의투자 기록을 판단 근거로 묶었습니다.",
+    role: "데이터 수집, 판단 근거, 잠금 화면 설계",
+    impact: "방문자는 읽기 전용, 주문은 승인 후만",
+  },
+  "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼": {
+    hook: "암표 방지 티켓 흐름",
+    teaser: "예매, NFT 발급, QR 검표를 하나로 연결했습니다.",
+    role: "예매, NFT 발급, 검표 상태 흐름 설계",
+    impact: "암표 제한 로직을 티켓 흐름에 연결",
+  },
+  "AI 감정 분석 기반 음악 추천 서비스 (개발 중)": {
+    hook: "감정 기반 추천 설계",
+    teaser: "감정 분석 결과를 추천 기준으로 분리했습니다.",
+    role: "감정 분석 결과를 추천 기준으로 설계",
+    impact: "사용자 히스토리 연동 구조 정리 중",
+  },
+  Major_Link: {
+    hook: "MVP 범위 정리",
+    teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리했습니다.",
+    role: "기능, 일정, 역할, 비용 범위 정리",
+    impact: "개발 전 검증 기준을 문서화",
+  },
+};
 
 export default function Projects({ data }: { data: ProjectItem[] }) {
   const ref = useRef<HTMLElement>(null);
@@ -152,11 +205,13 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const originalIndex = data.indexOf(project);
     const color = colors[originalIndex % colors.length];
     const categoryLabel = project.category || "기타 프로젝트";
-    const hook = project.problem || project.desc;
-    const teaser = project.teaser || project.detail?.impact || project.desc;
-    const role = project.detail?.role;
-    const impact = project.detail?.impact;
+    const compactCopy = PROJECT_CARD_COPY[project.title];
+    const hook = compactCopy?.hook || project.problem || project.desc;
+    const teaser = compactCopy?.teaser || project.teaser || project.detail?.impact || project.desc;
+    const role = compactCopy?.role || project.detail?.role;
+    const impact = compactCopy?.impact || project.detail?.impact;
     const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
+    const cardBadge = categoryLabel.includes("개발 중") ? "진행" : "해결";
 
     return (
       <div
@@ -182,9 +237,9 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4">
               <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
-                이걸 해결했습니다
+                {cardBadge}
               </span>
-              <p className="readable-copy mt-2 line-clamp-2 text-base font-bold leading-6 text-white">
+              <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
                 {hook}
               </p>
             </div>
@@ -204,9 +259,9 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/65 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4">
               <span className="inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
-                이걸 해결했습니다
+                {cardBadge}
               </span>
-              <p className="readable-copy mt-2 line-clamp-2 text-base font-bold leading-6 text-white">
+              <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
                 {hook}
               </p>
             </div>
@@ -226,27 +281,27 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
           <h3 className="text-white font-bold text-lg leading-tight">
             {project.title}
           </h3>
-          <p className="readable-copy mt-3 line-clamp-2 text-gray-400 text-sm leading-7 text-left">
+          <p className="readable-copy mt-3 line-clamp-1 text-gray-400 text-sm leading-6 text-left">
             {teaser}
           </p>
 
-          <div className="my-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div className="my-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {role && (
-              <div className="rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-3">
+              <div className="rounded-xl border border-emerald-500/15 bg-emerald-500/5 px-3 py-2.5">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-300">
                   내가 맡은 것
                 </p>
-                <p className="readable-copy mt-1 line-clamp-2 text-xs leading-5 text-gray-300 text-left">
+                <p className="readable-copy mt-1 line-clamp-1 text-xs leading-5 text-gray-300 text-left">
                   {role}
                 </p>
               </div>
             )}
             {impact && (
-              <div className="rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-3">
+              <div className="rounded-xl border border-blue-500/15 bg-blue-500/5 px-3 py-2.5">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
                   결과
                 </p>
-                <p className="readable-copy mt-1 line-clamp-2 text-xs leading-5 text-gray-300 text-left">
+                <p className="readable-copy mt-1 line-clamp-1 text-xs leading-5 text-gray-300 text-left">
                   {impact}
                 </p>
               </div>
@@ -283,7 +338,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>
-              어떻게 풀었는지 보기
+              상세 보기
             </a>
             {project.link && (
               <a
