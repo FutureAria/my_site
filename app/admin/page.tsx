@@ -5,12 +5,22 @@ import { useEffect, useState, useRef } from "react";
 interface TimelineItem {
   year: string;
   title: string;
+  summary?: string;
   desc: string;
   type: string;
   image: string;
   certificateImage?: string;
   certificateFile?: string;
+  documents?: TimelineDocument[];
   subjects: string[];
+}
+
+interface TimelineDocument {
+  title?: string;
+  description?: string;
+  file?: string;
+  preview?: string;
+  type?: string;
 }
 
 interface ProjectDetail {
@@ -448,7 +458,21 @@ export default function AdminPage() {
                     />
                   </div>
                   <TextArea
-                    label="설명"
+                    label="3줄 요약 (공개 카드에 먼저 보이는 문장)"
+                    value={item.summary || ""}
+                    placeholder={"- CS 기초를 서비스 구조와 연결\n- 프로젝트에서 API/DB 흐름에 관심\n- 증빙은 클릭 후 확인"}
+                    onChange={(v) => {
+                      const timeline = [...data.about.timeline];
+                      timeline[i] = { ...timeline[i], summary: v };
+                      setData({
+                        ...data,
+                        about: { ...data.about, timeline },
+                      });
+                    }}
+                    rows={3}
+                  />
+                  <TextArea
+                    label="상세 설명 (카드를 열었을 때 보이는 내용)"
                     value={item.desc}
                     onChange={(v) => {
                       const timeline = [...data.about.timeline];
@@ -519,12 +543,12 @@ export default function AdminPage() {
                           증빙 자료
                         </p>
                         <p className="text-[11px] text-gray-500 mt-1">
-                          학력, 교육, 경력, 수상, 자격증 증빙 이미지는 화면에 표시되고, PDF는 열기/다운로드 버튼으로 노출됩니다.
+                          재학증명서, 수료증, 상장 이미지, PDF, PPT, 엑셀 같은 파일을 공개 화면에서 열람/다운로드할 수 있게 연결합니다.
                         </p>
                       </div>
-                      {(item.certificateImage || item.certificateFile) && (
+                      {(item.certificateImage || item.certificateFile || (item.documents || []).length > 0) && (
                         <span className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-200 border border-amber-400/10">
-                          증빙 있음
+                          증빙/문서 있음
                         </span>
                       )}
                     </div>
@@ -616,6 +640,185 @@ export default function AdminPage() {
                         )}
                       </div>
                     </div>
+                    <div className="mt-5 border-t border-white/10 pt-4">
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs text-gray-400 font-medium">
+                            추가 첨부 문서
+                          </p>
+                          <p className="text-[11px] text-gray-500 mt-1">
+                            재학증명서, 수료증, 발표자료, 기획서처럼 공개 가능한 파일만 올리세요.
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const timeline = [...data.about.timeline];
+                            timeline[i] = {
+                              ...timeline[i],
+                              documents: [
+                                ...(timeline[i].documents || []),
+                                {
+                                  title: "",
+                                  description: "",
+                                  file: "",
+                                  preview: "",
+                                  type: "file",
+                                },
+                              ],
+                            };
+                            setData({ ...data, about: { ...data.about, timeline } });
+                          }}
+                          className="shrink-0 text-xs text-emerald-300 hover:text-emerald-200 transition-colors"
+                        >
+                          + 문서 추가
+                        </button>
+                      </div>
+                      {(item.documents || []).length === 0 ? (
+                        <p className="rounded-lg border border-dashed border-white/10 bg-black/10 px-3 py-3 text-xs text-gray-500">
+                          아직 추가 문서가 없습니다. 필요하면 재학증명서 PDF, 발표자료 PPT 같은 파일을 연결할 수 있습니다.
+                        </p>
+                      ) : (
+                        <div className="space-y-3">
+                          {(item.documents || []).map((doc, docIndex) => (
+                            <details
+                              key={docIndex}
+                              className="rounded-lg border border-white/10 bg-white/[0.02] p-3"
+                            >
+                              <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+                                <div className="min-w-0">
+                                  <p className="text-sm font-semibold text-white">
+                                    {doc.title || `첨부 문서 ${docIndex + 1}`}
+                                  </p>
+                                  <p className="mt-1 truncate text-xs text-gray-500">
+                                    {doc.file || doc.preview || "파일 URL 없음"}
+                                  </p>
+                                </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    const timeline = [...data.about.timeline];
+                                    const documents = [...(timeline[i].documents || [])];
+                                    documents.splice(docIndex, 1);
+                                    timeline[i] = { ...timeline[i], documents };
+                                    setData({ ...data, about: { ...data.about, timeline } });
+                                  }}
+                                  className="text-xs text-red-400 hover:text-red-300 transition-colors"
+                                >
+                                  삭제
+                                </button>
+                              </summary>
+                              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <Field
+                                  label="문서 제목"
+                                  value={doc.title || ""}
+                                  placeholder="재학증명서 / 발표자료 / 수료증"
+                                  onChange={(v) => {
+                                    const timeline = [...data.about.timeline];
+                                    const documents = [...(timeline[i].documents || [])];
+                                    documents[docIndex] = {
+                                      ...documents[docIndex],
+                                      title: v,
+                                    };
+                                    timeline[i] = { ...timeline[i], documents };
+                                    setData({ ...data, about: { ...data.about, timeline } });
+                                  }}
+                                />
+                                <Field
+                                  label="문서 타입"
+                                  value={doc.type || ""}
+                                  placeholder="pdf / pptx / xlsx"
+                                  onChange={(v) => {
+                                    const timeline = [...data.about.timeline];
+                                    const documents = [...(timeline[i].documents || [])];
+                                    documents[docIndex] = {
+                                      ...documents[docIndex],
+                                      type: v,
+                                    };
+                                    timeline[i] = { ...timeline[i], documents };
+                                    setData({ ...data, about: { ...data.about, timeline } });
+                                  }}
+                                />
+                              </div>
+                              <TextArea
+                                label="문서 설명"
+                                value={doc.description || ""}
+                                placeholder="면접관이 이 파일에서 확인하면 좋은 내용을 짧게 적어주세요."
+                                rows={2}
+                                onChange={(v) => {
+                                  const timeline = [...data.about.timeline];
+                                  const documents = [...(timeline[i].documents || [])];
+                                  documents[docIndex] = {
+                                    ...documents[docIndex],
+                                    description: v,
+                                  };
+                                  timeline[i] = { ...timeline[i], documents };
+                                  setData({ ...data, about: { ...data.about, timeline } });
+                                }}
+                              />
+                              <Field
+                                label="다운로드 파일 URL"
+                                value={doc.file || ""}
+                                placeholder="/uploads/admin-...pdf"
+                                onChange={(v) => {
+                                  const timeline = [...data.about.timeline];
+                                  const documents = [...(timeline[i].documents || [])];
+                                  documents[docIndex] = {
+                                    ...documents[docIndex],
+                                    file: v,
+                                  };
+                                  timeline[i] = { ...timeline[i], documents };
+                                  setData({ ...data, about: { ...data.about, timeline } });
+                                }}
+                              />
+                              <Field
+                                label="미리보기 URL (선택)"
+                                value={doc.preview || ""}
+                                placeholder="/uploads/... 또는 별도 미리보기 링크"
+                                onChange={(v) => {
+                                  const timeline = [...data.about.timeline];
+                                  const documents = [...(timeline[i].documents || [])];
+                                  documents[docIndex] = {
+                                    ...documents[docIndex],
+                                    preview: v,
+                                  };
+                                  timeline[i] = { ...timeline[i], documents };
+                                  setData({ ...data, about: { ...data.about, timeline } });
+                                }}
+                              />
+                              <div className="mt-3 flex flex-wrap items-center gap-3">
+                                <FileUpload
+                                  accept=".xlsx,.xls,.pptx,.ppt,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint,application/pdf"
+                                  label="문서 파일 업로드"
+                                  onUploaded={(url) => {
+                                    const timeline = [...data.about.timeline];
+                                    const documents = [...(timeline[i].documents || [])];
+                                    const ext = url.split(".").pop()?.toLowerCase() || "file";
+                                    documents[docIndex] = {
+                                      ...documents[docIndex],
+                                      file: url,
+                                      type: ext,
+                                    };
+                                    timeline[i] = { ...timeline[i], documents };
+                                    setData({ ...data, about: { ...data.about, timeline } });
+                                  }}
+                                />
+                                {(doc.file || doc.preview) && (
+                                  <a
+                                    href={doc.preview || doc.file}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-xs text-blue-300 hover:text-blue-200 transition-colors"
+                                  >
+                                    현재 파일 열기
+                                  </a>
+                                )}
+                              </div>
+                            </details>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {/* Subjects */}
                   <DelimitedField
@@ -644,7 +847,18 @@ export default function AdminPage() {
                       ...data.about,
                       timeline: [
                         ...data.about.timeline,
-                        { year: "", title: "", desc: "", type: "education", image: "", certificateImage: "", certificateFile: "", subjects: [] },
+                        {
+                          year: "",
+                          title: "",
+                          summary: "",
+                          desc: "",
+                          type: "education",
+                          image: "",
+                          certificateImage: "",
+                          certificateFile: "",
+                          documents: [],
+                          subjects: [],
+                        },
                       ],
                     },
                   });

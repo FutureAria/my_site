@@ -12,7 +12,16 @@ interface TimelineItem {
   image?: string;
   certificateImage?: string;
   certificateFile?: string;
+  documents?: TimelineDocument[];
   subjects?: string[];
+}
+
+interface TimelineDocument {
+  title?: string;
+  description?: string;
+  file?: string;
+  preview?: string;
+  type?: string;
 }
 
 interface AboutData {
@@ -148,24 +157,27 @@ function TimelineCard({
   onToggle: () => void;
 }) {
   const meta = timelineTypeMeta[item.type] || timelineTypeMeta.training;
-  const hasCertificate = Boolean(item.certificateImage || item.certificateFile);
+  const documents = item.documents || [];
+  const hasEvidence = Boolean(
+    item.certificateImage || item.certificateFile || documents.length > 0,
+  );
   const subjects = item.subjects || [];
   const visibleSubjects = isExpanded ? subjects : subjects.slice(0, 3);
-  const summary =
-    item.summary || item.desc.split(/\n+/).find(Boolean)?.trim() || item.title;
+  const summaryLines = getTimelineSummaryLines(item);
 
   return (
     <article
       className={`glass rounded-xl p-4 sm:p-5 transition-all duration-300 max-w-md w-full ${
         isExpanded
           ? "border-blue-400/30 bg-white/[0.055]"
-          : "hover:bg-white/[0.06] hover:border-blue-400/25"
+          : "hover:-translate-y-1 hover:bg-white/[0.06] hover:border-blue-400/25"
       }`}
     >
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isExpanded}
+        aria-label={`${item.title} 상세 기록 ${isExpanded ? "접기" : "열기"}`}
         className="w-full text-left group/card"
       >
         <div className="flex items-start gap-4">
@@ -187,9 +199,9 @@ function TimelineCard({
               >
                 {meta.label}
               </span>
-              {hasCertificate && (
+              {hasEvidence && (
                 <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-200 border border-amber-400/10">
-                  증빙 있음
+                  증빙/문서
                 </span>
               )}
               <span className="sm:hidden text-xs text-gray-500">{item.year}</span>
@@ -197,9 +209,17 @@ function TimelineCard({
             <h3 className="text-white font-semibold text-base leading-7 sm:text-lg sm:leading-7 group-hover/card:gradient-text transition-all duration-300">
               {item.title}
             </h3>
-            <p className="readable-copy text-gray-400 text-sm mt-2 leading-6 text-left">
-              {summary}
-            </p>
+            <ul className="mt-3 space-y-2 text-left">
+              {summaryLines.map((line) => (
+                <li
+                  key={line}
+                  className="readable-copy flex gap-2 text-sm leading-6 text-gray-400"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
           </div>
           <span
             className={`mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-gray-300 transition-all duration-300 group-hover/card:border-blue-400/35 group-hover/card:text-white ${
@@ -221,13 +241,18 @@ function TimelineCard({
           </span>
         </div>
         <div className="mt-4 flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.03] px-3 py-2 text-xs font-semibold text-gray-400 transition-colors group-hover/card:text-blue-200">
-          <span>{isExpanded ? "상세 접기" : "클릭해서 자세히 보기"}</span>
-          <span className="text-blue-300">{isExpanded ? "닫기" : "열기"}</span>
+          <span>{isExpanded ? "상세 접기" : "3줄 요약 다음 기록 보기"}</span>
+          <span className="text-blue-300">
+            {isExpanded ? "닫기" : hasEvidence ? "증빙 열기" : "열기"}
+          </span>
         </div>
       </button>
 
       {isExpanded && (
         <div className="mt-4 border-t border-white/5 pt-4">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blue-300">
+            detail note
+          </p>
           <p className="readable-copy whitespace-pre-line text-gray-400 text-sm leading-7 text-left">
             {item.desc}
           </p>
@@ -255,8 +280,16 @@ function TimelineCard({
         </div>
       )}
 
-      {isExpanded && hasCertificate && (
+      {isExpanded && hasEvidence && (
         <div className="mt-4 pt-4 border-t border-white/5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-emerald-300">
+              evidence
+            </p>
+            <p className="text-xs text-gray-500">
+              열람 / 다운로드 가능
+            </p>
+          </div>
           {item.certificateImage && (
             <a
               href={item.certificateImage}
@@ -307,8 +340,74 @@ function TimelineCard({
               </>
             )}
           </div>
+          {documents.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {documents.map((doc, docIndex) => {
+                const openUrl = doc.preview || doc.file || "";
+                const typeLabel = getDocumentTypeLabel(doc.type, doc.file || doc.preview);
+                return (
+                  <div
+                    key={`${doc.title || "문서"}-${docIndex}`}
+                    className="rounded-lg border border-white/10 bg-white/[0.03] p-3"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white">
+                          {doc.title || `첨부 문서 ${docIndex + 1}`}
+                        </p>
+                        {doc.description && (
+                          <p className="readable-copy mt-1 text-xs leading-5 text-gray-400">
+                            {doc.description}
+                          </p>
+                        )}
+                      </div>
+                      <span className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold uppercase text-gray-300">
+                        {typeLabel}
+                      </span>
+                    </div>
+                    {openUrl && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <a
+                          href={openUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-500/15 text-blue-200 border border-blue-400/15 hover:border-blue-400/40 hover:text-white transition-colors"
+                        >
+                          문서 열기
+                        </a>
+                        {doc.file && (
+                          <a
+                            href={doc.file}
+                            download
+                            className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 border border-white/10 hover:border-emerald-400/40 hover:text-white transition-colors"
+                          >
+                            다운로드
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </article>
   );
+}
+
+function getTimelineSummaryLines(item: TimelineItem) {
+  const source = item.summary || item.desc || item.title;
+  const lines = source
+    .split(/\n+/)
+    .map((line) => line.replace(/^[-•\s]+/, "").trim())
+    .filter(Boolean);
+
+  return (lines.length > 0 ? lines : [item.title]).slice(0, 3);
+}
+
+function getDocumentTypeLabel(type?: string, url?: string) {
+  const value = type || url?.split(".").pop() || "file";
+  return value.replace(/^\./, "").toUpperCase();
 }

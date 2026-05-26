@@ -1,5 +1,15 @@
 # Portfolio Deploy Log
 
+## 2026-05-26
+
+### About Timeline Evidence Update
+
+- Reworked public timeline cards so each item opens with a clearer click target and a compact three-line bullet summary.
+- Added support for multiple timeline evidence documents such as enrollment certificates, PDFs, PPT/PPTX files, and spreadsheets.
+- Extended the admin About editor with a three-line summary field and editable timeline document upload/list controls.
+- Updated existing timeline copy to be shorter, more interviewer-oriented, and easier to scan before opening details.
+- Oracle production deployment has not been run in this step.
+
 ## 2026-05-03
 
 ### Current Production
