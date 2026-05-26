@@ -27,6 +27,12 @@
 - Reduced skills card spacing, icon size, and border radius so the section reads closer to the earlier compact tag layout.
 - Oracle production deployment has not been run for this cleanup yet.
 
+### Core Strengths Rollback
+
+- Restored the core strengths section to the earlier simple `핵심 역량` card style.
+- Removed the extra proof rows, project names, and `근거 보기` links that made the section feel too large and text-heavy.
+- Oracle production deployment has not been run for this rollback yet.
+
 ## 2026-05-03
 
 ### Current Production
