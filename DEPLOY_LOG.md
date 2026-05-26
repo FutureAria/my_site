@@ -21,6 +21,12 @@
 - Oracle disk check after deployment showed `45G` total, `9.6G` used, `36G` available, and `/home/ubuntu/my_site` about `685M`.
 - `npm audit` during deployment still reported 2 vulnerabilities: 1 moderate and 1 high. They were not fixed in this deployment.
 
+### Skills Section Compact Cleanup
+
+- Removed the large project evidence boxes and round project chips from the skills section.
+- Reduced skills card spacing, icon size, and border radius so the section reads closer to the earlier compact tag layout.
+- Oracle production deployment has not been run for this cleanup yet.
+
 ## 2026-05-03
 
 ### Current Production

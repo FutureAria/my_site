@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const categoryMeta: Record<
@@ -84,47 +83,11 @@ const defaultMeta = {
 const categoryLabelMap: Record<string, string> = {
   Backend: "백엔드",
   DB: "DB",
+  Database: "데이터베이스",
   DevOps: "데브옵스",
   Blockchain: "블록체인",
   Tools: "도구 / 프론트 기초",
-};
-
-const categoryEvidenceMap: Record<
-  string,
-  { summary: string; projects: Array<{ label: string; href: string }> }
-> = {
-  Backend: {
-    summary: "요청-응답 흐름과 상태 변화를 설명할 수 있는 프로젝트에서 사용했습니다.",
-    projects: [
-      { label: "CRUD", href: "/projects/1" },
-      { label: "KIS", href: "/projects/3" },
-    ],
-  },
-  DB: {
-    summary: "정원, 좌석, 추천 점수처럼 값이 어긋나면 문제가 되는 기능에서 다뤘습니다.",
-    projects: [
-      { label: "수강신청", href: "/projects/0" },
-      { label: "상권 분석", href: "/projects/2" },
-    ],
-  },
-  DevOps: {
-    summary: "로컬에서 끝내지 않고 도메인, HTTPS, 서버 로그까지 확인한 경험입니다.",
-    projects: [
-      { label: "KIS", href: "/projects/3" },
-      { label: "BASE CHAIN", href: "/projects/4" },
-    ],
-  },
-  Blockchain: {
-    summary: "NFT 티켓 발급과 재판매 제한처럼 상태 흐름이 중요한 기능에 연결했습니다.",
-    projects: [{ label: "BASE CHAIN", href: "/projects/4" }],
-  },
-  Tools: {
-    summary: "협업, API 확인, 화면 구현, AI 기반 요구사항 정리에 사용하는 도구입니다.",
-    projects: [
-      { label: "Major Link", href: "/projects/6" },
-      { label: "포트폴리오", href: "/#projects" },
-    ],
-  },
+  "Collaboration Tools": "협업 도구",
 };
 
 export default function Skills({ data }: { data: Record<string, string[]> }) {
@@ -145,10 +108,10 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
   const categories = Object.entries(data);
 
   return (
-    <section id="skills" ref={ref} className="py-20 sm:py-24 px-4 sm:px-6 relative">
+    <section id="skills" ref={ref} className="py-16 sm:py-20 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <div
-          className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`text-center mb-10 sm:mb-12 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <span className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-3 block">
             skill map
@@ -162,24 +125,23 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {categories.map(([category, skills], i) => {
             const meta = categoryMeta[category] || defaultMeta;
             const displayCategory = categoryLabelMap[category] || category;
-            const evidence = categoryEvidenceMap[category];
             return (
               <div
                 key={category}
-                className={`glass rounded-2xl p-5 sm:p-6 hover:bg-white/[0.06] transition-all duration-500 group ${
+                className={`glass rounded-xl p-4 sm:p-5 hover:bg-white/[0.06] transition-all duration-500 group ${
                   visible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${150 + i * 100}ms` }}
               >
-                <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center gap-3 mb-4">
                   <div
-                    className={`w-10 h-10 rounded-xl ${meta.bgColor} ${meta.borderColor} border flex items-center justify-center`}
+                    className={`w-9 h-9 rounded-lg ${meta.bgColor} ${meta.borderColor} border flex items-center justify-center`}
                   >
                     {meta.icon}
                   </div>
@@ -187,29 +149,11 @@ export default function Skills({ data }: { data: Record<string, string[]> }) {
                     {displayCategory}
                   </h3>
                 </div>
-                {evidence && (
-                  <div className="mb-5 rounded-xl border border-white/10 bg-white/[0.035] p-4">
-                    <p className="text-sm leading-7 text-gray-300">
-                      {evidence.summary}
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {evidence.projects.map((project) => (
-                        <Link
-                          key={`${category}-${project.label}`}
-                          href={project.href}
-                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-gray-300 transition-colors hover:border-white/25 hover:text-white"
-                        >
-                          {project.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className={`px-3.5 py-1.5 rounded-lg text-sm font-medium ${meta.bgColor} ${meta.borderColor} border text-gray-200 hover:text-white hover:scale-105 transition-all duration-200 cursor-default`}
+                      className={`px-3 py-1.5 rounded-md text-sm font-medium ${meta.bgColor} ${meta.borderColor} border text-gray-200 hover:text-white transition-colors duration-200 cursor-default`}
                     >
                       {skill}
                     </span>
