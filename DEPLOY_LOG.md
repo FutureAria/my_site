@@ -389,3 +389,7 @@
 - Added bullet-style rendering for multiline project detail text so interviewers can scan role, impact, and design notes quickly.
 - Tightened mobile project-detail title wrapping and CTA button layout after checking a 390px-wide local Chrome screenshot.
 - Local production build completed successfully with `npm run build` on `2026-05-27 00:06 KST`.
+- Pushed commit `a6f5a21` to GitHub `main`, then deployed to Oracle with `npm run deploy:oracle`.
+- Oracle deploy completed successfully; remote build used Next.js `15.5.18`, service restarted as `active (running)`, and `/control-room` stayed excluded from the deployed route list.
+- Production checks after deploy: `/` returned `200`, `/projects/4` returned `200`, and `/control-room` returned `404`.
+- Oracle capacity after deploy: `45G` total, `9.5G` used, `36G` available, `/home/ubuntu/my_site` at `620M`.
