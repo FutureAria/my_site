@@ -200,6 +200,40 @@ function DetailSection({
   );
 }
 
+function TextLines({
+  text,
+  className = "",
+}: {
+  text?: string;
+  className?: string;
+}) {
+  if (!text) return null;
+
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (lines.length <= 1) {
+    return (
+      <p className={`readable-copy text-left ${className}`}>
+        {text}
+      </p>
+    );
+  }
+
+  return (
+    <ul className={`space-y-2 text-left ${className}`}>
+      {lines.map((line) => (
+        <li key={line} className="readable-copy flex gap-2">
+          <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" />
+          <span>{line}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 async function getData() {
   const raw = fs.readFileSync(
     path.join(process.cwd(), "data", "portfolio.json"),
@@ -290,7 +324,7 @@ export default async function ProjectPage({
               <span className="inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300 mb-2">
                 Project · {String(idx + 1).padStart(2, "0")}
               </span>
-              <h1 className="text-2xl sm:text-4xl font-black leading-tight">
+              <h1 className="mobile-safe-wrap max-w-[18rem] break-all text-[1.4rem] font-black leading-tight sm:max-w-full sm:break-normal sm:text-4xl">
                 {project.title}
               </h1>
               <p className="text-sm text-gray-300 mt-2">{project.period}</p>
@@ -303,7 +337,7 @@ export default async function ProjectPage({
             <span className="inline-block text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-3">
               Project · {String(idx + 1).padStart(2, "0")}
             </span>
-            <h1 className="text-3xl sm:text-5xl font-black leading-tight mb-3">
+            <h1 className="mobile-safe-wrap mb-3 text-3xl font-black leading-tight sm:text-5xl">
               {project.title}
             </h1>
             <p className="text-sm text-[var(--text-secondary)]">{project.period}</p>
@@ -340,7 +374,7 @@ export default async function ProjectPage({
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600"
+                      className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600 sm:w-auto"
                     >
                       {demo?.ctaLabel || "데모 보기"}
                     </a>
@@ -350,7 +384,7 @@ export default async function ProjectPage({
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-200 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white"
+                      className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-200 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white sm:w-auto"
                     >
                       GitHub
                     </a>
@@ -358,7 +392,7 @@ export default async function ProjectPage({
                   {documents.length > 0 && (
                     <Link
                       href={`/projects/${idx}/documents/0`}
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 transition-all hover:-translate-y-0.5 hover:bg-emerald-500/15"
+                      className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 transition-all hover:-translate-y-0.5 hover:bg-emerald-500/15 sm:w-auto"
                     >
                       기획자료
                     </Link>
@@ -366,7 +400,7 @@ export default async function ProjectPage({
                   {screenshots.length > 0 && (
                     <a
                       href="#screenshots"
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300 transition-all hover:-translate-y-0.5 hover:bg-cyan-500/15"
+                      className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300 transition-all hover:-translate-y-0.5 hover:bg-cyan-500/15 sm:w-auto"
                     >
                       화면 보기
                     </a>
@@ -376,7 +410,7 @@ export default async function ProjectPage({
                       href={detail.readme}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white"
+                      className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-300 transition-all hover:-translate-y-0.5 hover:bg-white/5 hover:text-white sm:w-auto"
                     >
                       README
                     </a>
@@ -395,9 +429,10 @@ export default async function ProjectPage({
                     <p className="text-xs font-semibold tracking-widest text-emerald-300">
                       {item.label}
                     </p>
-                    <p className="readable-copy mt-2 line-clamp-2 text-sm leading-7 text-gray-300 text-left">
-                      {item.body}
-                    </p>
+                    <TextLines
+                      text={item.body}
+                      className="mt-2 line-clamp-2 text-sm leading-7 text-gray-300"
+                    />
                   </div>
                 ))}
               </div>
@@ -432,9 +467,10 @@ export default async function ProjectPage({
 
         {role && (
           <DetailSection title="내 역할 · 규모" eyebrow="role" tone="emerald">
-            <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
-              {role}
-            </p>
+            <TextLines
+              text={role}
+              className="text-[var(--text-secondary)] leading-8"
+            />
           </DetailSection>
         )}
 
@@ -445,9 +481,10 @@ export default async function ProjectPage({
                 <p className="text-xs font-semibold tracking-widest uppercase text-blue-300">
                   핵심 성과
                 </p>
-                <p className="readable-copy mt-2 text-[var(--text-secondary)] leading-8 text-left">
-                  {detail.impact}
-                </p>
+                <TextLines
+                  text={detail.impact}
+                  className="mt-2 text-[var(--text-secondary)] leading-8"
+                />
               </div>
             )}
             {outcomeItems.length > 0 && (
@@ -460,9 +497,10 @@ export default async function ProjectPage({
                     <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
                       {item.label}
                     </p>
-                    <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
-                      {item.body}
-                    </p>
+                    <TextLines
+                      text={item.body}
+                      className="mt-2 text-sm leading-7 text-[var(--text-secondary)]"
+                    />
                   </div>
                 ))}
               </div>
@@ -481,9 +519,10 @@ export default async function ProjectPage({
                   <p className="text-xs font-semibold tracking-widest uppercase text-cyan-300">
                     {item.label}
                   </p>
-                  <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
-                    {item.body}
-                  </p>
+                  <TextLines
+                    text={item.body}
+                    className="mt-2 text-sm leading-7 text-[var(--text-secondary)]"
+                  />
                 </div>
               ))}
             </div>
@@ -506,9 +545,10 @@ export default async function ProjectPage({
         {detail.troubleshooting && (
           <DetailSection title="트러블슈팅" eyebrow="debugging" tone="amber">
             <div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 p-6">
-              <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
-                {detail.troubleshooting}
-              </p>
+              <TextLines
+                text={detail.troubleshooting}
+                className="text-[var(--text-secondary)] leading-8"
+              />
             </div>
           </DetailSection>
         )}
@@ -567,9 +607,10 @@ export default async function ProjectPage({
                         </span>
                       </div>
                     )}
-                    <p className="readable-copy text-[var(--text-secondary)] leading-8 text-left">
-                      {block.body}
-                    </p>
+                    <TextLines
+                      text={block.body}
+                      className="text-[var(--text-secondary)] leading-8"
+                    />
                   </div>
                 );
               })}

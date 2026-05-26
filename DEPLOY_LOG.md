@@ -380,3 +380,12 @@
 - Made the hero intro use short fixed lines so older server-side admin data cannot re-expand the first screen copy.
 - Shortened the project detail hero by hiding duplicated long descriptions when a curated compact summary exists.
 - Excluded the local-only `app/control-room` experiment from Oracle deploys and added remote cleanup for stale `.next` output.
+
+### Interview-Focused Copy And Security Patch
+
+- Updated Next.js from `15.5.15` to `15.5.18` and forced `postcss` to `8.5.10`; `npm audit --omit=dev` now reports `0 vulnerabilities`.
+- Shortened public profile, skills, project roles, features, impact, architecture, API, troubleshooting, and takeaway copy into concise reviewer-facing lines.
+- Removed weakly supported stack exposure from the public skills map and kept visible skills tied to actual portfolio projects or documented planning work.
+- Added bullet-style rendering for multiline project detail text so interviewers can scan role, impact, and design notes quickly.
+- Tightened mobile project-detail title wrapping and CTA button layout after checking a 390px-wide local Chrome screenshot.
+- Local production build completed successfully with `npm run build` on `2026-05-27 00:06 KST`.

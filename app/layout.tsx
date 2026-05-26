@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://juyoung-portfolio.duckdns.org"),
   title: "박주영 | 백엔드 개발자 포트폴리오",
   description:
-    "데이터 흐름과 API 기반 구조 설계를 중심으로 문제를 해결하는 백엔드 개발자 박주영의 포트폴리오입니다. Python, Java, React 등 다양한 기술 스택을 활용한 프로젝트를 확인하세요.",
-  keywords: ["포트폴리오", "백엔드 개발자", "박주영", "Python", "Java", "React", "Next.js", "K-Digital"],
+    "데이터 흐름과 API 기반 구조 설계를 중심으로 문제를 해결하는 백엔드 개발자 박주영의 포트폴리오입니다. PHP, Python, React, Node.js 기반 프로젝트를 확인하세요.",
+  keywords: ["포트폴리오", "백엔드 개발자", "박주영", "PHP", "Python", "React", "Node.js", "K-Digital"],
   manifest: "/manifest.webmanifest",
   applicationName: "JY Portfolio",
   appleWebApp: {
