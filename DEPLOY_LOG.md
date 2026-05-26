@@ -8,7 +8,18 @@
 - Added support for multiple timeline evidence documents such as enrollment certificates, PDFs, PPT/PPTX files, and spreadsheets.
 - Extended the admin About editor with a three-line summary field and editable timeline document upload/list controls.
 - Updated existing timeline copy to be shorter, more interviewer-oriented, and easier to scan before opening details.
-- Oracle production deployment has not been run in this step.
+- Local production build completed successfully before deployment.
+
+### Oracle Production Deployment
+
+- Deployed the portfolio site to Oracle with `npm run deploy:oracle`.
+- Server-side production build completed successfully and `my-site.service` restarted in active/running state.
+- Because the deploy script preserves the server's existing `data/portfolio.json`, patched only the five About timeline items on the Oracle server so current admin-managed data was not overwritten.
+- Rebuilt and restarted the Oracle service again after the server data patch so the public static output reflects the updated three-line timeline summaries.
+- Verified `https://juyoung-portfolio.duckdns.org` returned `200` and included the updated About timeline text.
+- Verified `https://juyoung-portfolio.duckdns.org/admin` returned `200`.
+- Oracle disk check after deployment showed `45G` total, `9.6G` used, `36G` available, and `/home/ubuntu/my_site` about `685M`.
+- `npm audit` during deployment still reported 2 vulnerabilities: 1 moderate and 1 high. They were not fixed in this deployment.
 
 ## 2026-05-03
 
