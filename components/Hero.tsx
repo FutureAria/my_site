@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface HeroData {
   badge: string;
@@ -36,6 +38,11 @@ const RECOMMENDED_PROJECTS = [
 export default function Hero({ data }: { data: HeroData }) {
   const [visible] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    RECOMMENDED_PROJECTS.forEach((project) => router.prefetch(project.href));
+  }, [router]);
 
   useEffect(() => {
     if (previewOpen) {
@@ -121,13 +128,13 @@ export default function Hero({ data }: { data: HeroData }) {
               추천 순서
             </span>
             {RECOMMENDED_PROJECTS.map((project, index) => (
-              <a
+              <Link
                 key={project.href}
                 href={project.href}
                 className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-semibold text-gray-300 transition-colors hover:border-emerald-400/25 hover:text-white"
               >
                 {index + 1}. {project.title}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -229,7 +236,7 @@ export default function Hero({ data }: { data: HeroData }) {
               </p>
               <div className="mt-3 grid gap-2">
                 {RECOMMENDED_PROJECTS.map((project, index) => (
-                  <a
+                  <Link
                     key={project.href}
                     href={project.href}
                     className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2.5 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.06]"
@@ -248,7 +255,7 @@ export default function Hero({ data }: { data: HeroData }) {
                     <svg className="ml-auto h-4 w-4 shrink-0 text-gray-500 transition-colors group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
