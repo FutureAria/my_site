@@ -492,3 +492,10 @@
 - Updated robots and sitemap URLs to the production DuckDNS domain and added admin `noindex` metadata.
 - Added a portfolio Open Graph image and linked it from global metadata for richer link previews.
 - Moved the ignored local `app/control-room` experiment route into `data/backups/local-routes/control-room/` so it cannot be included in production builds.
+
+### Admin Password And Predeploy Checks
+
+- Added `ADMIN_PASSWORD_HASH` support using PBKDF2 so production can avoid storing the admin password in plain text.
+- Added `npm run admin:hash` to generate a deployable admin password hash without printing or committing secrets.
+- Added `/api/health` to verify portfolio data parsing and upload-directory availability without exposing secret values.
+- Added `npm run predeploy:check` to run upload-reference reporting and a production build before deployment.

@@ -6,6 +6,7 @@ const CSRF_COOKIE = "portfolio_admin_csrf";
 const maxFailedAttempts = 5;
 const windowMs = 15 * 60 * 1000;
 const lockMs = 10 * 60 * 1000;
+const passwordHashPrefix = "pbkdf2_sha256";
 
 type LoginAttempt = {
   count: number;
@@ -31,23 +32,59 @@ function getAttempt(clientId: string, now: number) {
   return attempt;
 }
 
-function isSamePassword(input: unknown, expected: string) {
-  if (typeof input !== "string") return false;
-
+function isSameText(input: string, expected: string) {
   const inputHash = crypto.createHash("sha256").update(input).digest();
   const expectedHash = crypto.createHash("sha256").update(expected).digest();
   return crypto.timingSafeEqual(inputHash, expectedHash);
 }
 
+function isSamePassword(input: unknown, expected: string) {
+  if (typeof input !== "string") return false;
+
+  return isSameText(input, expected);
+}
+
+function isSamePasswordHash(input: unknown, expectedHash: string) {
+  if (typeof input !== "string") return false;
+
+  const [scheme, iterationsText, salt, storedHash] = expectedHash.split("$");
+  const iterations = Number(iterationsText);
+
+  if (scheme !== passwordHashPrefix || !Number.isInteger(iterations) || iterations < 100000 || !salt || !storedHash) {
+    return false;
+  }
+
+  const derivedHash = crypto.pbkdf2Sync(input, salt, iterations, 32, "sha256").toString("base64url");
+  return isSameText(derivedHash, storedHash);
+}
+
+function hasValidAdminPassword(input: unknown) {
+  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (adminPasswordHash) {
+    return isSamePasswordHash(input, adminPasswordHash);
+  }
+
+  if (adminPassword) {
+    return isSamePassword(input, adminPassword);
+  }
+
+  return null;
+}
+
 export async function POST(request: Request) {
   const { password } = await request.json();
-  const adminPassword = process.env.ADMIN_PASSWORD;
   const clientId = getClientId(request);
   const now = Date.now();
   const attempt = getAttempt(clientId, now);
+  const passwordResult = hasValidAdminPassword(password);
 
-  if (!adminPassword) {
-    return NextResponse.json({ success: false, error: "ADMIN_PASSWORD not configured" }, { status: 500 });
+  if (passwordResult === null) {
+    return NextResponse.json(
+      { success: false, error: "ADMIN_PASSWORD_HASH or ADMIN_PASSWORD not configured" },
+      { status: 500 },
+    );
   }
 
   if (attempt.lockedUntil && attempt.lockedUntil > now) {
@@ -61,7 +98,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isSamePassword(password, adminPassword)) {
+  if (!passwordResult) {
     const nextAttempt: LoginAttempt = {
       count: attempt.count + 1,
       firstAttemptAt: attempt.firstAttemptAt,
