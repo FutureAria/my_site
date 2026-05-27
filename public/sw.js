@@ -1,6 +1,18 @@
-const CACHE_NAME = "jy-portfolio-v3";
+const CACHE_NAME = "jy-portfolio-v4";
 const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg", "/icon-192.png", "/icon-512.png"];
-const NETWORK_TIMEOUT_MS = 500;
+
+function isRscRequest(request, url) {
+  const accept = request.headers.get("accept") || "";
+  return (
+    request.headers.has("rsc") ||
+    url.searchParams.has("_rsc") ||
+    accept.includes("text/x-component")
+  );
+}
+
+function isHtml(response) {
+  return (response.headers.get("content-type") || "").includes("text/html");
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -29,23 +41,24 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) return;
+  if (isRscRequest(request, url)) return;
 
-  if (request.mode === "navigate" || url.pathname === "/") {
+  if (request.mode === "navigate") {
+    if (url.pathname !== "/") {
+      event.respondWith(fetch(request));
+      return;
+    }
+
     event.respondWith(
-      Promise.race([
-        fetch(request).then((response) => {
-          if (response.ok) {
+      fetch(request)
+        .then((response) => {
+          if (response.ok && isHtml(response)) {
             const copy = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put("/", copy));
           }
           return response;
-        }),
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            caches.match("/").then((cached) => (cached ? resolve(cached) : reject()));
-          }, NETWORK_TIMEOUT_MS);
-        }),
-      ]).catch(() => caches.match("/").then((cached) => cached || fetch(request))),
+        })
+        .catch(() => caches.match("/").then((cached) => cached || fetch(request))),
     );
     return;
   }
@@ -53,12 +66,12 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(request)
       .then((response) => {
-        if (response.ok && (url.pathname === "/" || url.pathname.startsWith("/_next/static/"))) {
+        if (response.ok && url.pathname.startsWith("/_next/static/")) {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }
         return response;
       })
-      .catch(() => caches.match(request).then((cached) => cached || caches.match("/"))),
+      .catch(() => caches.match(request).then((cached) => cached || Response.error())),
   );
 });

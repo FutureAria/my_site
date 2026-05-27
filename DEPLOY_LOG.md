@@ -422,3 +422,11 @@
 - Started light-theme QA for the new interview route and project-detail cards.
 - Added a planning-specific `전체 기능 / 제 기여` split to MajorLink so the development-before-implementation evidence is also scan-friendly.
 - Strengthened light-theme cyan CTA contrast after reviewing mobile screenshots for the representative project detail pages.
+
+### Project Navigation Service Worker Fix
+
+- Fixed a production navigation issue where the service worker could race project-detail navigations against a stale cached root page.
+- Stopped the service worker from handling Next.js RSC requests, including `_rsc` and `RSC` header requests, so internal component payloads cannot be shown as page text.
+- Changed project-detail navigations such as `/projects/3` to network-only document loads while keeping static asset caching for `/_next/static/`.
+- Added service-worker update handling in `PwaRegister` so existing browsers pick up the corrected worker and reload once when the controller changes.
+- Verified `npm run build` locally and checked localhost production navigation with service workers enabled: home to KIS detail rendered HTML normally instead of raw `$React.fragment` text.
