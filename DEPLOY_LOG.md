@@ -433,3 +433,11 @@
 - Switched internal project-card and interview-route jumps to Next `Link` so representative project detail pages can use client-side navigation instead of full document reloads.
 - Re-applied the Oracle Caddy setup so gzip/zstd compression is active for production HTML responses.
 - Changed project detail and document routes from per-request dynamic rendering to 60-second ISR with generated params, reducing repeated server-render cost while still allowing updated portfolio data to refresh shortly after deployment/admin edits.
+
+### Portfolio Click Speed And First Screen Polish
+
+- Shortened representative project card role/result copy so mobile cards show the key point without ellipsis-heavy text.
+- Shortened the first proof cards for KIS, BASE CHAIN, and MajorLink so the detail first screen answers problem, role, and result faster.
+- Added project-card hover/focus/touch prefetch for detail routes before navigation.
+- Deferred GitHub stats requests until each card is near the viewport and the browser is idle, reducing noisy background requests during first read and click.
+- Reworded the KIS problem-first home card around verifiable AI judgment and locked real orders, matching the current personal-project framing.

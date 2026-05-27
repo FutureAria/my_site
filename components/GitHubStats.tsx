@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Stats {
   stars: number | null;
@@ -22,20 +22,55 @@ function extractRepoPath(url: string): string | null {
 
 export default function GitHubStats({ githubUrl }: { githubUrl: string }) {
   const [stats, setStats] = useState<Stats | null>(null);
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
   const repo = extractRepoPath(githubUrl);
 
   useEffect(() => {
-    if (!repo) return;
-    fetch(`/api/github-stats?repo=${encodeURIComponent(repo)}`)
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "160px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!repo || !visible) return;
+
+    const controller = new AbortController();
+    const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 250));
+    const cancelIdle = window.cancelIdleCallback || window.clearTimeout;
+    const idleId = idle(() => {
+      fetch(`/api/github-stats?repo=${encodeURIComponent(repo)}`, {
+        signal: controller.signal,
+      })
       .then((r) => r.json())
       .then((d) => setStats(d))
       .catch(() => {});
-  }, [repo]);
+    });
 
-  if (!repo || !stats || (stats.stars === null && stats.forks === null)) return null;
+    return () => {
+      controller.abort();
+      cancelIdle(idleId);
+    };
+  }, [repo, visible]);
+
+  if (!repo || !stats || (stats.stars === null && stats.forks === null)) {
+    return <span ref={ref} className="block min-h-[18px]" aria-hidden="true" />;
+  }
 
   return (
-    <span className="flex items-center gap-2 text-xs text-gray-500">
+    <span ref={ref} className="flex min-h-[18px] items-center gap-2 text-xs text-gray-500">
       {stats.stars !== null && (
         <span className="flex items-center gap-1">
           <svg className="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">

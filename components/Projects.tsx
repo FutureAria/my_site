@@ -140,15 +140,15 @@ const PROJECT_CARD_COPY: Record<
   },
   "KIS AI 트레이더": {
     hook: "AI 판단 이유 공개",
-    teaser: "데이터와 모의투자 기록을 판단 근거로 묶었습니다.",
-    role: "데이터 수집, 판단 근거, 잠금 화면 설계",
-    impact: "방문자는 읽기 전용, 주문은 승인 후만",
+    teaser: "시장 데이터와 모의투자 기록을 근거로 묶었습니다.",
+    role: "수집·판단·잠금 설계",
+    impact: "읽기 전용 공개, 주문 잠금",
   },
   "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼": {
     hook: "최신 시연본 통합",
-    teaser: "예매부터 MOCK 결제, QR 입장까지 운영 서버에서 보여줍니다.",
-    role: "코드 통합, 프론트/백엔드 수정, 시연 오류 정리",
-    impact: "운영 배포본 기준으로 최신 화면 갱신",
+    teaser: "예매, MOCK 결제, QR 입장을 운영 화면으로 연결했습니다.",
+    role: "통합·API·UI 오류 정리",
+    impact: "최신 Oracle 시연본 반영",
   },
   "AI 감정 분석 기반 음악 추천 서비스 (개발 중)": {
     hook: "감정 기반 추천 설계",
@@ -159,8 +159,8 @@ const PROJECT_CARD_COPY: Record<
   Major_Link: {
     hook: "MVP 범위 정리",
     teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리했습니다.",
-    role: "기능, 일정, 역할, 비용 범위 정리",
-    impact: "개발 전 검증 기준을 문서화",
+    role: "범위·일정·비용 정리",
+    impact: "개발 전 검증 기준 확보",
   },
 };
 
@@ -234,11 +234,16 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const impact = compactCopy?.impact || project.detail?.impact;
     const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
     const cardBadge = categoryLabel.includes("개발 중") ? "진행" : "해결";
+    const projectHref = `/projects/${originalIndex}`;
+    const prefetchProject = () => router.prefetch(projectHref);
 
     return (
       <div
         key={originalIndex}
-        onClick={() => router.push(`/projects/${originalIndex}`)}
+        onClick={() => router.push(projectHref)}
+        onMouseEnter={prefetchProject}
+        onFocus={prefetchProject}
+        onTouchStart={prefetchProject}
         className={`group relative glass rounded-2xl overflow-hidden transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 cursor-pointer ${
           visible
             ? "opacity-100 translate-y-0"
@@ -353,7 +358,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
           {/* Links */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-white/5">
             <Link
-              href={`/projects/${originalIndex}`}
+              href={projectHref}
               className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
@@ -378,7 +383,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
             )}
             {project.documents && project.documents.length > 0 && (
               <Link
-                href={`/projects/${originalIndex}/documents/0`}
+                href={`${projectHref}/documents/0`}
                 className="flex items-center gap-1.5 text-xs text-emerald-300 hover:text-emerald-200 transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
