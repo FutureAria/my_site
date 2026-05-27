@@ -464,3 +464,8 @@
 - Replaced the oversized pill-style `바로 볼 프로젝트` links with a compact aligned panel.
 - Kept the three recommended project links visible while making their spacing stable across desktop and mobile widths.
 - Shortened the hero intro copy so mobile widths do not clip the first-screen explanation.
+
+### About Indent And Ongoing Project State
+
+- Adjusted the about intro bullets to use a fixed bullet column so wrapped lines stay aligned with the text.
+- Changed MajorLink card copy and badge from completed-style wording to `진행 중` / `MVP 범위 정리 중`.

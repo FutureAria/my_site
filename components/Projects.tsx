@@ -157,10 +157,10 @@ const PROJECT_CARD_COPY: Record<
     impact: "사용자 히스토리 연동 구조 정리 중",
   },
   Major_Link: {
-    hook: "MVP 범위 정리",
-    teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리했습니다.",
-    role: "범위·일정·비용 정리",
-    impact: "개발 전 검증 기준 확보",
+    hook: "MVP 범위 정리 중",
+    teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리 중입니다.",
+    role: "범위·일정·비용 정리 중",
+    impact: "개발 전 검증 기준 정리 중",
   },
 };
 
@@ -233,7 +233,9 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const role = compactCopy?.role || project.detail?.role;
     const impact = compactCopy?.impact || project.detail?.impact;
     const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
-    const cardBadge = categoryLabel.includes("개발 중") ? "진행" : "해결";
+    const projectStatusText = `${categoryLabel} ${project.period} ${project.title}`;
+    const isOngoingProject = /개발 중|진행\s*중|진행중|정리 중/.test(projectStatusText);
+    const cardBadge = isOngoingProject ? "진행 중" : "해결";
     const projectHref = `/projects/${originalIndex}`;
     const prefetchProject = () => router.prefetch(projectHref);
 

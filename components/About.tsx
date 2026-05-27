@@ -95,15 +95,18 @@ export default function About({ data }: { data: AboutData }) {
         <div
           className={`glass rounded-2xl p-5 sm:p-6 mb-10 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <ul className="grid gap-3 text-left sm:grid-cols-3">
+          <ul className="grid gap-4 text-left lg:grid-cols-3">
             {data.intro
               .split("\n")
               .map((line) => line.trim())
               .filter(Boolean)
               .map((line) => (
-                <li key={line} className="readable-copy flex gap-2 text-sm leading-7 text-gray-300">
-                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" />
-                  <span>{line}</span>
+                <li
+                  key={line}
+                  className="grid grid-cols-[0.5rem_1fr] items-start gap-3 text-sm leading-7 text-gray-300"
+                >
+                  <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                  <span className="readable-copy block min-w-0">{line}</span>
                 </li>
               ))}
           </ul>
