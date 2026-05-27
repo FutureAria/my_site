@@ -413,3 +413,12 @@
 - Added the same interview route above the project filters so reviewers can jump to the strongest evidence without scanning every card.
 - Updated the BASE CHAIN project card copy to emphasize the latest integrated demo, MOCK payment, QR entry, and Oracle deployment evidence.
 - Checked 390px mobile home and BASE CHAIN detail with browser automation; fixed the BASE CHAIN Korean title wrapping so words like `야구` do not split awkwardly.
+
+### Representative Project Interview Prep
+
+- Reframed KIS AI Trader as a personal project, not a team project, and clarified that AI is used for judgment support while implementation, safety boundaries, and operations are handled directly.
+- Added `전체 기능 / 제 기여` and screenshot captions for KIS AI Trader, with read-only/no-order boundaries shown as the main safety evidence.
+- Added three interview questions to KIS AI Trader, BASE CHAIN, and MajorLink so each representative project can lead into technical interview discussion.
+- Started light-theme QA for the new interview route and project-detail cards.
+- Added a planning-specific `전체 기능 / 제 기여` split to MajorLink so the development-before-implementation evidence is also scan-friendly.
+- Strengthened light-theme cyan CTA contrast after reviewing mobile screenshots for the representative project detail pages.

@@ -13,6 +13,10 @@ interface ProjectDetail {
     overall?: string[];
     owned?: string[];
   };
+  interviewQuestions?: Array<{
+    q?: string;
+    a?: string;
+  }>;
   impact?: string;
   problem?: string;
   solution?: string;
@@ -281,6 +285,7 @@ export default async function ProjectPage({
   const features = detail.features || [];
   const challengeSections = parseChallenges(detail.challenges || "");
   const takeaways = detail.takeaways || [];
+  const interviewQuestions = detail.interviewQuestions || [];
   const screenshots = detail.images || [];
   const demo = project.demo;
   const documents = project.documents || [];
@@ -675,6 +680,33 @@ export default async function ProjectPage({
                   <p className="readable-copy text-sm text-[var(--text-secondary)] leading-7 text-left">
                     {item}
                   </p>
+                </div>
+              ))}
+            </div>
+          </DetailSection>
+        )}
+
+        {interviewQuestions.length > 0 && (
+          <DetailSection title="면접 질문 3개" eyebrow="interview prep" tone="blue" defaultOpen>
+            <div className="grid grid-cols-1 gap-3">
+              {interviewQuestions.map((item, i) => (
+                <div
+                  key={`${item.q || i}`}
+                  className="rounded-2xl border border-blue-500/20 bg-blue-500/[0.05] p-5"
+                >
+                  <p className="text-xs font-semibold tracking-widest uppercase text-blue-300">
+                    Q{String(i + 1).padStart(2, "0")}
+                  </p>
+                  {item.q && (
+                    <h3 className="korean-title-wrap mt-2 text-base font-bold leading-7 text-[var(--text-primary)]">
+                      {item.q}
+                    </h3>
+                  )}
+                  {item.a && (
+                    <p className="readable-copy mt-3 text-left text-sm leading-7 text-[var(--text-secondary)]">
+                      {item.a}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

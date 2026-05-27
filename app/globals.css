@@ -321,6 +321,16 @@ html.light .hero-email-cta {
   box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
 }
 
+html.light .border-cyan-500\/25.bg-cyan-500\/10 {
+  background: rgba(8, 145, 178, 0.1) !important;
+  border-color: rgba(8, 145, 178, 0.34) !important;
+  color: #0e7490 !important;
+}
+
+html.light .text-cyan-300 {
+  color: #0e7490 !important;
+}
+
 html.light .hero-map-shell {
   background: #ffffff !important;
   border-color: #e5e7eb !important;
