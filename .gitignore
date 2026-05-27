@@ -20,3 +20,7 @@ next-env.d.ts
 
 # local experiments
 app/control-room/
+
+# runtime backups created before admin saves
+data/backups/
+data/upload-events.jsonl

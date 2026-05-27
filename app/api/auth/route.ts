@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 
 const ADMIN_COOKIE = "portfolio_admin";
+const CSRF_COOKIE = "portfolio_admin_csrf";
 const maxFailedAttempts = 5;
 const windowMs = 15 * 60 * 1000;
 const lockMs = 10 * 60 * 1000;
@@ -76,8 +77,16 @@ export async function POST(request: Request) {
 
   attempts.delete(clientId);
   const response = NextResponse.json({ success: true });
+  const csrfToken = crypto.randomBytes(24).toString("base64url");
   response.cookies.set(ADMIN_COOKIE, "ok", {
     httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 8,
+  });
+  response.cookies.set(CSRF_COOKIE, csrfToken, {
+    httpOnly: false,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
@@ -90,6 +99,13 @@ export async function DELETE() {
   const response = NextResponse.json({ success: true });
   response.cookies.set(ADMIN_COOKIE, "", {
     httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 0,
+  });
+  response.cookies.set(CSRF_COOKIE, "", {
+    httpOnly: false,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",

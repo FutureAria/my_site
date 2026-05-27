@@ -1,0 +1,17 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#030712"/>
+  <path d="M0 0H1200V630H0V0Z" fill="url(#grid)" opacity="0.28"/>
+  <rect x="84" y="88" width="1032" height="454" rx="36" fill="#07111F" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="151" cy="154" r="7" fill="#34D399"/>
+  <text x="174" y="160" fill="#93C5FD" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">Backend Problem Solver</text>
+  <text x="142" y="286" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="900">박주영 포트폴리오</text>
+  <text x="142" y="366" fill="#38BDF8" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="900">문제를 구조로 증명합니다</text>
+  <text x="142" y="442" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">BASE CHAIN · KIS AI Trader · MajorLink</text>
+  <rect x="142" y="480" width="188" height="46" rx="23" fill="#10B981" fill-opacity="0.16" stroke="#34D399" stroke-opacity="0.38"/>
+  <text x="172" y="512" fill="#A7F3D0" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800">JY Portfolio</text>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#38BDF8" stroke-opacity="0.18"/>
+    </pattern>
+  </defs>
+</svg>

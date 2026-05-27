@@ -9,6 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check:uploads": "node scripts/check-upload-references.mjs",
+    "check:uploads:strict": "node scripts/check-upload-references.mjs --strict",
     "check:oracle": "node scripts/check-oracle-capacity.mjs",
     "setup:oracle": "node scripts/setup-oracle-next.mjs",
     "deploy:oracle": "node scripts/deploy-oracle-next.mjs",

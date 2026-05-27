@@ -483,3 +483,12 @@
 - Added an unsaved-change summary banner so accidental broad admin edits are easier to spot before saving.
 - Made project detail pages prefer admin-managed card/detail copy before fallback copy, matching the project card behavior.
 - Split ongoing labels into `진행 중`, `개발 중`, and `기획 검증 중` so MajorLink does not look like a completed implementation.
+
+### Admin Security And Metadata Hardening
+
+- Added CSRF double-submit protection for admin write APIs and upload requests.
+- Added timestamped `data/backups/portfolio-*.json` backups before admin portfolio saves.
+- Added upload event logging and a `npm run check:uploads` script to report referenced, missing, and unreferenced upload files without deleting them.
+- Updated robots and sitemap URLs to the production DuckDNS domain and added admin `noindex` metadata.
+- Added a portfolio Open Graph image and linked it from global metadata for richer link previews.
+- Moved the ignored local `app/control-room` experiment route into `data/backups/local-routes/control-room/` so it cannot be included in production builds.

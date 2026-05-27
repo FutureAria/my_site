@@ -118,6 +118,24 @@ const DEFAULT_PROJECT_CATEGORIES = [
   "기타 프로젝트",
 ];
 
+function getCookieValue(name: string) {
+  if (typeof document === "undefined") return "";
+  const prefix = `${name}=`;
+  return (
+    document.cookie
+      .split(";")
+      .map((item) => item.trim())
+      .find((item) => item.startsWith(prefix))
+      ?.slice(prefix.length) || ""
+  );
+}
+
+function csrfHeaders() {
+  return {
+    "X-CSRF-Token": getCookieValue("portfolio_admin_csrf"),
+  };
+}
+
 function getProjectStatus(project: Pick<Project, "title" | "period" | "category" | "problem">) {
   const text = `${project.title} ${project.period} ${project.category || ""} ${project.problem || ""}`;
   if (/MVP|기획 검증|정리 중/.test(text)) return "기획 검증 중";
@@ -262,7 +280,7 @@ export default function AdminPage() {
     setSaving(true);
     await fetch("/api/portfolio", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...csrfHeaders() },
       body: JSON.stringify(data),
     });
     setOriginalData(data);
@@ -2439,7 +2457,11 @@ function ImageUpload({
     setUploading(true);
     const form = new FormData();
     form.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      headers: csrfHeaders(),
+      body: form,
+    });
     const json = await res.json();
     if (json.url) onChange(json.url);
     setUploading(false);
@@ -2524,7 +2546,11 @@ function FileUpload({
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: form });
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: csrfHeaders(),
+        body: form,
+      });
       const json = await res.json();
       if (!res.ok || !json.url) {
         setError(json.message || json.error || "업로드에 실패했습니다.");

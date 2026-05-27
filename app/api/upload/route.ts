@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import sharp from "sharp";
 
 const uploadDir = path.join(process.cwd(), "public", "uploads");
+const uploadLogPath = path.join(process.cwd(), "data", "upload-events.jsonl");
 const allowedTypes = new Set([
   "image/jpeg",
   "image/png",
@@ -106,6 +107,21 @@ function readUploadFiles(formData: FormData) {
   return single instanceof File ? [single] : [];
 }
 
+async function appendUploadLog(paths: string[], files: File[]) {
+  await fs.mkdir(path.dirname(uploadLogPath), { recursive: true });
+  const records = paths.map((url, index) => ({
+    at: new Date().toISOString(),
+    url,
+    type: files[index]?.type || "",
+    size: files[index]?.size || 0,
+  }));
+  await fs.appendFile(
+    uploadLogPath,
+    records.map((record) => JSON.stringify(record)).join("\n") + "\n",
+    "utf-8",
+  );
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
@@ -169,6 +185,8 @@ export async function POST(request: Request) {
         return `/uploads/${safeName}`;
       }),
     );
+
+    await appendUploadLog(paths, files);
 
     return NextResponse.json({ url: paths[0], paths });
   } catch (error) {

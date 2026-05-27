@@ -39,6 +39,22 @@ export const metadata: Metadata = {
     description: "데이터 흐름과 API 기반 구조 설계를 중심으로 문제를 해결하는 백엔드 개발자",
     type: "website",
     locale: "ko_KR",
+    url: "https://juyoung-portfolio.duckdns.org",
+    siteName: "JY Portfolio",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "박주영 백엔드 개발자 포트폴리오",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "박주영 | 백엔드 개발자 포트폴리오",
+    description: "문제를 쪼개고 구조로 증명하는 백엔드 개발자 포트폴리오",
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,

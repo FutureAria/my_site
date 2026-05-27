@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const raw = fs.readFileSync(path.join(process.cwd(), "data", "portfolio.json"), "utf-8");
   const data = JSON.parse(raw);
 
-  const baseUrl = "https://juyoung-portfolio.vercel.app";
+  const baseUrl = "https://juyoung-portfolio.duckdns.org";
 
   const projectRoutes: MetadataRoute.Sitemap = (data.projects || []).map(
     (_: unknown, i: number) => ({
