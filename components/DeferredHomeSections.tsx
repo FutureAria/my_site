@@ -26,14 +26,17 @@ export default function DeferredHomeSections({ data }: DeferredHomeSectionsProps
     const load = () => setReady(true);
     const requestIdle =
       typeof window !== "undefined" ? window.requestIdleCallback : undefined;
+    const timeoutId = window.setTimeout(load, 900);
 
     if (requestIdle) {
-      const id = requestIdle(load, { timeout: 700 });
-      return () => window.cancelIdleCallback?.(id);
+      const idleId = requestIdle(load, { timeout: 700 });
+      return () => {
+        window.cancelIdleCallback?.(idleId);
+        window.clearTimeout(timeoutId);
+      };
     }
 
-    const id = window.setTimeout(load, 250);
-    return () => window.clearTimeout(id);
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   if (!ready) return null;
