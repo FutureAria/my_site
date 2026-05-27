@@ -13,8 +13,8 @@ interface HeroData {
 }
 
 const HERO_INTRO = [
-  "백엔드, 데이터 흐름, 배포까지 직접 다루며 문제를 작동하는 화면으로 설명합니다.",
-  "면접관이 빠르게 확인할 수 있도록 대표 프로젝트 3개를 먼저 배치했습니다.",
+  "백엔드, 데이터 흐름, 배포까지 직접 다룹니다.",
+  "대표 프로젝트 3개만 먼저 보이게 정리했습니다.",
 ];
 
 const RECOMMENDED_PROJECTS = [
@@ -120,22 +120,39 @@ export default function Hero({ data }: { data: HeroData }) {
           </div>
 
           <div
-            className={`mb-5 flex flex-wrap items-center gap-2 text-xs transition-all duration-700 delay-[420ms] ${
+            className={`mb-6 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.025] p-3 transition-all duration-700 delay-[420ms] sm:p-4 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            <span className="font-semibold uppercase tracking-[0.18em] text-emerald-300">
-              바로 볼 프로젝트
-            </span>
-            {RECOMMENDED_PROJECTS.map((project, index) => (
-              <Link
-                key={project.href}
-                href={project.href}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-semibold text-gray-300 transition-colors hover:border-emerald-400/25 hover:text-white"
-              >
-                {index + 1}. {project.title}
-              </Link>
-            ))}
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
+                바로 볼 프로젝트
+              </span>
+              <span className="hidden text-xs text-gray-500 sm:inline">
+                상세 페이지로 이동
+              </span>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {RECOMMENDED_PROJECTS.map((project, index) => (
+                <Link
+                  key={project.href}
+                  href={project.href}
+                  className="group flex min-h-[4.25rem] items-start gap-2 rounded-xl border border-white/10 bg-gray-950/25 px-3 py-2.5 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.045]"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-[11px] font-black text-emerald-200">
+                    {index + 1}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-bold text-gray-100 transition-colors group-hover:text-white">
+                      {project.title}
+                    </span>
+                    <span className="mobile-safe-wrap mt-0.5 block text-xs leading-5 text-gray-500">
+                      {project.body}
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
 
           <div

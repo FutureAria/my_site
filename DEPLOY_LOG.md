@@ -458,3 +458,9 @@
 - Renamed project-card actions from generic labels to interview-oriented actions: `문제 해결 보기`, `운영 화면 보기`, and `설계 문서 보기`.
 - Moved `전체 기능 / 제 기여` above the tech stack on project detail pages so contribution evidence appears before stack labels.
 - Compressed the about section into three short bullet cards and reduced vertical spacing so the page gets back to projects faster.
+
+### Hero Quick Links Alignment Fix
+
+- Replaced the oversized pill-style `바로 볼 프로젝트` links with a compact aligned panel.
+- Kept the three recommended project links visible while making their spacing stable across desktop and mobile widths.
+- Shortened the hero intro copy so mobile widths do not clip the first-screen explanation.
