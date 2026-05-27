@@ -42,6 +42,15 @@ interface ProjectDetail {
   features: string[];
   challenges: string;
   images: string[];
+  takeaways?: string[];
+  interviewQuestions?: Array<{
+    q: string;
+    a: string;
+  }>;
+  contribution?: {
+    overall?: string[];
+    owned?: string[];
+  };
 }
 
 interface ProjectDemo {
@@ -108,6 +117,23 @@ const DEFAULT_PROJECT_CATEGORIES = [
   "개발 중 · 기획 프로젝트",
   "기타 프로젝트",
 ];
+
+function getProjectStatus(project: Pick<Project, "title" | "period" | "category" | "problem">) {
+  const text = `${project.title} ${project.period} ${project.category || ""} ${project.problem || ""}`;
+  return /개발 중|진행\s*중|진행중|정리 중|설계 중/.test(text)
+    ? "진행 중"
+    : "해결";
+}
+
+function getProjectCardPreview(project: Project) {
+  return {
+    status: getProjectStatus(project),
+    hook: project.problem || project.desc || "카드 상단에 보일 핵심 문장",
+    teaser: project.teaser || project.detail?.impact || project.desc || "카드 보조 설명",
+    role: project.detail?.role || "",
+    impact: project.detail?.impact || "",
+  };
+}
 
 function swap<T>(arr: T[], i: number, j: number): T[] {
   const copy = [...arr];
@@ -906,6 +932,7 @@ export default function AdminPage() {
                 };
                 setData({ ...data, projects });
               };
+              const cardPreview = getProjectCardPreview(project);
               return (
               <div key={i} className="glass rounded-xl mb-4 overflow-hidden">
                 {/* Header with move/delete - always visible */}
@@ -930,10 +957,19 @@ export default function AdminPage() {
                         </span>
                       )}
                       {project.category && (
-                        <span className="mt-2 inline-flex rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-gray-400 sm:hidden">
+                        <span className="mt-2 inline-flex rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-gray-400">
                           {project.category}
                         </span>
                       )}
+                      <span
+                        className={`mt-2 ml-2 inline-flex rounded-md border px-2 py-0.5 text-[11px] font-semibold ${
+                          cardPreview.status === "진행 중"
+                            ? "border-blue-400/20 bg-blue-500/10 text-blue-300"
+                            : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                        }`}
+                      >
+                        {cardPreview.status}
+                      </span>
                     </div>
                   </div>
                   <div
@@ -1069,9 +1105,9 @@ export default function AdminPage() {
                   }}
                 />
                 <TextArea
-                  label="카드 문제 질문"
+                  label="카드 핵심 문장"
                   value={project.problem || ""}
-                  placeholder="동시에 눌러도 정원이 초과되지 않는 수강신청을 만들 수 있을까?"
+                  placeholder="예: MVP 범위 정리 중"
                   rows={2}
                   onChange={(v) => {
                     const projects = [...data.projects];
@@ -1080,9 +1116,9 @@ export default function AdminPage() {
                   }}
                 />
                 <TextArea
-                  label="카드 한 줄 요약"
+                  label="카드 보조 설명"
                   value={project.teaser || ""}
-                  placeholder="카드에서 먼저 보여줄 짧은 결과 요약"
+                  placeholder="카드에서 먼저 보여줄 짧은 진행 상태 또는 결과 요약"
                   rows={2}
                   onChange={(v) => {
                     const projects = [...data.projects];
@@ -1090,6 +1126,46 @@ export default function AdminPage() {
                     setData({ ...data, projects });
                   }}
                 />
+                <div className="mb-4 rounded-xl border border-white/10 bg-white/[0.025] p-4">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                      공개 카드 미리보기
+                    </p>
+                    <span
+                      className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold ${
+                        cardPreview.status === "진행 중"
+                          ? "border-blue-400/20 bg-blue-500/10 text-blue-300"
+                          : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                      }`}
+                    >
+                      {cardPreview.status}
+                    </span>
+                  </div>
+                  <p className="text-sm font-bold leading-6 text-white">
+                    {cardPreview.hook}
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-gray-400">
+                    {cardPreview.teaser}
+                  </p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    <div className="rounded-lg border border-emerald-500/15 bg-emerald-500/5 px-3 py-2">
+                      <p className="text-[11px] font-semibold text-emerald-300">
+                        내가 맡은 것
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-300">
+                        {cardPreview.role || "담당 역할을 입력하면 여기에 보입니다."}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border border-blue-500/15 bg-blue-500/5 px-3 py-2">
+                      <p className="text-[11px] font-semibold text-blue-300">
+                        결과
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-300">
+                        {cardPreview.impact || "핵심 성과를 입력하면 여기에 보입니다."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <DelimitedField
                   label="기술 스택 (쉼표로 구분)"
                   values={project.techs}
@@ -1443,6 +1519,123 @@ export default function AdminPage() {
                       onChange={(v) => updateDetail({ challenges: v })}
                       rows={4}
                     />
+                    <details className="mb-4 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                      <summary className="cursor-pointer text-sm font-semibold text-emerald-300 transition-colors hover:text-emerald-200">
+                        전체 기능 / 제 기여 / 면접 질문
+                      </summary>
+                      <div className="mt-4">
+                        <DelimitedField
+                          label="전체 프로젝트 기능 (쉼표로 구분)"
+                          values={project.detail?.contribution?.overall || []}
+                          placeholder="예: 경기 예매, QR 입장, 공식 재판매"
+                          onCommit={(overall) =>
+                            updateDetail({
+                              contribution: {
+                                ...project.detail?.contribution,
+                                overall,
+                              },
+                            })
+                          }
+                        />
+                        <DelimitedField
+                          label="제가 맡은 부분 (쉼표로 구분)"
+                          values={project.detail?.contribution?.owned || []}
+                          placeholder="예: 코드 통합, MOCK 결제 연결, Oracle 오류 정리"
+                          onCommit={(owned) =>
+                            updateDetail({
+                              contribution: {
+                                ...project.detail?.contribution,
+                                owned,
+                              },
+                            })
+                          }
+                        />
+                        <DelimitedField
+                          label="배운 점 / 면접 포인트 (쉼표로 구분)"
+                          values={project.detail?.takeaways || []}
+                          placeholder="예: MVP는 제외 범위까지 정해야 함"
+                          onCommit={(takeaways) => updateDetail({ takeaways })}
+                        />
+                        <div className="mt-4 space-y-3">
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-xs font-semibold text-gray-400">
+                              면접 질문
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const interviewQuestions = [
+                                  ...(project.detail?.interviewQuestions || []),
+                                  { q: "", a: "" },
+                                ];
+                                updateDetail({ interviewQuestions });
+                              }}
+                              className="text-xs text-blue-400 transition-colors hover:text-blue-300"
+                            >
+                              + 질문 추가
+                            </button>
+                          </div>
+                          {(project.detail?.interviewQuestions || []).map(
+                            (question, questionIndex) => (
+                              <div
+                                key={questionIndex}
+                                className="rounded-lg border border-white/10 bg-gray-950/40 p-3"
+                              >
+                                <div className="mb-2 flex items-center justify-between gap-3">
+                                  <span className="text-xs text-gray-500">
+                                    질문 {questionIndex + 1}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const interviewQuestions = [
+                                        ...(project.detail?.interviewQuestions || []),
+                                      ];
+                                      interviewQuestions.splice(questionIndex, 1);
+                                      updateDetail({ interviewQuestions });
+                                    }}
+                                    className="text-xs text-red-400 transition-colors hover:text-red-300"
+                                  >
+                                    삭제
+                                  </button>
+                                </div>
+                                <Field
+                                  label="질문"
+                                  value={question.q}
+                                  placeholder="예: 아직 개발 전인데 왜 포트폴리오에 넣었나요?"
+                                  onChange={(v) => {
+                                    const interviewQuestions = [
+                                      ...(project.detail?.interviewQuestions || []),
+                                    ];
+                                    interviewQuestions[questionIndex] = {
+                                      ...interviewQuestions[questionIndex],
+                                      q: v,
+                                    };
+                                    updateDetail({ interviewQuestions });
+                                  }}
+                                />
+                                <TextArea
+                                  label="답변"
+                                  value={question.a}
+                                  placeholder="면접에서 바로 말할 수 있는 짧은 답변"
+                                  rows={2}
+                                  onChange={(v) => {
+                                    const interviewQuestions = [
+                                      ...(project.detail?.interviewQuestions || []),
+                                    ];
+                                    interviewQuestions[questionIndex] = {
+                                      ...interviewQuestions[questionIndex],
+                                      a: v,
+                                    };
+                                    updateDetail({ interviewQuestions });
+                                  }}
+                                />
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                    </details>
                     {/* Detail images */}
                     <div className="mb-4">
                       <label className="block text-xs text-gray-400 font-medium mb-1.5">
@@ -1544,6 +1737,12 @@ export default function AdminPage() {
                         features: [],
                         challenges: "",
                         images: [],
+                        takeaways: [],
+                        interviewQuestions: [],
+                        contribution: {
+                          overall: [],
+                          owned: [],
+                        },
                       },
                     },
                   ],

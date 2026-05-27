@@ -228,10 +228,10 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const color = colors[originalIndex % colors.length];
     const categoryLabel = project.category || "기타 프로젝트";
     const compactCopy = PROJECT_CARD_COPY[project.title];
-    const hook = compactCopy?.hook || project.problem || project.desc;
-    const teaser = compactCopy?.teaser || project.teaser || project.detail?.impact || project.desc;
-    const role = compactCopy?.role || project.detail?.role;
-    const impact = compactCopy?.impact || project.detail?.impact;
+    const hook = project.problem || compactCopy?.hook || project.desc;
+    const teaser = project.teaser || compactCopy?.teaser || project.detail?.impact || project.desc;
+    const role = project.detail?.role || compactCopy?.role;
+    const impact = project.detail?.impact || compactCopy?.impact;
     const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
     const projectStatusText = `${categoryLabel} ${project.period} ${project.title}`;
     const isOngoingProject = /개발 중|진행\s*중|진행중|정리 중/.test(projectStatusText);

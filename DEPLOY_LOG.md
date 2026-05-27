@@ -469,3 +469,10 @@
 
 - Adjusted the about intro bullets to use a fixed bullet column so wrapped lines stay aligned with the text.
 - Changed MajorLink card copy and badge from completed-style wording to `진행 중` / `MVP 범위 정리 중`.
+
+### Admin Editor Latest Portfolio Sync
+
+- Made project cards prefer admin-managed portfolio data before fallback copy so admin edits stay reflected on the public site.
+- Added public-card preview/status chips to the admin project editor, including `진행 중` detection for ongoing projects.
+- Added admin controls for `전체 기능 / 제 기여`, takeaways, and interview Q&A fields used by the latest project detail pages.
+- Synced stored project card copy to the latest concise interview-facing wording, including ongoing wording for MajorLink and the music recommendation project.
