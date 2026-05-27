@@ -443,3 +443,4 @@
 - Reworded the KIS problem-first home card around verifiable AI judgment and locked real orders, matching the current personal-project framing.
 - Removed the service-worker controller-change auto reload because it could interrupt the first click after a worker update; the worker still checks for updates on registration.
 - Added a hard timeout fallback to deferred home sections so the project list appears even when `requestIdleCallback` is delayed by browser/network activity.
+- Removed the home-section deferral entirely after production verification showed project cards could appear too late for fast click-through.
