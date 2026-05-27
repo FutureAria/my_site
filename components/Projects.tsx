@@ -164,6 +164,14 @@ const PROJECT_CARD_COPY: Record<
   },
 };
 
+function getProjectStatusLabel(project: ProjectItem) {
+  const text = `${project.title} ${project.period} ${project.category || ""} ${project.problem || ""}`;
+  if (/MVP|기획 검증|정리 중/.test(text)) return "기획 검증 중";
+  if (/개발 중|설계 중/.test(text)) return "개발 중";
+  if (/진행\s*중|진행중/.test(text)) return "진행 중";
+  return "해결";
+}
+
 export default function Projects({ data }: { data: ProjectItem[] }) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -233,9 +241,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const role = project.detail?.role || compactCopy?.role;
     const impact = project.detail?.impact || compactCopy?.impact;
     const visibleCardTechs = project.techs.slice(0, CARD_TECH_LIMIT);
-    const projectStatusText = `${categoryLabel} ${project.period} ${project.title}`;
-    const isOngoingProject = /개발 중|진행\s*중|진행중|정리 중/.test(projectStatusText);
-    const cardBadge = isOngoingProject ? "진행 중" : "해결";
+    const cardBadge = getProjectStatusLabel(project);
     const projectHref = `/projects/${originalIndex}`;
     const prefetchProject = () => router.prefetch(projectHref);
 

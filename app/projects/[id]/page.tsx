@@ -146,6 +146,14 @@ const PROJECT_DETAIL_COPY: Record<
   },
 };
 
+function getProjectStatusLabel(project: Project) {
+  const text = `${project.title} ${project.period} ${project.category || ""} ${project.problem || ""}`;
+  if (/MVP|기획 검증|정리 중/.test(text)) return "기획 검증 중";
+  if (/개발 중|설계 중/.test(text)) return "개발 중";
+  if (/진행\s*중|진행중/.test(text)) return "진행 중";
+  return "";
+}
+
 function parseChallenges(text: string) {
   if (!text) return [] as Array<{ key: string; body: string }>;
   const blocks = text.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
@@ -298,12 +306,13 @@ export default async function ProjectPage({
   const documents = project.documents || [];
   const hasDemoGuide = Boolean(demo?.note);
   const compactCopy = PROJECT_DETAIL_COPY[project.title];
-  const projectHook = compactCopy?.headline || project.problem || detail.problem || project.desc;
-  const projectTeaser = compactCopy?.summary || project.teaser || detail.impact || project.desc;
+  const statusLabel = getProjectStatusLabel(project);
+  const projectHook = project.problem || compactCopy?.headline || detail.problem || project.desc;
+  const projectTeaser = project.teaser || compactCopy?.summary || detail.impact || project.desc;
   const snapshotItems = [
-    { label: "문제", body: compactCopy?.problem || detail.problem || projectHook },
-    { label: "내 역할", body: compactCopy?.role || role },
-    { label: "확인 결과", body: compactCopy?.result || detail.impact || detail.result },
+    { label: "문제", body: detail.problem || compactCopy?.problem || projectHook },
+    { label: "내 역할", body: role || compactCopy?.role },
+    { label: "확인 결과", body: detail.impact || detail.result || compactCopy?.result },
   ].filter((item) => item.body);
 
   return (
@@ -364,10 +373,19 @@ export default async function ProjectPage({
         <section className="project-detail-hero mb-10 overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-white/[0.03] to-emerald-500/10 p-5 shadow-2xl shadow-black/10 sm:p-7">
           <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
-              {project.category && (
-                <span className="inline-flex rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
-                  {project.category}
-                </span>
+              {(project.category || statusLabel) && (
+                <div className="flex flex-wrap gap-2">
+                  {project.category && (
+                    <span className="inline-flex rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                      {project.category}
+                    </span>
+                  )}
+                  {statusLabel && (
+                    <span className="inline-flex rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
+                      {statusLabel}
+                    </span>
+                  )}
+                </div>
               )}
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
                 먼저 볼 핵심

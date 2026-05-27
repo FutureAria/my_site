@@ -120,9 +120,10 @@ const DEFAULT_PROJECT_CATEGORIES = [
 
 function getProjectStatus(project: Pick<Project, "title" | "period" | "category" | "problem">) {
   const text = `${project.title} ${project.period} ${project.category || ""} ${project.problem || ""}`;
-  return /개발 중|진행\s*중|진행중|정리 중|설계 중/.test(text)
-    ? "진행 중"
-    : "해결";
+  if (/MVP|기획 검증|정리 중/.test(text)) return "기획 검증 중";
+  if (/개발 중|설계 중/.test(text)) return "개발 중";
+  if (/진행\s*중|진행중/.test(text)) return "진행 중";
+  return "해결";
 }
 
 function getProjectCardPreview(project: Project) {
@@ -135,6 +136,23 @@ function getProjectCardPreview(project: Project) {
   };
 }
 
+function getChangedProjectTitles(previous: PortfolioData | null, current: PortfolioData | null) {
+  if (!previous || !current) return [] as string[];
+  return current.projects
+    .map((project, index) => {
+      const before = previous.projects[index];
+      if (!before) return project.title || `새 프로젝트 ${index + 1}`;
+      return JSON.stringify(before) === JSON.stringify(project)
+        ? null
+        : project.title || before.title || `프로젝트 ${index + 1}`;
+    })
+    .filter(Boolean) as string[];
+}
+
+function normalizeProjectStatusText(value: string) {
+  return value.replace(/진행중/g, "진행 중");
+}
+
 function swap<T>(arr: T[], i: number, j: number): T[] {
   const copy = [...arr];
   [copy[i], copy[j]] = [copy[j], copy[i]];
@@ -143,6 +161,7 @@ function swap<T>(arr: T[], i: number, j: number): T[] {
 
 export default function AdminPage() {
   const [data, setData] = useState<PortfolioData | null>(null);
+  const [originalData, setOriginalData] = useState<PortfolioData | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [activeTab, setActiveTab] = useState("hero");
@@ -158,7 +177,10 @@ export default function AdminPage() {
       setAuthed(true);
       fetch("/api/portfolio")
         .then((r) => r.json())
-        .then(setData);
+        .then((next) => {
+          setData(next);
+          setOriginalData(next);
+        });
     }
   }, []);
 
@@ -173,7 +195,10 @@ export default function AdminPage() {
       sessionStorage.setItem("admin_authed", "true");
       fetch("/api/portfolio")
         .then((r) => r.json())
-        .then(setData);
+        .then((next) => {
+          setData(next);
+          setOriginalData(next);
+        });
     } else {
       setPwError(true);
       setTimeout(() => setPwError(false), 2000);
@@ -217,12 +242,30 @@ export default function AdminPage() {
 
   const save = async () => {
     if (!data) return;
+    const changedProjects = getChangedProjectTitles(originalData, data);
+    const changedSummary =
+      changedProjects.length > 0
+        ? `변경된 프로젝트: ${changedProjects.slice(0, 5).join(", ")}${
+            changedProjects.length > 5 ? ` 외 ${changedProjects.length - 5}개` : ""
+          }`
+        : "프로젝트 변경 없음";
+    const ok = window.confirm(
+      [
+        "관리자 데이터를 저장할까요?",
+        "",
+        changedSummary,
+        "",
+        "저장하면 운영 데이터가 갱신됩니다.",
+      ].join("\n"),
+    );
+    if (!ok) return;
     setSaving(true);
     await fetch("/api/portfolio", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    setOriginalData(data);
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -249,6 +292,7 @@ export default function AdminPage() {
       ...data.projects.map((project) => project.category || "").filter(Boolean),
     ]),
   );
+  const changedProjectTitles = getChangedProjectTitles(originalData, data);
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -276,6 +320,21 @@ export default function AdminPage() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        {changedProjectTitles.length > 0 && (
+          <div className="mb-5 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-300">
+              저장 전 변경 요약
+            </p>
+            <p className="mt-2 text-sm leading-6 text-gray-300">
+              {changedProjectTitles.slice(0, 4).join(", ")}
+              {changedProjectTitles.length > 4
+                ? ` 외 ${changedProjectTitles.length - 4}개`
+                : ""}{" "}
+              수정됨
+            </p>
+          </div>
+        )}
+
         {/* Tabs */}
         <div className="flex gap-1 mb-8 overflow-x-auto pb-2">
           {tabs.map((tab) => (
@@ -1036,7 +1095,10 @@ export default function AdminPage() {
                     value={project.period}
                     onChange={(v) => {
                       const projects = [...data.projects];
-                      projects[i] = { ...projects[i], period: v };
+                      projects[i] = {
+                        ...projects[i],
+                        period: normalizeProjectStatusText(v),
+                      };
                       setData({ ...data, projects });
                     }}
                   />

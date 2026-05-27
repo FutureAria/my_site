@@ -476,3 +476,10 @@
 - Added public-card preview/status chips to the admin project editor, including `진행 중` detection for ongoing projects.
 - Added admin controls for `전체 기능 / 제 기여`, takeaways, and interview Q&A fields used by the latest project detail pages.
 - Synced stored project card copy to the latest concise interview-facing wording, including ongoing wording for MajorLink and the music recommendation project.
+
+### Admin Save Guard And Status Labels
+
+- Added a save confirmation step with changed-project summary before the admin page writes portfolio data.
+- Added an unsaved-change summary banner so accidental broad admin edits are easier to spot before saving.
+- Made project detail pages prefer admin-managed card/detail copy before fallback copy, matching the project card behavior.
+- Split ongoing labels into `진행 중`, `개발 중`, and `기획 검증 중` so MajorLink does not look like a completed implementation.
