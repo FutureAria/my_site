@@ -393,7 +393,7 @@ export default async function ProjectPage({
                       rel="noopener noreferrer"
                       className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600 sm:w-auto"
                     >
-                      {demo?.ctaLabel || "데모 보기"}
+                      {demo?.ctaLabel || "운영 화면 보기"}
                     </a>
                   )}
                   {project.github && (
@@ -411,7 +411,7 @@ export default async function ProjectPage({
                       href={`/projects/${idx}/documents/0`}
                       className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 transition-all hover:-translate-y-0.5 hover:bg-emerald-500/15 sm:w-auto"
                     >
-                      기획자료
+                      설계 문서 보기
                     </Link>
                   )}
                   {screenshots.length > 0 && (
@@ -468,29 +468,6 @@ export default async function ProjectPage({
           )}
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">기술 스택</h2>
-          <div className="flex flex-wrap gap-2">
-            {project.techs.map((tech) => (
-              <span
-                key={tech}
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium bg-blue-500/10 border border-blue-500/20 text-blue-300"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {role && (
-          <DetailSection title="내 역할 · 규모" eyebrow="role" tone="emerald">
-            <TextLines
-              text={role}
-              className="text-[var(--text-secondary)] leading-8"
-            />
-          </DetailSection>
-        )}
-
         {(detail.contribution?.overall?.length || detail.contribution?.owned?.length) && (
           <DetailSection title="전체 기능 / 제 기여" eyebrow="contribution" tone="emerald" defaultOpen>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -528,6 +505,29 @@ export default async function ProjectPage({
             </div>
           </DetailSection>
         )}
+
+        {role && (
+          <DetailSection title="내 역할 · 규모" eyebrow="role" tone="emerald">
+            <TextLines
+              text={role}
+              className="text-[var(--text-secondary)] leading-8"
+            />
+          </DetailSection>
+        )}
+
+        <section className="mb-12 mt-8">
+          <h2 className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-4">기술 스택</h2>
+          <div className="flex flex-wrap gap-2">
+            {project.techs.map((tech) => (
+              <span
+                key={tech}
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium bg-blue-500/10 border border-blue-500/20 text-blue-300"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </section>
 
         {(detail.impact || outcomeItems.length > 0) && (
           <DetailSection title="문제 · 해결 · 결과" eyebrow="case flow" tone="blue">

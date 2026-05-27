@@ -365,7 +365,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>
-              상세 보기
+              문제 해결 보기
             </Link>
             {project.link && (
               <a
@@ -378,7 +378,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>
-                데모
+                운영 화면 보기
               </a>
             )}
             {project.documents && project.documents.length > 0 && (
@@ -390,7 +390,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-7.5A2.25 2.25 0 0017.25 4.5H6.75A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5h6.75M15 18l2.25 2.25L21 16.5" />
                 </svg>
-                기획자료
+                설계 문서 보기
               </Link>
             )}
             {project.github && (

@@ -452,3 +452,9 @@
 - Reduced first-screen CTA competition by removing the secondary `문제 보기` button and changing the email CTA to a shorter `연락하기` label.
 - Reframed the hero around the three representative projects instead of repeating a generic interview map.
 - Rewrote core-strength cards from generic skill claims into project-grounded problem statements: state flow, critical data, deployment debugging, and verifiable AI output.
+
+### Interview Click Path Tightening
+
+- Renamed project-card actions from generic labels to interview-oriented actions: `문제 해결 보기`, `운영 화면 보기`, and `설계 문서 보기`.
+- Moved `전체 기능 / 제 기여` above the tech stack on project detail pages so contribution evidence appears before stack labels.
+- Compressed the about section into three short bullet cards and reduced vertical spacing so the page gets back to projects faster.

@@ -76,28 +76,37 @@ export default function About({ data }: { data: AboutData }) {
   }, []);
 
   return (
-    <section id="about" ref={ref} className="py-20 sm:py-24 px-4 sm:px-6">
+    <section id="about" ref={ref} className="py-16 sm:py-20 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
         <div
-          className={`text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`text-center mb-10 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <span className="text-sm font-semibold tracking-widest uppercase text-blue-400 mb-3 block">
             소개
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            성장 <span className="gradient-text">기록</span>
+            짧은 <span className="gradient-text">소개</span>
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto" />
         </div>
 
         {/* About intro */}
         <div
-          className={`glass rounded-2xl p-6 sm:p-8 mb-12 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`glass rounded-2xl p-5 sm:p-6 mb-10 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <p className="readable-copy whitespace-pre-line text-gray-300 leading-8 text-base sm:text-lg text-left">
-            {data.intro}
-          </p>
+          <ul className="grid gap-3 text-left sm:grid-cols-3">
+            {data.intro
+              .split("\n")
+              .map((line) => line.trim())
+              .filter(Boolean)
+              .map((line) => (
+                <li key={line} className="readable-copy flex gap-2 text-sm leading-7 text-gray-300">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" />
+                  <span>{line}</span>
+                </li>
+              ))}
+          </ul>
         </div>
 
         {/* Timeline */}
