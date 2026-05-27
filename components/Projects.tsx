@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import GitHubStats from "./GitHubStats";
 
 interface ProjectItem {
@@ -351,7 +352,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
 
           {/* Links */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 border-t border-white/5">
-            <a
+            <Link
               href={`/projects/${originalIndex}`}
               className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
               onClick={(e) => e.stopPropagation()}
@@ -360,7 +361,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>
               상세 보기
-            </a>
+            </Link>
             {project.link && (
               <a
                 href={project.link}
@@ -376,7 +377,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               </a>
             )}
             {project.documents && project.documents.length > 0 && (
-              <a
+              <Link
                 href={`/projects/${originalIndex}/documents/0`}
                 className="flex items-center gap-1.5 text-xs text-emerald-300 hover:text-emerald-200 transition-colors"
                 onClick={(e) => e.stopPropagation()}
@@ -385,7 +386,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-7.5A2.25 2.25 0 0017.25 4.5H6.75A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5h6.75M15 18l2.25 2.25L21 16.5" />
                 </svg>
                 기획자료
-              </a>
+              </Link>
             )}
             {project.github && (
               <a
@@ -443,7 +444,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
           </div>
           <div className="grid gap-3 md:grid-cols-3">
             {INTERVIEW_ROUTE.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="group rounded-2xl border border-white/10 bg-gray-950/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-400/25 hover:bg-white/[0.055]"
@@ -463,7 +464,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                   </svg>
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
