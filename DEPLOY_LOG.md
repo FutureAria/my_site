@@ -445,3 +445,10 @@
 - Added a hard timeout fallback to deferred home sections so the project list appears even when `requestIdleCallback` is delayed by browser/network activity.
 - Removed the home-section deferral entirely after production verification showed project cards could appear too late for fast click-through.
 - Converted first-screen recommended project links in the hero from plain anchors to Next `Link` and prefetched BASE CHAIN, KIS, and MajorLink on home load.
+
+### Home Focus Backup And Hero Refinement
+
+- Created a remote backup branch and tag before changing the homepage focus so the previous version can be restored if needed.
+- Reduced first-screen CTA competition by removing the secondary `문제 보기` button and changing the email CTA to a shorter `연락하기` label.
+- Reframed the hero around the three representative projects instead of repeating a generic interview map.
+- Rewrote core-strength cards from generic skill claims into project-grounded problem statements: state flow, critical data, deployment debugging, and verifiable AI output.

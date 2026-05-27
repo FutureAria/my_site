@@ -13,8 +13,8 @@ interface HeroData {
 }
 
 const HERO_INTRO = [
-  "컴퓨터공학부에서 백엔드와 데이터 흐름을 중심으로 프로젝트를 구현하고 있습니다.",
-  "API 설계, DB 구조, 배포 환경까지 직접 다루며 작동하는 서비스로 문제를 설명합니다.",
+  "백엔드, 데이터 흐름, 배포까지 직접 다루며 문제를 작동하는 화면으로 설명합니다.",
+  "면접관이 빠르게 확인할 수 있도록 대표 프로젝트 3개를 먼저 배치했습니다.",
 ];
 
 const RECOMMENDED_PROJECTS = [
@@ -59,7 +59,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
   return (
     <>
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden px-4 pt-24 pb-12 sm:px-6 sm:pt-28 sm:pb-16 supports-[height:100dvh]:min-h-[100dvh]">
+    <section className="relative flex min-h-[92svh] items-center overflow-hidden px-4 pt-24 pb-12 sm:px-6 sm:pt-28 sm:pb-16 supports-[height:92dvh]:min-h-[92dvh]">
       <div
         className="absolute inset-0 -z-10 opacity-[0.03]"
         style={{
@@ -108,9 +108,9 @@ export default function Hero({ data }: { data: HeroData }) {
             }`}
           >
             {[
-              "컴퓨터공학부 · 백엔드 개발자 지망생",
               "API, DB, 배포 흐름을 프로젝트로 검증",
-              "AI는 정리 도구, 검증은 직접 수행",
+              "KIS는 개인 프로젝트, 주문 권한은 잠금",
+              "BASE CHAIN은 최신 시연본 통합",
             ].map((item) => (
               <div key={item} className="flex items-start gap-2">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
@@ -125,7 +125,7 @@ export default function Hero({ data }: { data: HeroData }) {
             }`}
           >
             <span className="font-semibold uppercase tracking-[0.18em] text-emerald-300">
-              추천 순서
+              바로 볼 프로젝트
             </span>
             {RECOMMENDED_PROJECTS.map((project, index) => (
               <Link
@@ -147,13 +147,7 @@ export default function Hero({ data }: { data: HeroData }) {
               onClick={() => handleScrollTo("projects")}
               className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 px-7 py-3 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-emerald-600 hover:shadow-blue-500/40 active:translate-y-0 sm:w-auto"
             >
-              프로젝트 보기
-            </button>
-            <button
-              onClick={() => handleScrollTo("problems")}
-              className="hero-secondary-cta inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-5 py-3 text-sm font-semibold text-blue-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300/40 hover:bg-blue-400/15 hover:text-white active:translate-y-0 sm:w-auto"
-            >
-              문제 보기
+              대표 프로젝트 보기
             </button>
             {data.email && (
               <a
@@ -163,7 +157,7 @@ export default function Hero({ data }: { data: HeroData }) {
                 <svg className="h-4 w-4 shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
-                {data.email}
+                연락하기
               </a>
             )}
           </div>
@@ -197,10 +191,10 @@ export default function Hero({ data }: { data: HeroData }) {
             <div className="mb-6 flex flex-col items-start gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
-                  Interview Map
+                  Interview Route
                 </p>
                 <h2 className="mt-2 text-xl font-bold text-white">
-                  눌러서 확인하는 흐름
+                  가장 먼저 볼 3개
                 </h2>
               </div>
               <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
@@ -210,10 +204,9 @@ export default function Hero({ data }: { data: HeroData }) {
 
             <div className="space-y-3">
               {[
-                ["01", "문제", "왜 만들었는지 먼저 보여줍니다."],
-                ["02", "역할", "API, DB, 배포에서 맡은 부분을 나눕니다."],
-                ["03", "증거", "데모와 GitHub로 확인하게 합니다."],
-                ["04", "검증", "실행한 기록만 남깁니다."],
+                ["01", "BASE CHAIN", "코드 통합, MOCK 결제, QR 입장"],
+                ["02", "KIS AI Trader", "개인 프로젝트, 판단 근거, 주문 잠금"],
+                ["03", "MajorLink", "MVP 범위, 일정, 역할, 비용 정리"],
               ].map(([number, title, body]) => (
                 <div
                   key={number}
@@ -232,7 +225,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
             <div className="mt-5 rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.04] p-3">
               <p className="px-1 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
-                추천 열람 순서
+                클릭해서 상세 보기
               </p>
               <div className="mt-3 grid gap-2">
                 {RECOMMENDED_PROJECTS.map((project, index) => (

@@ -4,33 +4,33 @@ import { useEffect, useRef, useState } from "react";
 
 const strengths = [
   {
-    title: "API 설계와 서버 구조 이해",
+    title: "상태가 꼬이지 않는 흐름 설계",
     description:
-      "웹 서비스 프로젝트를 통해 API 설계와 서버 구조에 대한 이해를 쌓아왔습니다.",
+      "예매, 신청, 주문처럼 상태가 바뀌는 기능은 요청 순서와 권한 경계를 먼저 나눕니다.",
     accent: "from-blue-500/20 to-cyan-400/20",
     border: "border-blue-500/20",
     text: "text-blue-300",
   },
   {
-    title: "데이터 처리와 DB 구조 고려",
+    title: "깨지면 안 되는 데이터 기준",
     description:
-      "데이터 처리 흐름과 DB 구조를 고려하며 기능을 구현하는 데 익숙합니다.",
+      "정원, 티켓 상태, 판단 기록처럼 어긋나면 안 되는 데이터를 기준으로 DB와 화면을 맞춥니다.",
     accent: "from-emerald-500/20 to-teal-400/20",
     border: "border-emerald-500/20",
     text: "text-emerald-300",
   },
   {
-    title: "안정적인 서비스 운영 관심",
+    title: "배포 후 문제까지 직접 추적",
     description:
-      "트랜잭션 처리와 데이터 정합성처럼 안정적인 서비스 운영에 필요한 요소에 관심이 많습니다.",
+      "운영 URL, 캐시, 서비스워커, 빌드 오류처럼 배포 뒤에 보이는 문제도 로그와 화면으로 확인합니다.",
     accent: "from-amber-500/20 to-orange-400/20",
     border: "border-amber-500/20",
     text: "text-amber-300",
   },
   {
-    title: "AI 도구 활용",
+    title: "AI 결과를 검증 가능한 화면으로",
     description:
-      "AI 도구를 활용해 학습 속도를 높이고 구현 과정의 문제를 빠르게 분석하고 있습니다.",
+      "AI 판단은 그대로 믿지 않고 근거, 차단 이유, 읽기 전용 화면처럼 사람이 확인할 수 있게 정리합니다.",
     accent: "from-purple-500/20 to-pink-400/20",
     border: "border-purple-500/20",
     text: "text-purple-300",
@@ -74,7 +74,7 @@ export default function CoreStrengths() {
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full mx-auto mb-6" />
           <p className="readable-copy text-gray-400 text-base max-w-3xl mx-auto leading-8 text-center">
-            프로젝트를 수행하며 꾸준히 쌓아온 백엔드 중심 역량을 정리했습니다.
+            역량을 추상적으로 나열하지 않고, 프로젝트에서 실제로 다룬 문제 기준으로 정리했습니다.
           </p>
         </div>
 
