@@ -441,3 +441,4 @@
 - Added project-card hover/focus/touch prefetch for detail routes before navigation.
 - Deferred GitHub stats requests until each card is near the viewport and the browser is idle, reducing noisy background requests during first read and click.
 - Reworded the KIS problem-first home card around verifiable AI judgment and locked real orders, matching the current personal-project framing.
+- Removed the service-worker controller-change auto reload because it could interrupt the first click after a worker update; the worker still checks for updates on registration.
