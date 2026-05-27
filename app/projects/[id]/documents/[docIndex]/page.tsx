@@ -3,7 +3,7 @@ import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 interface ProjectDocument {
   title?: string;
@@ -25,6 +25,16 @@ async function getData() {
     "utf-8",
   );
   return JSON.parse(raw);
+}
+
+export async function generateStaticParams() {
+  const data = await getData();
+  return (data.projects || []).flatMap((project: Project, id: number) =>
+    (project.documents || []).map((_: ProjectDocument, docIndex: number) => ({
+      id: String(id),
+      docIndex: String(docIndex),
+    })),
+  );
 }
 
 function isSafePublicPath(value?: string) {

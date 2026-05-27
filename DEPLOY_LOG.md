@@ -432,3 +432,4 @@
 - Verified `npm run build` locally and checked localhost production navigation with service workers enabled: home to KIS detail rendered HTML normally instead of raw `$React.fragment` text.
 - Switched internal project-card and interview-route jumps to Next `Link` so representative project detail pages can use client-side navigation instead of full document reloads.
 - Re-applied the Oracle Caddy setup so gzip/zstd compression is active for production HTML responses.
+- Changed project detail and document routes from per-request dynamic rendering to 60-second ISR with generated params, reducing repeated server-render cost while still allowing updated portfolio data to refresh shortly after deployment/admin edits.

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProjectScreenshotGallery from "@/components/ProjectScreenshotGallery";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 interface ProjectDetail {
   role?: string;
@@ -249,6 +249,13 @@ async function getData() {
     "utf-8"
   );
   return JSON.parse(raw);
+}
+
+export async function generateStaticParams() {
+  const data = await getData();
+  return (data.projects || []).map((_: Project, id: number) => ({
+    id: String(id),
+  }));
 }
 
 export default async function ProjectPage({
