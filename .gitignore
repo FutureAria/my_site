@@ -24,3 +24,4 @@ app/control-room/
 # runtime backups created before admin saves
 data/backups/
 data/upload-events.jsonl
+data/admin-auth-events.jsonl

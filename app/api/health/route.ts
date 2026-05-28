@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
 
@@ -6,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 const dataPath = path.join(process.cwd(), "data", "portfolio.json");
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
+const adminCookie = "portfolio_admin";
 
 function checkPortfolioData() {
   const raw = fs.readFileSync(dataPath, "utf-8");
@@ -14,6 +16,7 @@ function checkPortfolioData() {
 }
 
 export async function GET() {
+  const isAdmin = (await cookies()).get(adminCookie)?.value === "ok";
   const checks = {
     portfolioData: false,
     uploadsDirectory: false,
@@ -29,11 +32,16 @@ export async function GET() {
   const ok = Object.values(checks).every(Boolean);
 
   return NextResponse.json(
-    {
-      ok,
-      checks,
-      checkedAt: new Date().toISOString(),
-    },
+    isAdmin
+      ? {
+          ok,
+          checks,
+          checkedAt: new Date().toISOString(),
+        }
+      : {
+          ok,
+          checkedAt: new Date().toISOString(),
+        },
     {
       status: ok ? 200 : 503,
       headers: {

@@ -18,8 +18,9 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPortfolioWriteApi = pathname === "/api/portfolio" && request.method !== "GET";
   const isUploadApi = pathname === "/api/upload";
+  const isAdminApi = pathname.startsWith("/api/admin/");
 
-  if (!isPortfolioWriteApi && !isUploadApi) {
+  if (!isPortfolioWriteApi && !isUploadApi && !isAdminApi) {
     return NextResponse.next();
   }
 
@@ -36,5 +37,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/portfolio", "/api/upload"],
+  matcher: ["/api/portfolio", "/api/upload", "/api/admin/:path*"],
 };

@@ -499,3 +499,11 @@
 - Added `npm run admin:hash` to generate a deployable admin password hash without printing or committing secrets.
 - Added `/api/health` to verify portfolio data parsing and upload-directory availability without exposing secret values.
 - Added `npm run predeploy:check` to run upload-reference reporting and a production build before deployment.
+
+### Admin Recovery And Audit Tools
+
+- Added masked admin login audit logging to `data/admin-auth-events.jsonl` without storing passwords or tokens.
+- Added authenticated `/api/admin/backups` endpoints to list portfolio backups and restore a selected backup after creating a pre-restore backup.
+- Added an admin `운영` tab with health status and recent backup restore controls.
+- Reduced public `/api/health` output to `ok` unless the requester is already authenticated as admin.
+- Surfaced `제가 기여한 부분` in the first project-detail screen so interviewers see contribution evidence before deeper sections.

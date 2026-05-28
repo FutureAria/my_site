@@ -314,6 +314,9 @@ export default async function ProjectPage({
     { label: "내 역할", body: role || compactCopy?.role },
     { label: "확인 결과", body: detail.impact || detail.result || compactCopy?.result },
   ].filter((item) => item.body);
+  const ownedItems = detail.contribution?.owned || [];
+  const overallItems = detail.contribution?.overall || [];
+  const hasHeroProof = snapshotItems.length > 0 || ownedItems.length > 0 || overallItems.length > 0;
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
@@ -454,7 +457,7 @@ export default async function ProjectPage({
               )}
             </div>
 
-            {snapshotItems.length > 0 && (
+            {hasHeroProof && (
               <div className="grid gap-3">
                 {snapshotItems.map((item) => (
                   <div
@@ -470,6 +473,21 @@ export default async function ProjectPage({
                     />
                   </div>
                 ))}
+                {(ownedItems.length > 0 || overallItems.length > 0) && (
+                  <div className="detail-proof-card rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-4">
+                    <p className="text-xs font-semibold tracking-widest text-emerald-300">
+                      제가 기여한 부분
+                    </p>
+                    <ul className="mt-2 space-y-2 text-left text-sm leading-6 text-gray-300">
+                      {(ownedItems.length > 0 ? ownedItems : overallItems).slice(0, 3).map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-300/80" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -487,6 +505,7 @@ export default async function ProjectPage({
         </section>
 
         {(detail.contribution?.overall?.length || detail.contribution?.owned?.length) && (
+          <div id="contribution">
           <DetailSection title="전체 기능 / 제 기여" eyebrow="contribution" tone="emerald" defaultOpen>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {detail.contribution?.overall?.length ? (
@@ -522,6 +541,7 @@ export default async function ProjectPage({
               ) : null}
             </div>
           </DetailSection>
+          </div>
         )}
 
         {role && (

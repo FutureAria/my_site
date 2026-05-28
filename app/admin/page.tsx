@@ -111,6 +111,19 @@ interface PortfolioData {
   };
 }
 
+interface BackupInfo {
+  name: string;
+  size: number;
+  mtime: string;
+  projectCount: number | null;
+}
+
+interface HealthInfo {
+  ok: boolean;
+  checkedAt: string;
+  checks?: Record<string, boolean>;
+}
+
 const DEFAULT_PROJECT_CATEGORIES = [
   "대표 프로젝트",
   "백엔드 기초 프로젝트",
@@ -189,6 +202,10 @@ export default function AdminPage() {
   const [openProjects, setOpenProjects] = useState<Set<number>>(new Set([0]));
   const [openAbout, setOpenAbout] = useState<Set<number>>(new Set([0]));
   const [openBlog, setOpenBlog] = useState<Set<number>>(new Set([0]));
+  const [backups, setBackups] = useState<BackupInfo[]>([]);
+  const [health, setHealth] = useState<HealthInfo | null>(null);
+  const [opsLoading, setOpsLoading] = useState(false);
+  const [restoringBackup, setRestoringBackup] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("admin_authed") === "true") {
@@ -201,6 +218,66 @@ export default function AdminPage() {
         });
     }
   }, []);
+
+  const loadOperations = async () => {
+    setOpsLoading(true);
+    try {
+      const [backupRes, healthRes] = await Promise.all([
+        fetch("/api/admin/backups"),
+        fetch("/api/health"),
+      ]);
+      if (backupRes.ok) {
+        const backupJson = await backupRes.json();
+        setBackups(backupJson.backups || []);
+      }
+      if (healthRes.ok) {
+        setHealth(await healthRes.json());
+      }
+    } finally {
+      setOpsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (authed && activeTab === "ops") {
+      loadOperations();
+    }
+  }, [authed, activeTab]);
+
+  const restoreBackup = async (backup: BackupInfo) => {
+    const ok = window.confirm(
+      [
+        "이 백업으로 관리자 데이터를 복원할까요?",
+        "",
+        backup.name,
+        "",
+        "현재 데이터는 복원 직전 백업으로 한 번 더 저장됩니다.",
+      ].join("\n"),
+    );
+    if (!ok) return;
+
+    setRestoringBackup(backup.name);
+    const res = await fetch("/api/admin/backups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...csrfHeaders() },
+      body: JSON.stringify({ name: backup.name }),
+    });
+
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      alert(json.error || "백업 복원에 실패했습니다.");
+      setRestoringBackup("");
+      return;
+    }
+
+    const next = await fetch("/api/portfolio").then((r) => r.json());
+    setData(next);
+    setOriginalData(next);
+    setRestoringBackup("");
+    setActiveTab("projects");
+    await loadOperations();
+    alert("백업을 복원했습니다.");
+  };
 
   const handleLogin = async () => {
     const res = await fetch("/api/auth", {
@@ -303,6 +380,7 @@ export default function AdminPage() {
     { id: "blog", label: "블로그" },
     { id: "skills", label: "기술 스택" },
     { id: "contact", label: "연락처" },
+    { id: "ops", label: "운영" },
   ];
   const projectCategoryOptions = Array.from(
     new Set([
@@ -2255,6 +2333,101 @@ export default function AdminPage() {
                     />
                   </div>
                 ))
+              )}
+            </div>
+          </Section>
+        )}
+
+        {activeTab === "ops" && (
+          <Section title="운영 점검 / 복원">
+            <div className="mb-5 rounded-2xl border border-blue-500/20 bg-blue-500/[0.05] p-5">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-300">
+                    Health
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-gray-300">
+                    {health
+                      ? health.ok
+                        ? "운영 데이터와 업로드 폴더 접근이 정상입니다."
+                        : "운영 점검 항목 중 실패가 있습니다."
+                      : "운영 상태를 불러오지 않았습니다."}
+                  </p>
+                  {health?.checks && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {Object.entries(health.checks).map(([key, value]) => (
+                        <span
+                          key={key}
+                          className={`rounded-lg border px-2.5 py-1 text-xs font-medium ${
+                            value
+                              ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                              : "border-red-400/20 bg-red-500/10 text-red-300"
+                          }`}
+                        >
+                          {key}: {value ? "OK" : "FAIL"}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={loadOperations}
+                  disabled={opsLoading}
+                  className="rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/5 disabled:opacity-50"
+                >
+                  {opsLoading ? "확인 중..." : "상태 새로고침"}
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                    Portfolio Backups
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-gray-400">
+                    관리자 저장 전 생성된 백업입니다. 복원 전 현재 데이터도 한 번 더 백업됩니다.
+                  </p>
+                </div>
+                <span className="rounded-lg border border-white/10 bg-black/20 px-3 py-1.5 text-xs text-gray-400">
+                  {backups.length}개
+                </span>
+              </div>
+
+              {backups.length === 0 ? (
+                <p className="rounded-xl border border-dashed border-white/10 px-4 py-5 text-sm text-gray-500">
+                  아직 복원 가능한 백업이 없습니다. 관리자 저장을 한 번 이상 하면 자동으로 생성됩니다.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {backups.slice(0, 12).map((backup) => (
+                    <div
+                      key={backup.name}
+                      className="flex flex-col gap-3 rounded-xl border border-white/10 bg-gray-950/40 p-4 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-semibold text-white">
+                          {backup.name}
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                          {new Date(backup.mtime).toLocaleString("ko-KR")} ·{" "}
+                          {(backup.size / 1024).toFixed(1)}KB
+                          {backup.projectCount !== null
+                            ? ` · 프로젝트 ${backup.projectCount}개`
+                            : ""}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => restoreBackup(backup)}
+                        disabled={Boolean(restoringBackup)}
+                        className="shrink-0 rounded-lg border border-emerald-400/20 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-300 transition-colors hover:bg-emerald-500/15 disabled:opacity-50"
+                      >
+                        {restoringBackup === backup.name ? "복원 중..." : "이 백업으로 복원"}
+                      </button>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </Section>

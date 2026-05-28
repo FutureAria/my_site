@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import fs from "fs/promises";
+import path from "path";
 
 const ADMIN_COOKIE = "portfolio_admin";
 const CSRF_COOKIE = "portfolio_admin_csrf";
+const authLogPath = path.join(process.cwd(), "data", "admin-auth-events.jsonl");
 const maxFailedAttempts = 5;
 const windowMs = 15 * 60 * 1000;
 const lockMs = 10 * 60 * 1000;
@@ -20,6 +23,40 @@ function getClientId(request: Request) {
   const forwardedFor = request.headers.get("x-forwarded-for");
   const ip = forwardedFor?.split(",")[0]?.trim();
   return ip || request.headers.get("x-real-ip") || "unknown";
+}
+
+function maskClientId(clientId: string) {
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(clientId)) {
+    return clientId.replace(/\.\d{1,3}$/, ".0");
+  }
+
+  if (clientId.includes(":")) {
+    return `${clientId.split(":").slice(0, 3).join(":")}::`;
+  }
+
+  return clientId === "unknown" ? "unknown" : "masked";
+}
+
+async function appendAuthEvent(event: {
+  result: "success" | "failure" | "locked";
+  clientId: string;
+  failedCount?: number;
+}) {
+  try {
+    await fs.mkdir(path.dirname(authLogPath), { recursive: true });
+    await fs.appendFile(
+      authLogPath,
+      `${JSON.stringify({
+        at: new Date().toISOString(),
+        result: event.result,
+        client: maskClientId(event.clientId),
+        failedCount: event.failedCount,
+      })}\n`,
+      "utf-8",
+    );
+  } catch {
+    // Authentication should not fail because audit logging is temporarily unavailable.
+  }
 }
 
 function getAttempt(clientId: string, now: number) {
@@ -89,6 +126,7 @@ export async function POST(request: Request) {
 
   if (attempt.lockedUntil && attempt.lockedUntil > now) {
     const retryAfter = Math.ceil((attempt.lockedUntil - now) / 1000);
+    await appendAuthEvent({ result: "locked", clientId, failedCount: attempt.count });
     return NextResponse.json(
       {
         success: false,
@@ -109,10 +147,12 @@ export async function POST(request: Request) {
     }
 
     attempts.set(clientId, nextAttempt);
+    await appendAuthEvent({ result: "failure", clientId, failedCount: nextAttempt.count });
     return NextResponse.json({ success: false }, { status: 401 });
   }
 
   attempts.delete(clientId);
+  await appendAuthEvent({ result: "success", clientId });
   const response = NextResponse.json({ success: true });
   const csrfToken = crypto.randomBytes(24).toString("base64url");
   response.cookies.set(ADMIN_COOKIE, "ok", {
