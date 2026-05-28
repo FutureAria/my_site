@@ -120,43 +120,7 @@ export default function Hero({ data }: { data: HeroData }) {
           </div>
 
           <div
-            className={`mb-6 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.025] p-3 transition-all duration-700 delay-[420ms] sm:p-4 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-          >
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
-                바로 볼 프로젝트
-              </span>
-              <span className="hidden text-xs text-gray-500 sm:inline">
-                상세 페이지로 이동
-              </span>
-            </div>
-            <div className="grid gap-2 sm:grid-cols-3">
-              {RECOMMENDED_PROJECTS.map((project, index) => (
-                <Link
-                  key={project.href}
-                  href={project.href}
-                  className="group flex min-h-[4.25rem] items-start gap-2 rounded-xl border border-white/10 bg-gray-950/25 px-3 py-2.5 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.045]"
-                >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-[11px] font-black text-emerald-200">
-                    {index + 1}
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block truncate text-sm font-bold text-gray-100 transition-colors group-hover:text-white">
-                      {project.title}
-                    </span>
-                    <span className="mobile-safe-wrap mt-0.5 block text-xs leading-5 text-gray-500">
-                      {project.body}
-                    </span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className={`flex flex-col gap-3 transition-all duration-700 delay-500 sm:flex-row sm:items-center ${
+            className={`flex flex-col gap-3 transition-all duration-700 delay-[420ms] sm:flex-row sm:items-center ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -220,54 +184,28 @@ export default function Hero({ data }: { data: HeroData }) {
             </div>
 
             <div className="space-y-3">
-              {[
-                ["01", "BASE CHAIN", "코드 통합, MOCK 결제, QR 입장"],
-                ["02", "KIS AI Trader", "개인 프로젝트, 판단 근거, 주문 잠금"],
-                ["03", "MajorLink", "MVP 범위, 일정, 역할, 비용 정리"],
-              ].map(([number, title, body]) => (
-                <div
-                  key={number}
-                  className="hero-map-step grid grid-cols-[2.75rem_1fr] gap-3 rounded-2xl border border-white/10 bg-gray-950/40 p-3"
+              {RECOMMENDED_PROJECTS.map((project, index) => (
+                <Link
+                  key={project.href}
+                  href={project.href}
+                  className="hero-map-step group grid grid-cols-[2.75rem_1fr_1.5rem] gap-3 rounded-2xl border border-white/10 bg-gray-950/40 p-3 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.055]"
                 >
                   <span className="hero-map-token flex h-11 w-11 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">
-                    {number}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <p className="font-semibold text-white">{title}</p>
-                    <p className="hero-map-step-copy mt-1 text-sm leading-6 text-gray-400">{body}</p>
+                    <p className="font-semibold text-white transition-colors group-hover:text-emerald-100">
+                      {project.title}
+                    </p>
+                    <p className="hero-map-step-copy mt-1 text-sm leading-6 text-gray-400">
+                      {project.body}
+                    </p>
                   </div>
-                </div>
+                  <svg className="mt-3 h-4 w-4 shrink-0 text-gray-500 transition-colors group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
               ))}
-            </div>
-
-            <div className="mt-5 rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.04] p-3">
-              <p className="px-1 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
-                클릭해서 상세 보기
-              </p>
-              <div className="mt-3 grid gap-2">
-                {RECOMMENDED_PROJECTS.map((project, index) => (
-                  <Link
-                    key={project.href}
-                    href={project.href}
-                    className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2.5 transition-colors hover:border-emerald-400/25 hover:bg-white/[0.06]"
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-xs font-black text-emerald-200">
-                      {index + 1}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-bold text-white">
-                        {project.title}
-                      </span>
-                      <span className="mobile-safe-wrap mt-0.5 block text-xs leading-5 text-gray-400">
-                        {project.body}
-                      </span>
-                    </span>
-                    <svg className="ml-auto h-4 w-4 shrink-0 text-gray-500 transition-colors group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                    </svg>
-                  </Link>
-                ))}
-              </div>
             </div>
           </div>
         </div>

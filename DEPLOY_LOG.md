@@ -515,3 +515,8 @@
 - Limited automatic portfolio backups to the latest 30 files to avoid unbounded Oracle disk growth.
 - Updated Oracle setup scripts to support `ADMIN_PASSWORD_HASH` without requiring a plain admin password.
 - Compressed KIS, BASE CHAIN, and MajorLink detail copy toward `문제 / 내 역할 / 결과` first-screen reading.
+
+### Hero Interview Route Simplification
+
+- Removed duplicate hero project-link groups from the left column and the lower right card.
+- Kept a single clickable `가장 먼저 볼 3개` route on the right so the first screen has one clear project path.
