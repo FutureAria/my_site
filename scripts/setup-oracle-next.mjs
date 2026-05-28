@@ -7,6 +7,10 @@ function shellQuote(value) {
   return `'${String(value).replaceAll("'", "'\\''")}'`;
 }
 
+function serviceEnvLine(key, value) {
+  return value ? `Environment=${key}=${value}` : "";
+}
+
 function run(command, args) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { stdio: "inherit" });
@@ -41,7 +45,8 @@ WorkingDirectory=${oracleEnv.remoteDir}
 Environment=NODE_ENV=production
 Environment=PORT=${oracleEnv.port}
 Environment=NEXT_PUBLIC_SITE_URL=${oracleEnv.publicHost}
-Environment=ADMIN_PASSWORD=${oracleEnv.adminPassword}
+${serviceEnvLine("ADMIN_PASSWORD", oracleEnv.adminPassword)}
+${serviceEnvLine("ADMIN_PASSWORD_HASH", oracleEnv.adminPasswordHash)}
 ExecStart=/usr/bin/npm start
 Restart=always
 RestartSec=5

@@ -17,7 +17,7 @@ interface ContactData {
 export default function Contact({ data }: { data: ContactData }) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [sendError, setSendError] = useState("");
@@ -46,7 +46,7 @@ export default function Contact({ data }: { data: ContactData }) {
       const result = await res.json();
       if (result.success) {
         setSent(true);
-        setForm({ name: "", email: "", message: "" });
+        setForm({ name: "", email: "", message: "", website: "" });
       } else if (result.error === "SMTP_NOT_CONFIGURED") {
         // SMTP 미설정 시 mailto 링크로 폴백
         window.location.href = `mailto:${data.email}?subject=${encodeURIComponent(`[문의] ${form.name}`)}&body=${encodeURIComponent(form.message)}`;
@@ -165,6 +165,16 @@ export default function Contact({ data }: { data: ContactData }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <input
+                  type="text"
+                  name="website"
+                  value={form.website}
+                  onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wide">이름</label>

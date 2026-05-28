@@ -195,6 +195,7 @@ export default function AdminPage() {
   const [originalData, setOriginalData] = useState<PortfolioData | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const [activeTab, setActiveTab] = useState("hero");
   const [authed, setAuthed] = useState(false);
   const [pw, setPw] = useState("");
@@ -355,15 +356,38 @@ export default function AdminPage() {
     );
     if (!ok) return;
     setSaving(true);
-    await fetch("/api/portfolio", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...csrfHeaders() },
-      body: JSON.stringify(data),
-    });
-    setOriginalData(data);
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setSaveError("");
+    try {
+      const res = await fetch("/api/portfolio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...csrfHeaders() },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        const message =
+          res.status === 401
+            ? "관리자 세션이 만료되었습니다. 다시 로그인해주세요."
+            : res.status === 403
+              ? "보안 토큰이 만료되었습니다. 다시 로그인해주세요."
+              : json.error || "저장에 실패했습니다. 잠시 후 다시 시도해주세요.";
+        setSaveError(message);
+
+        if (res.status === 401 || res.status === 403) {
+          sessionStorage.removeItem("admin_authed");
+        }
+        return;
+      }
+
+      setOriginalData(data);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      setSaveError("네트워크 오류로 저장하지 못했습니다. 연결 상태를 확인해주세요.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (!data)
@@ -428,6 +452,25 @@ export default function AdminPage() {
                 : ""}{" "}
               수정됨
             </p>
+          </div>
+        )}
+        {saveError && (
+          <div className="mb-5 rounded-2xl border border-red-400/20 bg-red-500/[0.08] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-300">
+              저장 실패
+            </p>
+            <p className="mt-2 text-sm leading-6 text-gray-200">{saveError}</p>
+            {saveError.includes("다시 로그인") && (
+              <button
+                onClick={() => {
+                  sessionStorage.removeItem("admin_authed");
+                  setAuthed(false);
+                }}
+                className="mt-3 rounded-lg border border-red-300/20 px-3 py-1.5 text-xs font-semibold text-red-200 transition-colors hover:bg-red-500/10"
+              >
+                다시 로그인하기
+              </button>
+            )}
           </div>
         )}
 

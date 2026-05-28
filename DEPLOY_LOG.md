@@ -507,3 +507,11 @@
 - Added an admin `운영` tab with health status and recent backup restore controls.
 - Reduced public `/api/health` output to `ok` unless the requester is already authenticated as admin.
 - Surfaced `제가 기여한 부분` in the first project-detail screen so interviewers see contribution evidence before deeper sections.
+
+### Save Failure, Contact Guard, And Backup Retention
+
+- Added explicit admin save failure messages for expired sessions, CSRF token errors, server errors, and network failures.
+- Added contact-form honeypot, per-client rate limiting, email validation, length limits, and HTML escaping for outgoing messages.
+- Limited automatic portfolio backups to the latest 30 files to avoid unbounded Oracle disk growth.
+- Updated Oracle setup scripts to support `ADMIN_PASSWORD_HASH` without requiring a plain admin password.
+- Compressed KIS, BASE CHAIN, and MajorLink detail copy toward `문제 / 내 역할 / 결과` first-screen reading.

@@ -8,6 +8,7 @@ const dataPath = path.join(process.cwd(), "data", "portfolio.json");
 const backupDir = path.join(process.cwd(), "data", "backups");
 const backupPrefix = "portfolio-";
 const backupSuffix = ".json";
+const maxPortfolioBackups = 30;
 
 function isPortfolioBackup(name: string) {
   return name.startsWith(backupPrefix) && name.endsWith(backupSuffix) && !name.includes("/");
@@ -52,6 +53,15 @@ function timestampForFile() {
   return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
+async function cleanupOldBackups() {
+  const backups = await readBackups();
+  await Promise.all(
+    backups.slice(maxPortfolioBackups).map((backup) =>
+      fs.unlink(path.join(backupDir, backup.name)).catch(() => undefined),
+    ),
+  );
+}
+
 export async function GET() {
   const backups = await readBackups();
   return NextResponse.json({ backups });
@@ -88,6 +98,7 @@ export async function POST(request: Request) {
       // If current data is unavailable, still allow restoring a valid backup.
     }
     await fs.writeFile(dataPath, JSON.stringify(parsed, null, 2), "utf-8");
+    await cleanupOldBackups();
 
     return NextResponse.json({ success: true, restored: name });
   } catch (error) {

@@ -19,6 +19,7 @@ export const oracleEnv = {
   publicHost: process.env.ORACLE_PUBLIC_HOST || "",
   serviceName: process.env.ORACLE_SERVICE_NAME || "my-site",
   adminPassword: process.env.ADMIN_PASSWORD || "",
+  adminPasswordHash: process.env.ADMIN_PASSWORD_HASH || "",
 };
 
 export function requireOracleEnv() {
@@ -28,7 +29,9 @@ export function requireOracleEnv() {
   if (!oracleEnv.keyPath) missing.push("ORACLE_KEY_PATH");
   if (!oracleEnv.remoteDir) missing.push("ORACLE_REMOTE_DIR");
   if (!oracleEnv.publicHost) missing.push("ORACLE_PUBLIC_HOST");
-  if (!oracleEnv.adminPassword) missing.push("ADMIN_PASSWORD");
+  if (!oracleEnv.adminPassword && !oracleEnv.adminPasswordHash) {
+    missing.push("ADMIN_PASSWORD or ADMIN_PASSWORD_HASH");
+  }
 
   if (missing.length > 0) {
     console.error(`Missing ${missing.join(", ")}. Create .env.oracle from .env.oracle.example first.`);

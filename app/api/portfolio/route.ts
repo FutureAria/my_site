@@ -4,9 +4,27 @@ import path from "path";
 
 const dataPath = path.join(process.cwd(), "data", "portfolio.json");
 const backupDir = path.join(process.cwd(), "data", "backups");
+const maxPortfolioBackups = 30;
 
 function timestampForFile() {
   return new Date().toISOString().replace(/[:.]/g, "-");
+}
+
+function cleanupOldBackups() {
+  if (!fs.existsSync(backupDir)) return;
+
+  const backups = fs
+    .readdirSync(backupDir)
+    .filter((name) => /^portfolio-.*\.json$/.test(name))
+    .map((name) => {
+      const filePath = path.join(backupDir, name);
+      return { name, mtimeMs: fs.statSync(filePath).mtimeMs };
+    })
+    .sort((a, b) => b.mtimeMs - a.mtimeMs);
+
+  for (const backup of backups.slice(maxPortfolioBackups)) {
+    fs.unlinkSync(path.join(backupDir, backup.name));
+  }
 }
 
 export async function GET() {
@@ -25,6 +43,7 @@ export async function POST(request: Request) {
     fs.mkdirSync(backupDir, { recursive: true });
     const backupPath = path.join(backupDir, `portfolio-${timestampForFile()}.json`);
     fs.copyFileSync(dataPath, backupPath);
+    cleanupOldBackups();
   }
   fs.writeFileSync(dataPath, JSON.stringify(rest, null, 2), "utf-8");
   return NextResponse.json({ success: true });

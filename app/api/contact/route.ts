@@ -1,11 +1,80 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+type ContactAttempt = {
+  count: number;
+  firstAttemptAt: number;
+};
+
+const attempts = new Map<string, ContactAttempt>();
+const windowMs = 10 * 60 * 1000;
+const maxAttempts = 3;
+
+function getClientId(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const ip = forwardedFor?.split(",")[0]?.trim();
+  return ip || request.headers.get("x-real-ip") || "unknown";
+}
+
+function isRateLimited(clientId: string) {
+  const now = Date.now();
+  const previous = attempts.get(clientId);
+
+  if (!previous || now - previous.firstAttemptAt > windowMs) {
+    attempts.set(clientId, { count: 1, firstAttemptAt: now });
+    return false;
+  }
+
+  const next = { ...previous, count: previous.count + 1 };
+  attempts.set(clientId, next);
+  return next.count > maxAttempts;
+}
+
+function cleanText(value: unknown, maxLength: number) {
+  return String(value || "").trim().slice(0, maxLength);
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 120;
+}
+
 export async function POST(request: Request) {
-  const { name, email, message } = await request.json();
+  const body = await request.json();
+  const name = cleanText(body.name, 60);
+  const email = cleanText(body.email, 120);
+  const message = cleanText(body.message, 2000);
+  const website = cleanText(body.website, 200);
+
+  if (website) {
+    return NextResponse.json({ success: true });
+  }
+
+  if (isRateLimited(getClientId(request))) {
+    return NextResponse.json(
+      { success: false, error: "요청이 너무 많습니다. 잠시 후 다시 시도해주세요." },
+      { status: 429, headers: { "Retry-After": "600" } },
+    );
+  }
 
   if (!name || !email || !message) {
     return NextResponse.json({ success: false, error: "모든 필드를 입력해주세요." }, { status: 400 });
+  }
+
+  if (!isValidEmail(email)) {
+    return NextResponse.json({ success: false, error: "이메일 형식을 확인해주세요." }, { status: 400 });
+  }
+
+  if (message.length < 10) {
+    return NextResponse.json({ success: false, error: "메시지를 10자 이상 입력해주세요." }, { status: 400 });
   }
 
   const smtpHost = process.env.SMTP_HOST;
@@ -35,10 +104,10 @@ export async function POST(request: Request) {
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;">
         <h2 style="color:#3b82f6;">포트폴리오 문의</h2>
         <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:8px 0;color:#6b7280;width:80px;">이름</td><td style="padding:8px 0;font-weight:600;">${name}</td></tr>
-          <tr><td style="padding:8px 0;color:#6b7280;">이메일</td><td style="padding:8px 0;"><a href="mailto:${email}" style="color:#3b82f6;">${email}</a></td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;width:80px;">이름</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(name)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;">이메일</td><td style="padding:8px 0;"><a href="mailto:${escapeHtml(email)}" style="color:#3b82f6;">${escapeHtml(email)}</a></td></tr>
         </table>
-        <div style="margin-top:16px;padding:16px;background:#f9fafb;border-radius:8px;white-space:pre-wrap;">${message}</div>
+        <div style="margin-top:16px;padding:16px;background:#f9fafb;border-radius:8px;white-space:pre-wrap;">${escapeHtml(message)}</div>
       </div>
     `,
   });
