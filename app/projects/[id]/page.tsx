@@ -137,7 +137,7 @@ const PROJECT_DETAIL_COPY: Record<
     role: "감정 분석 응답과 추천 기준 연결 구조를 정리했습니다.",
     result: "사용자 히스토리 기반 추천 흐름을 검증 중입니다.",
   },
-  Major_Link: {
+  MajorLink: {
     headline: "MVP 범위 먼저 검증",
     summary: "기능, 일정, 역할, 비용을 개발 전 검증 문서로 정리했습니다.",
     problem: "아이디어만 있으면 개발 범위와 검증 기준이 흐려졌습니다.",
@@ -350,13 +350,13 @@ export default async function ProjectPage({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-[var(--bg-primary)]/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300 mb-2">
+              <span className="on-media-accent inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300 mb-2">
                 Project · {String(idx + 1).padStart(2, "0")}
               </span>
-              <h1 className="korean-title-wrap max-w-[20rem] text-[1.4rem] font-black leading-tight sm:max-w-full sm:text-4xl">
+              <h1 className="on-media-text korean-title-wrap max-w-[20rem] text-[1.4rem] font-black leading-tight sm:max-w-full sm:text-4xl">
                 {project.title}
               </h1>
-              <p className="text-sm text-gray-300 mt-2">{project.period}</p>
+              <p className="on-media-muted text-sm text-gray-300 mt-2">{project.period}</p>
             </div>
           </div>
         )}

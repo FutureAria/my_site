@@ -1,5 +1,21 @@
 # Portfolio Deploy Log
 
+## 2026-05-29
+
+### Interview-Focused Portfolio Cleanup
+
+- Returned from the paused Notion portfolio work to the Next.js portfolio site.
+- Re-centered the representative project grouping around `BASE CHAIN`, `KIS AI 트레이더`, and `MajorLink`.
+- Moved the AI commercial-area project out of the representative group so the first scan matches the current portfolio direction.
+- Renamed `Major_Link` display copy to `MajorLink`.
+- Kept KIS copy as a personal project with read-only public viewing and real-order locking.
+- Kept BASE CHAIN copy aligned with the latest Oracle demo and MOCK Toss payment boundary.
+- Fixed light-theme media overlay text so project image titles remain readable on dark image gradients.
+- Local `npm run build` completed successfully.
+- Local `npm run check:uploads` completed with one known missing local admin upload reference: `/uploads/admin-1777886495176-0.xlsx`. This file is treated as an existing server-side admin upload and must not be deleted from Oracle.
+- Browser QA checked the home hero, representative-project route, BASE CHAIN detail hero, desktop light theme, and mobile dark viewport.
+- GitHub push and Oracle production deployment are pending in the current work session.
+
 ## 2026-05-26
 
 ### About Timeline Evidence Update

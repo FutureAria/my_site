@@ -301,7 +301,7 @@
           "type": "xlsx"
         }
       ],
-      "category": "대표 프로젝트"
+      "category": "백엔드 기초 프로젝트"
     },
     {
       "title": "KIS AI 트레이더",
@@ -623,7 +623,7 @@
       "category": "개발 중 · 기획 프로젝트"
     },
     {
-      "title": "Major_Link",
+      "title": "MajorLink",
       "period": "2026.05.12 ~ 진행 중",
       "desc": "전공/프로젝트 연결 아이디어를 MVP 기능, 일정, 역할, 비용, 검증 범위로 정리한 기획 프로젝트",
       "problem": "개발 전 MVP 검증",

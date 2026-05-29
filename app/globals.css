@@ -331,6 +331,18 @@ html.light .text-cyan-300 {
   color: #0e7490 !important;
 }
 
+html.light .on-media-text {
+  color: #ffffff !important;
+}
+
+html.light .on-media-muted {
+  color: #d1d5db !important;
+}
+
+html.light .on-media-accent {
+  color: #a7f3d0 !important;
+}
+
 html.light .hero-map-shell {
   background: #ffffff !important;
   border-color: #e5e7eb !important;
@@ -340,6 +352,12 @@ html.light .hero-map-shell {
 html.light .hero-map-step {
   background: #f8fafc !important;
   border-color: #dbeafe !important;
+}
+
+html.light .interview-route-card {
+  background: #ffffff !important;
+  border-color: #dbeafe !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
 }
 
 html.light .hero-map-token {

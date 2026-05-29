@@ -90,6 +90,12 @@ const PROJECT_GROUPS = [
   },
 ];
 
+const FEATURED_PROJECT_ORDER = [
+  "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼",
+  "KIS AI 트레이더",
+  "MajorLink",
+];
+
 const INTERVIEW_ROUTE = [
   {
     href: "/projects/4",
@@ -156,7 +162,7 @@ const PROJECT_CARD_COPY: Record<
     role: "감정 분석 결과를 추천 기준으로 설계",
     impact: "사용자 히스토리 연동 구조 정리 중",
   },
-  Major_Link: {
+  MajorLink: {
     hook: "MVP 범위 정리 중",
     teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리 중입니다.",
     role: "범위·일정·비용 정리 중",
@@ -220,12 +226,18 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
     const matchTech = !activeTech || p.techs.includes(activeTech);
     return matchSearch && matchTech;
   });
-  const groupedProjects = PROJECT_GROUPS.map((group) => ({
-    ...group,
-    projects: filtered.filter(
-      (project) => (project.category || "기타 프로젝트") === group.id
-    ),
-  })).filter((group) => group.projects.length > 0);
+  const groupedProjects = PROJECT_GROUPS.map((group) => {
+    const projects = filtered
+      .filter((project) => (project.category || "기타 프로젝트") === group.id)
+      .sort((a, b) => {
+        if (group.id !== "대표 프로젝트") return data.indexOf(a) - data.indexOf(b);
+        const aRank = FEATURED_PROJECT_ORDER.indexOf(a.title);
+        const bRank = FEATURED_PROJECT_ORDER.indexOf(b.title);
+        return (aRank === -1 ? 999 : aRank) - (bRank === -1 ? 999 : bRank);
+      });
+
+    return { ...group, projects };
+  }).filter((group) => group.projects.length > 0);
 
   const renderProjectCard = (
     project: ProjectItem,
@@ -274,7 +286,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               <span className="project-card-state inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
                 {cardBadge}
               </span>
-              <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
+              <p className="on-media-text readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
                 {hook}
               </p>
             </div>
@@ -296,7 +308,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               <span className="project-card-state inline-flex items-center rounded-full border border-emerald-400/15 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-200">
                 {cardBadge}
               </span>
-              <p className="readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
+              <p className="on-media-text readable-copy mt-2 line-clamp-1 text-sm font-bold leading-6 text-white sm:text-base">
                 {hook}
               </p>
             </div>
@@ -460,7 +472,7 @@ export default function Projects({ data }: { data: ProjectItem[] }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="group rounded-2xl border border-white/10 bg-gray-950/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-400/25 hover:bg-white/[0.055]"
+                className="interview-route-card group rounded-2xl border border-white/10 bg-gray-950/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-400/25 hover:bg-white/[0.055]"
               >
                 <span className="text-xs font-semibold text-emerald-300">
                   {item.label}
