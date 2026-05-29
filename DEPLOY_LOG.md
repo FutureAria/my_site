@@ -18,6 +18,10 @@
 - Ran `npm run deploy:oracle`; Oracle-side `npm ci`, `npm run build`, and `my-site.service` restart completed successfully.
 - Ran `npm run check:oracle`; Oracle disk showed `45G` total, `9.7G` used, `36G` available, and `/home/ubuntu/my_site` about `625M`.
 - After deployment, production HTML still showed the preserved server `data/portfolio.json`, so server data sync is required before final production verification.
+- Backed up the Oracle server `data/portfolio.json`, then synced the local public-safe `data/portfolio.json` and `DEPLOY_LOG.md` without touching `public/uploads`.
+- Rebuilt on Oracle and restarted `my-site.service`; service returned to active/running state.
+- Verified production `/api/portfolio` now shows `BASE CHAIN`, `KIS AI 트레이더`, and `MajorLink` as representative projects, while the AI commercial-area project is under `백엔드 기초 프로젝트`.
+- Verified `https://juyoung-portfolio.duckdns.org` and `/projects/4` returned `200`; BASE CHAIN detail includes `MOCK 결제`, `Oracle 배포본`, and the light-theme media text class.
 
 ## 2026-05-26
 
