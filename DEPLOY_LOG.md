@@ -14,7 +14,10 @@
 - Local `npm run build` completed successfully.
 - Local `npm run check:uploads` completed with one known missing local admin upload reference: `/uploads/admin-1777886495176-0.xlsx`. This file is treated as an existing server-side admin upload and must not be deleted from Oracle.
 - Browser QA checked the home hero, representative-project route, BASE CHAIN detail hero, desktop light theme, and mobile dark viewport.
-- GitHub push and Oracle production deployment are pending in the current work session.
+- Committed and pushed to GitHub: `7c12eaa Focus portfolio representative projects`.
+- Ran `npm run deploy:oracle`; Oracle-side `npm ci`, `npm run build`, and `my-site.service` restart completed successfully.
+- Ran `npm run check:oracle`; Oracle disk showed `45G` total, `9.7G` used, `36G` available, and `/home/ubuntu/my_site` about `625M`.
+- After deployment, production HTML still showed the preserved server `data/portfolio.json`, so server data sync is required before final production verification.
 
 ## 2026-05-26
 
