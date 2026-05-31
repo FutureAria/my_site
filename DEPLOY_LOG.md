@@ -1,5 +1,20 @@
 # Portfolio Deploy Log
 
+## 2026-05-31
+
+### About, KIS, MajorLink, and Data Policy Cleanup
+
+- Tightened the About intro and timeline copy so the first scan is shorter and more backend-focused.
+- Updated source data settings so the representative project indexes point to `KIS AI 트레이더`, `BASE CHAIN`, and `MajorLink`.
+- Strengthened KIS copy around `개인 프로젝트`, `읽기 전용`, and `실제 주문 잠금` in card and detail-page summaries.
+- Strengthened MajorLink copy as a 진행 중 project by showing the MVP slice: profile, recruiting post, application/approval, and tag search.
+- Added `docs/DEPLOYMENT_DATA_POLICY.md` and linked it from `README.md` to document the Oracle data sync rule.
+- Local `npm run build` completed successfully.
+- Local `npm run check:uploads` completed with the known missing local admin upload reference: `/uploads/admin-1777886495176-0.xlsx`.
+- Local browser QA confirmed the home page, KIS detail page, and MajorLink detail page expose the updated interview-focused copy with no console errors.
+- Mobile light-theme QA at a 390px viewport confirmed no horizontal overflow on the home page, KIS detail page, and MajorLink detail page.
+- Production deployment is pending in the current work session.
+
 ## 2026-05-29
 
 ### Interview-Focused Portfolio Cleanup

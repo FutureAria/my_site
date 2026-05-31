@@ -113,7 +113,7 @@ const INTERVIEW_ROUTE = [
     href: "/projects/6",
     title: "MajorLink",
     label: "3순위",
-    body: "아이디어를 MVP 범위, 일정, 역할, 비용 문서로 정리",
+    body: "프로필, 모집글, 지원/승인 중심 MVP 범위 정리",
   },
 ];
 
@@ -145,10 +145,10 @@ const PROJECT_CARD_COPY: Record<
     impact: "상권 추천 판단 기준을 화면에 연결",
   },
   "KIS AI 트레이더": {
-    hook: "AI 판단 이유 공개",
-    teaser: "시장 데이터와 모의투자 기록을 근거로 묶었습니다.",
-    role: "수집·판단·잠금 설계",
-    impact: "읽기 전용 공개, 주문 잠금",
+    hook: "개인 프로젝트 · 주문 잠금",
+    teaser: "AI 판단 근거는 공개하고 실제 주문 권한은 분리했습니다.",
+    role: "수집·판단·읽기 전용 설계",
+    impact: "공개 화면 read-only, 주문 잠금",
   },
   "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼": {
     hook: "최신 시연본 통합",
@@ -163,10 +163,10 @@ const PROJECT_CARD_COPY: Record<
     impact: "사용자 히스토리 연동 구조 정리 중",
   },
   MajorLink: {
-    hook: "MVP 범위 정리 중",
-    teaser: "기능, 일정, 역할, 비용을 개발 전 기준으로 정리 중입니다.",
-    role: "범위·일정·비용 정리 중",
-    impact: "개발 전 검증 기준 정리 중",
+    hook: "진행 중 · MVP 범위 검증",
+    teaser: "프로필, 모집글, 지원/승인을 1차 범위로 좁혔습니다.",
+    role: "포함·제외 범위 정리",
+    impact: "다음 구현 단위까지 문서화",
   },
 };
 

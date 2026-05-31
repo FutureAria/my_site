@@ -26,6 +26,8 @@ npm run deploy:oracle
 
 Use this only from a trusted local machine. The real `.env.oracle` file must not be committed.
 
+`npm run deploy:oracle` preserves server-managed `data/portfolio.json` and `public/uploads/` by default. If local portfolio copy must replace production admin data, follow [docs/DEPLOYMENT_DATA_POLICY.md](docs/DEPLOYMENT_DATA_POLICY.md) and back up the Oracle data first.
+
 ## Admin
 
 The admin page uses an environment-based password and an httpOnly cookie. Write APIs are protected by middleware.
