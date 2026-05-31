@@ -597,4 +597,5 @@
 - Verified representative project pages in the in-app browser: KIS personal/read-only framing, BASE CHAIN MOCK/QR framing, and MajorLink ongoing/MVP framing are present.
 - Verified mobile-menu theme toggle changes the document between light and dark mode, then restored dark mode.
 - Verified Oracle capacity after deployment: 45G total, 9.8G used, 36G available, site directory 626M.
+- Updated `README.md` with the current production status, representative project demo framing, contact-form fallback status, verification commands, and credential safety notes.
 - Remaining Decision Required: replace or reissue the Gmail/app-password credential, then rerun production contact-form POST verification.
