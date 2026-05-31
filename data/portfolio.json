@@ -188,8 +188,12 @@
         "UI/UX"
       ],
       "image": "/uploads/project-1775116821521.webp",
-      "link": "https://juyoung-crud.duckdns.org",
+      "link": "",
       "github": "https://github.com/FutureAria/CRUD",
+      "demo": {
+        "ctaLabel": "운영 데모 점검 중",
+        "note": "외부 운영 데모는 현재 HTTPS 연결 점검 중입니다. 구현 내용은 GitHub와 설계 문서에서 확인할 수 있습니다."
+      },
       "detail": {
         "role": "물품 목록 상태의 소유 위치 정리\n등록·수정·삭제 후 API 응답 기준으로 화면 갱신\n폼, 목록, 상세 모달 책임 분리",
         "features": [

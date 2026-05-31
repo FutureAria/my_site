@@ -1,5 +1,14 @@
 # Portfolio Deploy Log
 
+## 2026-06-01
+
+### CRUD Demo Link Safety
+
+- Checked all public demo, GitHub, and document links after deployment.
+- Found `https://juyoung-crud.duckdns.org` failing with `ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR`.
+- Removed the CRUD external demo URL from the public portfolio data so reviewers are not sent to a broken HTTPS endpoint.
+- Added a short CRUD demo notice: external live demo is under HTTPS inspection, while implementation can be checked through GitHub and the planning document.
+
 ## 2026-05-31
 
 ### About, KIS, MajorLink, and Data Policy Cleanup
