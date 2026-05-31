@@ -425,6 +425,22 @@ html.light .detail-accordion-body {
   border-color: #e5e7eb !important;
 }
 
+html.light .contact-error-panel {
+  background: #fef2f2 !important;
+  border-color: rgba(185, 28, 28, 0.2) !important;
+  color: #991b1b !important;
+}
+
+html.light .contact-error-link {
+  background: #ffffff !important;
+  border-color: rgba(185, 28, 28, 0.24) !important;
+  color: #7f1d1d !important;
+}
+
+html.light .contact-error-link:hover {
+  background: #fee2e2 !important;
+}
+
 @media (max-width: 480px) {
   .readable-copy {
     word-break: keep-all;
