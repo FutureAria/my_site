@@ -593,4 +593,8 @@
 - Added a visible fallback email action inside the contact form error state so visitors can still contact directly while SMTP credentials are being reissued.
 - Added light-theme contrast overrides for the contact-form error panel and fallback email action.
 - Added `docs/TASKS.md` and `docs/NEXT_CHAT_HANDOFF.md` with the remaining SMTP credential blocker, final QA list, and safe validation commands.
+- Verified production HTML includes the contact form and portfolio content after deployment.
+- Verified representative project pages in the in-app browser: KIS personal/read-only framing, BASE CHAIN MOCK/QR framing, and MajorLink ongoing/MVP framing are present.
+- Verified mobile-menu theme toggle changes the document between light and dark mode, then restored dark mode.
+- Verified Oracle capacity after deployment: 45G total, 9.8G used, 36G available, site directory 626M.
 - Remaining Decision Required: replace or reissue the Gmail/app-password credential, then rerun production contact-form POST verification.
