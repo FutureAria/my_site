@@ -13,7 +13,14 @@
 - Local `npm run check:uploads` completed with the known missing local admin upload reference: `/uploads/admin-1777886495176-0.xlsx`.
 - Local browser QA confirmed the home page, KIS detail page, and MajorLink detail page expose the updated interview-focused copy with no console errors.
 - Mobile light-theme QA at a 390px viewport confirmed no horizontal overflow on the home page, KIS detail page, and MajorLink detail page.
-- Production deployment is pending in the current work session.
+- Committed and pushed to GitHub: `ca495ed Refine portfolio project positioning`.
+- Follow-up pushed: `3f1f9c5 Clarify MajorLink MVP headline`.
+- Ran `npm run deploy:oracle`; Oracle-side build completed successfully and `my-site.service` restarted in active/running state.
+- Backed up the Oracle server `data/portfolio.json`, then synced the local public-safe `data/portfolio.json` without touching `public/uploads`.
+- Rebuilt on Oracle and restarted `my-site.service` after the server data sync.
+- Ran `npm run check:oracle`; Oracle disk showed `45G` total, `9.9G` used, `36G` available, and `/home/ubuntu/my_site` about `631M`.
+- Verified production `/api/portfolio` shows representative project indexes `[3,4,6]` and the updated KIS/MajorLink copy.
+- Verified `https://juyoung-portfolio.duckdns.org` returned `200`.
 
 ## 2026-05-29
 
