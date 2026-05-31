@@ -47,6 +47,13 @@ function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 120;
 }
 
+function getSmtpSecureMode() {
+  const explicit = process.env.SMTP_SECURE?.toLowerCase();
+  if (explicit === "true") return true;
+  if (explicit === "false") return false;
+  return Number(process.env.SMTP_PORT || 587) === 465;
+}
+
 export async function POST(request: Request) {
   const body = await request.json();
   const name = cleanText(body.name, 60);
@@ -90,27 +97,41 @@ export async function POST(request: Request) {
   const transporter = nodemailer.createTransport({
     host: smtpHost,
     port: Number(process.env.SMTP_PORT || 587),
-    secure: false,
+    secure: getSmtpSecureMode(),
     auth: { user: smtpUser, pass: smtpPass },
   });
 
-  await transporter.sendMail({
-    from: `"${name}" <${smtpUser}>`,
-    to: contactTo,
-    replyTo: email,
-    subject: `[포트폴리오 문의] ${name}님이 메시지를 보냈습니다`,
-    text: `이름: ${name}\n이메일: ${email}\n\n${message}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;">
-        <h2 style="color:#3b82f6;">포트폴리오 문의</h2>
-        <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:8px 0;color:#6b7280;width:80px;">이름</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:8px 0;color:#6b7280;">이메일</td><td style="padding:8px 0;"><a href="mailto:${escapeHtml(email)}" style="color:#3b82f6;">${escapeHtml(email)}</a></td></tr>
-        </table>
-        <div style="margin-top:16px;padding:16px;background:#f9fafb;border-radius:8px;white-space:pre-wrap;">${escapeHtml(message)}</div>
-      </div>
-    `,
-  });
+  try {
+    await transporter.sendMail({
+      from: `"${name}" <${smtpUser}>`,
+      to: contactTo,
+      replyTo: email,
+      subject: `[포트폴리오 문의] ${name}님이 메시지를 보냈습니다`,
+      text: `이름: ${name}\n이메일: ${email}\n\n${message}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;">
+          <h2 style="color:#3b82f6;">포트폴리오 문의</h2>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:8px 0;color:#6b7280;width:80px;">이름</td><td style="padding:8px 0;font-weight:600;">${escapeHtml(name)}</td></tr>
+            <tr><td style="padding:8px 0;color:#6b7280;">이메일</td><td style="padding:8px 0;"><a href="mailto:${escapeHtml(email)}" style="color:#3b82f6;">${escapeHtml(email)}</a></td></tr>
+          </table>
+          <div style="margin-top:16px;padding:16px;background:#f9fafb;border-radius:8px;white-space:pre-wrap;">${escapeHtml(message)}</div>
+        </div>
+      `,
+    });
+  } catch (error) {
+    const smtpError = error as { code?: string; command?: string; responseCode?: number };
+    console.error("contact_mail_send_failed", {
+      code: smtpError.code,
+      command: smtpError.command,
+      responseCode: smtpError.responseCode,
+    });
+
+    return NextResponse.json(
+      { success: false, error: "메일 전송 설정을 확인하는 중입니다. 아래 이메일로 직접 연락해주세요." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ success: true });
 }

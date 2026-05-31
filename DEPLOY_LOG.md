@@ -582,3 +582,12 @@
 
 - Removed duplicate hero project-link groups from the left column and the lower right card.
 - Kept a single clickable `가장 먼저 볼 3개` route on the right so the first screen has one clear project path.
+
+### Contact SMTP Runtime Guard
+
+- Configured the Oracle runtime `.env.local` with the required SMTP key names without recording secret values in Git or docs.
+- Restarted `my-site.service` and confirmed the runtime sees `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, and `CONTACT_TO`.
+- Production contact-form POST changed from `SMTP_NOT_CONFIGURED` to SMTP authentication failure, confirming the remaining blocker is credential/provider-side authentication.
+- Added guarded mail-send error handling so visitors receive a JSON fallback message instead of an empty 500 response.
+- Added SMTP secure-mode detection for port `465` or explicit `SMTP_SECURE=true`.
+- Remaining Decision Required: replace or reissue the Gmail/app-password credential, then rerun production contact-form POST verification.
