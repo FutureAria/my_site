@@ -495,7 +495,7 @@ export default async function ProjectPage({
           {hasDemoGuide && demo?.note && (
             <div className="detail-demo-note mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4">
               <p className="text-xs font-semibold tracking-widest uppercase text-emerald-300">
-                읽기 전용 데모 안내
+                데모 안내
               </p>
               <p className="readable-copy mt-2 text-sm leading-7 text-[var(--text-secondary)] text-left">
                 {demo.note}

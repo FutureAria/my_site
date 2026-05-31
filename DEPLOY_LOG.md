@@ -8,6 +8,7 @@
 - Found `https://juyoung-crud.duckdns.org` failing with `ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR`.
 - Removed the CRUD external demo URL from the public portfolio data so reviewers are not sent to a broken HTTPS endpoint.
 - Added a short CRUD demo notice: external live demo is under HTTPS inspection, while implementation can be checked through GitHub and the planning document.
+- Renamed the shared project demo notice heading from `읽기 전용 데모 안내` to the more neutral `데모 안내`.
 
 ## 2026-05-31
 
