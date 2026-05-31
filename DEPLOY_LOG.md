@@ -10,6 +10,13 @@
 - Added a short CRUD demo notice: external live demo is under HTTPS inspection, while implementation can be checked through GitHub and the planning document.
 - Renamed the shared project demo notice heading from `읽기 전용 데모 안내` to the more neutral `데모 안내`.
 
+### Final QA and 404 Page
+
+- Verified the KIS read-only demo enters `https://juyoung-quant.duckdns.org/web#summary` and shows read-only/order-lock wording.
+- Verified the BASE CHAIN ticket flow loads and stops unauthenticated reviewers at the login-required modal before any payment data is entered.
+- Confirmed the production contact API returns `SMTP_NOT_CONFIGURED`; Oracle `.env.local` is missing SMTP settings, so real mail delivery still requires an approved credential update.
+- Added a custom portfolio-style 404 page with links back to representative projects and the contact form.
+
 ## 2026-05-31
 
 ### About, KIS, MajorLink, and Data Policy Cleanup
