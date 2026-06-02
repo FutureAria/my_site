@@ -603,4 +603,6 @@
 ### MajorLink GitHub Link
 
 - Added the MajorLink repository URL to the project card and detail README link: `https://github.com/FutureAria/Major.git`.
-- Planned production data update is field-scoped to MajorLink `github` and `detail.readme`; existing server uploads are not touched.
+- Updated production `data/portfolio.json` with a field-scoped MajorLink `github` and `detail.readme` patch; existing server uploads were not touched.
+- Rebuilt and restarted the Oracle deployment after the server data patch so static home and `/projects/6` HTML include the new GitHub link.
+- Verified production home and `/projects/6` HTML both include `https://github.com/FutureAria/Major.git` and `GitHub` text.
