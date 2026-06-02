@@ -641,7 +641,7 @@
       ],
       "image": "",
       "link": "",
-      "github": "",
+      "github": "https://github.com/FutureAria/Major.git",
       "demo": {
         "ctaLabel": "",
         "note": ""
@@ -675,7 +675,7 @@
         "erd": "사용자, 전공/기술 태그, 프로젝트 모집글, 지원 내역, 승인 상태를 MVP 후보 엔티티로 검토 중",
         "apiSpec": "프로필 등록, 프로젝트 모집글 작성, 지원/승인, 태그 검색, 기획자료 조회를 MVP 후보 API로 정리 중",
         "troubleshooting": "실시간 채팅, 자동 추천, 결제, 학교 인증은 초기 MVP에서 제외해 일정 과부하를 줄였습니다.",
-        "readme": "",
+        "readme": "https://github.com/FutureAria/Major.git",
         "mobileCheck": "",
         "compatibilityCheck": "",
         "performance": "",

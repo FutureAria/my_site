@@ -599,3 +599,8 @@
 - Verified Oracle capacity after deployment: 45G total, 9.8G used, 36G available, site directory 626M.
 - Updated `README.md` with the current production status, representative project demo framing, contact-form fallback status, verification commands, and credential safety notes.
 - Remaining Decision Required: replace or reissue the Gmail/app-password credential, then rerun production contact-form POST verification.
+
+### MajorLink GitHub Link
+
+- Added the MajorLink repository URL to the project card and detail README link: `https://github.com/FutureAria/Major.git`.
+- Planned production data update is field-scoped to MajorLink `github` and `detail.readme`; existing server uploads are not touched.
