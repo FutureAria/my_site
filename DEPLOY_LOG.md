@@ -1,5 +1,14 @@
 # Portfolio Deploy Log
 
+## 2026-06-03
+
+### Notion AI Music Screenshot Assets
+
+- Ran the local `AI음악` demo app and captured current portfolio screenshots for the Notion copy page.
+- Added two public-safe screenshots under `/public/uploads/ai-music-notion/` for the `AI 감정 분석 기반 음악 추천 서비스` project card/detail page.
+- Excluded the mobile capture from Notion because the local demo layout clipped horizontally at phone width.
+- No existing server-managed upload files were overwritten or deleted.
+
 ## 2026-06-01
 
 ### CRUD Demo Link Safety
