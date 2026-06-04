@@ -615,3 +615,8 @@
 - Updated production `data/portfolio.json` with a field-scoped MajorLink `github` and `detail.readme` patch; existing server uploads were not touched.
 - Rebuilt and restarted the Oracle deployment after the server data patch so static home and `/projects/6` HTML include the new GitHub link.
 - Verified production home and `/projects/6` HTML both include `https://github.com/FutureAria/Major.git` and `GitHub` text.
+
+### Next Chat Handoff Refresh
+
+- Updated `docs/TASKS.md` and `docs/NEXT_CHAT_HANDOFF.md` so the next chat sees only one required P0: replacing the Gmail SMTP credential and verifying `POST /api/contact` returns `success:true`.
+- Marked pre-SMTP mobile, theme, representative project data, and MajorLink GitHub checks as completed.
