@@ -1,6 +1,6 @@
 # Portfolio Site Tasks
 
-Last updated: 2026-06-04 00:00 KST
+Last updated: 2026-06-04 10:38 KST
 
 ## P0
 
@@ -11,6 +11,7 @@ Last updated: 2026-06-04 00:00 KST
   - Security rule: do not commit or paste SMTP password, app password, DuckDNS token, Oracle key, or admin password into Git.
 - [ ] Rerun production contact-form verification after the credential is replaced.
   - Expected success check: `POST https://juyoung-portfolio.duckdns.org/api/contact` returns `{"success":true}`.
+  - 2026-06-04 recheck: production POST still returns `502` with the fallback JSON error, so the blocker remains SMTP credential replacement rather than code/build failure.
   - Current fallback check: failed sends return a JSON error and show a direct email action in the form.
 
 ## P1

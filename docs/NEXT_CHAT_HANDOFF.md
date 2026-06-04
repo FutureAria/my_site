@@ -22,8 +22,8 @@ Finish the only remaining P0: replace the Gmail SMTP app password or SMTP creden
 - Capacity check: `npm run check:oracle`
 - Last confirmed build command: `npm run build`
 - Last confirmed deploy: Oracle deploy completed after the MajorLink GitHub repository update.
-- Latest confirmed production health check: `/api/health` returned `{"ok":true}` on 2026-06-02.
-- Latest confirmed Oracle capacity: 45G total, 9.9G used, 36G available, site directory 626M.
+- Latest confirmed production health check: `/api/health` returned `{"ok":true}` on 2026-06-04.
+- Latest confirmed Oracle capacity: 45G total, 10G used, 36G available, site directory 627M.
 - Current Git note: tracked files are clean on `main`; there are unrelated untracked prompt/log docs under `docs/` that should not be touched unless the user asks.
 
 ## Completed Recently
@@ -54,6 +54,7 @@ Finish the only remaining P0: replace the Gmail SMTP app password or SMTP creden
    - Do not commit or print the credential.
 2. After replacing the credential, verify production contact form success.
    - Expected API result: `{"success":true}`.
+   - 2026-06-04 pre-credential recheck: current production POST still returns `502` with fallback JSON, matching the known Gmail SMTP credential blocker.
 
 ### P1
 

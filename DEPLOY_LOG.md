@@ -1,5 +1,15 @@
 # Portfolio Deploy Log
 
+## 2026-06-04
+
+### SMTP Blocker Recheck
+
+- Local `npm run build` completed successfully with Next.js `15.5.18`.
+- Verified production `/api/health` returned `{"ok":true}`.
+- Verified production `POST /api/contact` still returns `502` with the contact fallback JSON, so the remaining P0 is still Gmail SMTP credential replacement.
+- Ran `npm run check:oracle`; Oracle disk showed `45G` total, `10G` used, `36G` available, and `/home/ubuntu/my_site` about `627M`.
+- No SMTP password, app password, Oracle credential, admin password, or token value was printed or stored.
+
 ## 2026-06-03
 
 ### Notion AI Music Screenshot Assets
