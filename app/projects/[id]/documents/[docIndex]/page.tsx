@@ -57,6 +57,15 @@ export default async function ProjectDocumentPage({
 
   const canPreview = isSafePublicPath(document.preview);
   const canDownload = isSafePublicPath(document.file);
+  const downloadExt = (document.type || document.file?.split(".").pop() || "").toLowerCase();
+  const downloadLabel =
+    downloadExt === "pdf"
+      ? "PDF 다운로드"
+      : downloadExt === "pptx" || downloadExt === "ppt"
+        ? "PPT 다운로드"
+        : downloadExt === "xlsx" || downloadExt === "xls"
+          ? "엑셀 다운로드"
+          : "파일 다운로드";
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
@@ -99,7 +108,7 @@ export default async function ProjectDocumentPage({
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M7.5 12l4.5 4.5m0 0l4.5-4.5M12 16.5V3" />
               </svg>
-              엑셀 다운로드
+              {downloadLabel}
             </a>
           )}
         </div>

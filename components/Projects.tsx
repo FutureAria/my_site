@@ -93,6 +93,8 @@ const PROJECT_GROUPS = [
 const FEATURED_PROJECT_ORDER = [
   "BASE CHAIN - 블록체인 야구 티켓팅 플랫폼",
   "KIS AI 트레이더",
+  "AI 감정 분석 기반 음악 추천 서비스",
+  "ICPC MT 실시간 진행 시스템",
   "MajorLink",
 ];
 
@@ -156,11 +158,17 @@ const PROJECT_CARD_COPY: Record<
     role: "통합·API·UI 오류 정리",
     impact: "최신 Oracle 시연본 반영",
   },
-  "AI 감정 분석 기반 음악 추천 서비스 (개발 중)": {
-    hook: "감정 기반 추천 설계",
-    teaser: "감정 분석 결과를 추천 기준으로 분리했습니다.",
-    role: "감정 분석 결과를 추천 기준으로 설계",
-    impact: "사용자 히스토리 연동 구조 정리 중",
+  "AI 감정 분석 기반 음악 추천 서비스": {
+    hook: "Claude 감정분석 추천",
+    teaser: "Claude 응답을 정규화해 설명 가능한 추천으로 연결했습니다.",
+    role: "Spring Boot 백엔드 프록시·Claude 응답 정규화",
+    impact: "정규화로 설명가능한 추천 + 히스토리 개인화",
+  },
+  "ICPC MT 실시간 진행 시스템": {
+    hook: "폰 리모컨 · 실시간 동기화",
+    teaser: "발표 화면과 폰 리모컨을 분리하고 WebSocket으로 동기화했습니다.",
+    role: "발표/리모컨/보기 화면 분리·Socket.IO 구현",
+    impact: "폰 하나로 슬라이드·음악·점수 실시간 제어",
   },
   MajorLink: {
     hook: "진행 중 · MVP 범위 검증",

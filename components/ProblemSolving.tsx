@@ -28,6 +28,18 @@ const problems = [
     href: "/projects/3",
     point: "시장 데이터, 모의투자 기록, 차단 이유를 공개하고 실제 주문은 잠갔습니다.",
   },
+  {
+    title: "AI 감정 분석 결과를 어떻게 안정적인 추천으로 바꿀까?",
+    project: "AI 감정 분석 음악 추천",
+    href: "/projects/5",
+    point: "Claude 응답을 서비스 데이터로 정규화하고 감정결과·추천기준·히스토리를 분리했습니다.",
+  },
+  {
+    title: "여러 기기에서 슬라이드와 점수를 어떻게 실시간 동기화할까?",
+    project: "ICPC MT 실시간 진행 시스템",
+    href: "/projects/7",
+    point: "발표 화면이 상태를 broadcast하고 폰 리모컨이 구독하도록 WebSocket으로 분리했습니다.",
+  },
 ];
 
 export default function ProblemSolving() {
